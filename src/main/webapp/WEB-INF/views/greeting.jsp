@@ -10,4 +10,7 @@
         <p>${greeting.getContent()}</p>
         <a href="/greetings">Return to list</a>
     </body>
+    <script>
+
+    </script>
 </html>

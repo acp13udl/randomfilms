@@ -2,6 +2,7 @@ package com.udl.softarch.springexample.controllers;
 
 import com.udl.softarch.springexample.models.Greeting;
 import com.udl.softarch.springexample.repositories.GreetingRepository;
+import com.udl.softarch.springexample.utils.GenerateRandom;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -118,4 +119,22 @@ public class GreetingController {
         delete(id);
         return "redirect:/greetings";
     }
+
+    //Random
+    @RequestMapping(value = "/random", method = RequestMethod.GET)
+    @ResponseBody
+    public Greeting retrieveRandomGreeting() {
+        Greeting greeting =GenerateRandom.RandomGreeting(greetingRepository.findAll());
+        Preconditions.checkNotNull(greeting, "Greeting with id %s not found", greeting.getId());
+        return greeting;
+    }
+
+    @RequestMapping(value = "/random", method = RequestMethod.GET, produces = "text/html")
+    public ModelAndView retrieveRandomGreetingHTML() {
+        return new ModelAndView("greeting", "greeting", retrieveRandomGreeting());
+    }
+
+
+
+
 }
