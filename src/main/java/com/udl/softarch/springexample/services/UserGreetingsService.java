@@ -8,7 +8,7 @@ import com.udl.softarch.springexample.models.User;
  */
 public interface UserGreetingsService {
 
-    User getUserAndGreeting(Long userId);
+    User getUserAndGreetings(Long userId);
     Greeting addGreetingToUser(Greeting greeting);
     Greeting updateGreetingFromUser(Greeting updateGreeting, Long greeting);
     void removeGreetingFromUser(Long greetingId);

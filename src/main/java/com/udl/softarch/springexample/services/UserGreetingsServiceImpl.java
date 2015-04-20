@@ -20,7 +20,7 @@ public class UserGreetingsServiceImpl implements UserGreetingsService {
 
     @Transactional(readOnly = true)
     @Override
-    public User getUserAndGreeting(Long userId) {
+    public User getUserAndGreetings(Long userId) {
         User u = userRepository.findOne(userId);
         return u;
     }
