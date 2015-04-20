@@ -28,6 +28,8 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Greeting> greetings = new ArrayList<Greeting>();
 
+    private FavoritesList list;
+
     public User(){}
 
     public User(String username, String email){
