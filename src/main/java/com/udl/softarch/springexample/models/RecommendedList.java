@@ -4,10 +4,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +21,7 @@ public class RecommendedList {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date date;
 
-    @NotBlank(message = "List cannot be blank")
-    @Length(max = 20, message = "The recommended list of this week is full")
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Film> recommendedList = new ArrayList<>();
 
     public RecommendedList() {
