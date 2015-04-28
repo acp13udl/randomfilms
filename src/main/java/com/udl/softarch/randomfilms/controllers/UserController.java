@@ -3,7 +3,7 @@ package com.udl.softarch.randomfilms.controllers;
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.UserRepository;
-import com.udl.softarch.randomfilms.services.UserGreetingsService;
+import com.udl.softarch.randomfilms.services.UserFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    UserGreetingsService userGreetingsService;
+    UserFilmsService userFilmsService;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class UserController {
     public User receive(@PathVariable("id")Long id){
 
         Preconditions.checkNotNull(userRepository.findOne(id), "Test user not found");
-        return userGreetingsService.getUserAndGreetings(id);
+        return userFilmsService.getUserFilms(id);
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")

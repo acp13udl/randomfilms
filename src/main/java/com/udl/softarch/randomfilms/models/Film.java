@@ -9,6 +9,7 @@ import java.util.List;
  * Created by ler2 on 20/04/15.
  */
 @Entity
+@Access(AccessType.PROPERTY)
 public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -168,5 +169,12 @@ public class Film {
 
     public List<Actor> getActors(){
         return actors;
+    }
+
+    public void addActor(Actor actor){
+        actors.add(actor);
+    }
+    public void addDirector(Director director){
+        directors.add(director);
     }
 }

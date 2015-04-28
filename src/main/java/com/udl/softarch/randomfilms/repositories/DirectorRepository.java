@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Allu on 21/04/2015.
  */
 public interface DirectorRepository extends PagingAndSortingRepository<Director, Long> {
-    List<Director> findByContentContaining(@Param("content") String content);
+
 }

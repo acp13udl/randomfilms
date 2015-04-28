@@ -7,14 +7,14 @@ import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import com.udl.softarch.randomfilms.repositories.DirectorRepository;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by Allu on 21/04/2015.
  */
-public class FilmsServiceImpl implements FilmsService {
+@Service
+public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedService {
 
     @Autowired
     ActorRepository actorRepository;
@@ -26,20 +26,31 @@ public class FilmsServiceImpl implements FilmsService {
     @Transactional(readOnly = true)
     @Override
     public Film getFilmAndPersonInvolved(Long filmId) {
-        Film f = filmRepository.findOne(filmId);
-        return f;
+        Film film = filmRepository.findOne(filmId);
+        return film;
     }
 
     @Transactional
     @Override
-    public List<Actor> addActorToFilm(Actor actor) {
+    public Film addActorToFilm(Long actorId,Long filmId) {
+        Actor actor = actorRepository.findOne(actorId);
+        Film film = filmRepository.findOne(actorId);
+        film.addActor(actor);
 
-        return null;
+        filmRepository.save(film);
+
+        return film;
     }
 
     @Transactional
     @Override
-    public List<Director> addDirectorToFilm(Director director) {
-        return null;
+    public Film addDirectorToFilm(Long directorId,Long filmId) {
+        Director director = directorRepository.findOne(directorId);
+        Film film = filmRepository.findOne(filmId);
+        film.addDirector(director);
+
+        filmRepository.save(film);
+
+        return film;
     }
 }

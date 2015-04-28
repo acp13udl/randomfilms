@@ -25,10 +25,10 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.udl.softarch.springexample")
-@EnableJpaRepositories("com.udl.softarch.springexample.repositories")
+@ComponentScan("com.udl.softarch.randomfilms")
+@EnableJpaRepositories("com.udl.softarch.randomfilms.repositories")
 @EnableTransactionManagement
-public class GreetingAppContext extends WebMvcConfigurerAdapter {
+public class RandomFilmsAppContext extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -52,17 +52,17 @@ public class GreetingAppContext extends WebMvcConfigurerAdapter {
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+        return builder.setType(EmbeddedDatabaseType.H2).build();
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabase(Database.HSQL);
+        vendorAdapter.setDatabase(Database.H2);
         vendorAdapter.setGenerateDdl(true);
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.udl.softarch.springexample");
+        factory.setPackagesToScan("com.udl.softarch.randomfilms");
         factory.setDataSource(dataSource());
         return factory;
     }

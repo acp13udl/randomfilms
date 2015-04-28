@@ -24,11 +24,9 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
-    //cuando consultas un usuario, que greetings te devuelve (lazy) - EAGER (todos) y el orphanRemoval(si el usuario se borra se borraran sus greetings)
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<Greeting> greetings = new ArrayList<Greeting>();
+    private List<Film> favoritesList = new ArrayList<Film>();
 
-    private FavoritesList list;
 
     public User(){}
 
@@ -62,16 +60,16 @@ public class User {
         this.email = email;
     }
 
-    public List<Greeting> getGreetings() {
-        return greetings;
+    public List<Film> getFavoritesList() {
+        return favoritesList;
     }
 
-    public void addGreeting(Greeting newGreeting){
-        greetings.add(newGreeting);
+    public void addToFavorites(Film film){
+       favoritesList.add(film);
     }
 
-    public void removeGreeting(Greeting greeting){
-        greetings.remove(greeting);
+    public void removeFilm(Film film){
+        favoritesList.remove(film);
     }
 }
 

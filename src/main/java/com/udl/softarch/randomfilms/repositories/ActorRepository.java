@@ -10,5 +10,5 @@ import java.util.List;
  * Created by Allu on 21/04/2015.
  */
 public interface ActorRepository extends PagingAndSortingRepository<Actor, Long> {
-    List<Actor> findByContentContaining(@Param("content") String content);
+
 }

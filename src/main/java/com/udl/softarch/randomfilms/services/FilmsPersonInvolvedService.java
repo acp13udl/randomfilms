@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * Created by Allu on 21/04/2015.
  */
-public interface FilmsService {
+public interface FilmsPersonInvolvedService {
 
     Film getFilmAndPersonInvolved(Long filmId);
-    List<Actor> addActorToFilm(Actor actor);
-    List<Director> addDirectorToFilm(Director director);
+    Film addActorToFilm(Long actorId,Long filmId);
+    Film addDirectorToFilm(Long directorId, Long filmId);
 }

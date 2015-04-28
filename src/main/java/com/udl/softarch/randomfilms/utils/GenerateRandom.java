@@ -1,6 +1,5 @@
 package com.udl.softarch.randomfilms.utils;
 
-import com.udl.softarch.randomfilms.models.Greeting;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,11 +9,11 @@ import java.util.Random;
  */
 public class GenerateRandom {
 
-    public static Greeting RandomGreeting(Iterable<Greeting> greetins){
-
-        Random random = new Random();
-        ArrayList<Greeting> greetings =(ArrayList<Greeting>) greetins;
-        int randomint = random.nextInt(greetings.size());
-        return greetings.get(randomint);
-    }
+//    public static Greeting RandomGreeting(Iterable<Greeting> greetins){
+//
+//        Random random = new Random();
+//        ArrayList<Greeting> greetings =(ArrayList<Greeting>) greetins;
+//        int randomint = random.nextInt(greetings.size());
+//        return greetings.get(randomint);
+//    }
 }

@@ -2,7 +2,7 @@ package com.udl.softarch.randomfilms.init;
 
 import javax.servlet.*;
 
-import com.udl.softarch.randomfilms.config.GreetingAppContext;
+import com.udl.softarch.randomfilms.config.RandomFilmsAppContext;
 import com.udl.softarch.randomfilms.filters.SimpleCORSFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -16,7 +16,7 @@ public class Initializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) throws ServletException {
 
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(GreetingAppContext.class);
+        rootContext.register(RandomFilmsAppContext.class);
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(rootContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
