@@ -1,6 +1,7 @@
 package com.udl.softarch.randomfilms.models;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Access(AccessType.PROPERTY)
+@XmlRootElement
 public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +47,7 @@ public class Film {
 
     private int year;
 
-    private String tittle;
+    private String title;
 
     public Long getId() {
         return Id;
@@ -147,12 +149,12 @@ public class Film {
         this.year = year;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String tittle) {
+        this.title = tittle;
     }
 
     public void addDirectors(Collection<? extends Director> collection){
