@@ -27,9 +27,7 @@ public class Webservice {
     private XQConnection xqConnection;
     private XQPreparedExpression preparedExpression;
 
-    String genresQuery = "for $g in $m//genres/genre\n"
-            +"return\n"
-            +"<genre> {$g/text()}</genre>";
+    String genresQuery = "string-join($m//genres/genre, \", \")";
 
     String filmQuery = "declare variable $doc external;\n"
             +"for $m in $doc//movies/movie\n"
@@ -38,6 +36,14 @@ public class Webservice {
             +"<title>{$m/title/text()}</title>\n"
             +"<genres>{"+genresQuery+"}</genres>"
             +"</film>";
+
+    String actorsQuery = "\"declare variable $doc external;\\n\"\n" +
+            "            +\"for $m in $doc//movies/movie\\n\"\n" +
+            "            +\"return\\n\"\n" +
+            "            +\"<film>\\n\"\n" +
+            "            +\"<title>{$m/title/text()}</title>\\n\"\n" +
+            "            +\"<genres>{\"+genresQuery+\"}</genres>\"\n" +
+            "            +\"</film>\";";
 
     private Webservice(){}
 

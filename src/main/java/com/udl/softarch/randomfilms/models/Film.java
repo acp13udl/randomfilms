@@ -28,11 +28,7 @@ public class Film {
 
     @XmlElement private String idIMDB;
 
-    @XmlElementWrapper(name = "genres")
-    @XmlElement(name = "genre")
-
-    private List<Genre> genres = new ArrayList<>();
-//    private Genre[] genres;
+    @XmlElement private String genres;
 
     @XmlElement private String metascore;
 
@@ -90,9 +86,6 @@ public class Film {
         return idIMDB;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
-    }
 
     public String getMetascore() {
         return metascore;
