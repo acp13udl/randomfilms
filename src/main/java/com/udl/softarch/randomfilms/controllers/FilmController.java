@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * Created by Allu on 21/04/2015.
  */
@@ -21,14 +23,14 @@ public class FilmController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @ResponseBody
     public Film receive(@PathVariable("id")Long id){
-
-        Preconditions.checkNotNull(filmsPersonInvolvedService.getFilmAndPersonInvolved(id), "Test user not found");
-        return filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
+        Film film = filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
+        Preconditions.checkNotNull(film, "Film not found");
+        return film;
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveHTML(@PathVariable("id")Long id){
-
         return new ModelAndView("film","film",receive(id));
     }
+
 }

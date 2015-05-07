@@ -1,16 +1,16 @@
 package com.udl.softarch.randomfilms.models;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by ler2 on 20/04/15.
  */
 @Entity
-@Access(AccessType.PROPERTY)
 @XmlRootElement
 public class Film {
     @Id
@@ -23,154 +23,119 @@ public class Film {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Actor> actors = new ArrayList<>();
 
-    private String idIMDB;
+    @OneToMany
+    private List<Review> reviews = new ArrayList<>();
 
-    private String[] genres;
+    @XmlElement private String idIMDB;
 
-    private String metascore;
+    @XmlElementWrapper(name = "genres")
+    @XmlElement(name = "genre")
 
-    private String plot;
+    private List<Genre> genres = new ArrayList<>();
+//    private Genre[] genres;
 
-    private String rated;
+    @XmlElement private String metascore;
 
-    private float rating;
+    @XmlElement private String plot;
 
-    private int releaseDate;
+    @XmlElement private String rated;
 
-    private String runTime;
+    @XmlElement private float rating;
 
-    private String simplePlot;
+    @XmlElement private int releaseDate;
 
-    private String urlIMDB;
+    @XmlElement private String runTime;
 
-    private String urlPoster;
+    @XmlElement private String simplePlot;
 
-    private int year;
+    @XmlElement private String urlIMDB;
 
-    private String title;
+    @XmlElement private String urlPoster;
 
-    public Long getId() {
-        return Id;
+    @XmlElement private int year;
+
+    @XmlElement private String title;
+
+    public  Film(){}
+
+    public Film(String title) {
+        this.title = title;
+    }
+
+    public List<Director> getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(List<Director> directors) {
+        this.directors = directors;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public String getIdIMDB() {
         return idIMDB;
     }
 
-    public void setIdIMDB(String idIMDB) {
-        this.idIMDB = idIMDB;
-    }
-
-    public String[] getGenres() {
+    public List<Genre> getGenres() {
         return genres;
-    }
-
-    public void setGenres(String[] genres) {
-        this.genres = genres;
     }
 
     public String getMetascore() {
         return metascore;
     }
 
-    public void setMetascore(String metascore) {
-        this.metascore = metascore;
-    }
-
     public String getPlot() {
         return plot;
-    }
-
-    public void setPlot(String plot) {
-        this.plot = plot;
-    }
-
-    public String getRated() {
-        return rated;
-    }
-
-    public void setRated(String rated) {
-        this.rated = rated;
     }
 
     public float getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public String getRated() {
+        return rated;
     }
 
     public int getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(int releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getRunTime() {
-        return runTime;
-    }
-
-    public void setRunTime(String runTime) {
-        this.runTime = runTime;
-    }
-
     public String getSimplePlot() {
         return simplePlot;
-    }
-
-    public void setSimplePlot(String simplePlot) {
-        this.simplePlot = simplePlot;
     }
 
     public String getUrlIMDB() {
         return urlIMDB;
     }
 
-    public void setUrlIMDB(String urlIMDB) {
-        this.urlIMDB = urlIMDB;
-    }
-
     public String getUrlPoster() {
         return urlPoster;
-    }
-
-    public void setUrlPoster(String urlPoster) {
-        this.urlPoster = urlPoster;
     }
 
     public int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public String getRunTime() {
+        return runTime;
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String tittle) {
-        this.title = tittle;
-    }
-
-    public void addDirectors(Collection<? extends Director> collection){
-        directors.addAll(collection);
-    }
-
-    public List<Director> getDirectors(){
-        return directors;
-    }
-
-    public void addActors(Collection<? extends Actor> collection){
-        actors.addAll(collection);
-    }
-
-    public List<Actor> getActors(){
-        return actors;
     }
 
     public void addActor(Actor actor){
@@ -178,5 +143,9 @@ public class Film {
     }
     public void addDirector(Director director){
         directors.add(director);
+    }
+
+    public Long getId() {
+        return Id;
     }
 }

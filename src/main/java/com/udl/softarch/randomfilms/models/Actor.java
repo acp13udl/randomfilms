@@ -10,6 +10,20 @@ import java.util.List;
 @Entity
 public class Actor extends PersonInvolved{
 
+    private String actorName;
+
+    private String bio;
+
+    private String birthName;
+
+    private String dateOfBirth;
+
+    private String height;
+
+    private String placeOfBirth;
+
+    private String urlPhoto;
+
     @ManyToMany(mappedBy = "actors")
     private List<Film> films = new ArrayList<>();
 
@@ -21,5 +35,70 @@ public class Actor extends PersonInvolved{
     @Override
     public boolean isActor() {
         return true;
+    }
+
+    public String getActorName() {
+        return actorName;
+    }
+
+    public void setActorName(String actorName) {
+        this.actorName = actorName;
+    }
+
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBirthName() {
+        return birthName;
+    }
+
+    public void setBirthName(String birthName) {
+        this.birthName = birthName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+
+    public List<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(List<Film> films) {
+        this.films = films;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
     }
 }

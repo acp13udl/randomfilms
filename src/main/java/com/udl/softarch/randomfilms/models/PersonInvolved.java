@@ -1,21 +1,19 @@
 package com.udl.softarch.randomfilms.models;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by Allu on 21/04/2015.
  */
 @Entity
+@XmlRootElement
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class PersonInvolved {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-
-    private String name;
-
-    private String idIMDB;
 
     public abstract boolean isDirector();
 
@@ -25,19 +23,5 @@ public abstract class PersonInvolved {
         return Id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIdIMDB() {
-        return idIMDB;
-    }
-
-    public void setIdIMDB(String idIMDB) {
-        this.idIMDB = idIMDB;
-    }
 }

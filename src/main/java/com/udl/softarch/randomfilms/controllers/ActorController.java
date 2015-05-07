@@ -24,22 +24,6 @@ public class ActorController {
     @Autowired
     ActorRepository actorsRepository;
 
-    // LIST
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public Iterable<Actor> list(@RequestParam(required = false, defaultValue = "0") int page,
-                                   @RequestParam(required = false, defaultValue = "10") int size) {
-        PageRequest request = new PageRequest(page, size);
-        return actorsRepository.findAll(request).getContent();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView listHtml(@RequestParam(required = false, defaultValue = "0") int page,
-                                 @RequestParam(required = false, defaultValue = "10") int size) {
-        return new ModelAndView("actors", "actors", list(page, size));
-    }
-
-    // RETRIEVE
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Actor retrieve(@PathVariable("id") Long id) {
@@ -52,7 +36,6 @@ public class ActorController {
         return new ModelAndView("actor", "actor", retrieve(id));
     }
 
-    // CREATE
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody

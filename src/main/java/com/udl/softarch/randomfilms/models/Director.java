@@ -11,6 +11,10 @@ import java.util.List;
 @Entity
 public class Director extends PersonInvolved{
 
+    private String nameId;
+
+    private String name;
+
     @ManyToMany(mappedBy = "directors")
     private List<Film> films = new ArrayList<>();
 
@@ -23,4 +27,6 @@ public class Director extends PersonInvolved{
     public boolean isActor() {
         return false;
     }
+
+
 }
