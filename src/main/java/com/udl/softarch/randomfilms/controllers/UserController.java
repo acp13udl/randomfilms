@@ -67,7 +67,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/films",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveFavoritesHTML(@PathVariable("id")Long id){
-
+        createUser();
         return new ModelAndView("favoritesFilms","user",receiveFavorites(id));
     }
 
@@ -117,6 +117,9 @@ public class UserController {
         return "redirect:/user/" + update(id,user).getId();
     }
 
-
+    private User createUser(){
+        User user = new User("Allu","alluesan@hotmail.com");
+        return userRepository.save(user);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.models.Actor;
+import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +34,7 @@ public class ActorController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "text/html")
     public ModelAndView retrieveHTML(@PathVariable( "id" ) Long id) {
+        createActor();
         return new ModelAndView("actor", "actor", retrieve(id));
     }
 
@@ -51,11 +53,11 @@ public class ActorController {
         return "redirect:/actors/" + create(actor, response).getId();
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.GET, produces = "text/html")
+    /*@RequestMapping(value = "/form", method = RequestMethod.GET, produces = "text/html")
     public ModelAndView createForm() {
         Actor emptyActor = new Actor();
         return new ModelAndView("form", "actor", emptyActor);
-    }
+    }*/
 
     // UPDATE
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -95,4 +97,10 @@ public class ActorController {
         delete(id);
         return "redirect:/actors";
     }
+
+    private Actor createActor(){
+        Actor actor = new Actor("Bruce","Esta to loco","dfsdfs","afaf","afaafa","afaf","http://fc03.deviantart.net/fs71/f/2011/202/7/4/batman_icon_3_by_jeremymallin-d417owb.png");
+        return actorsRepository.save(actor);
+    }
+
 }

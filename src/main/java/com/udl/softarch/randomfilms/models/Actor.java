@@ -30,6 +30,18 @@ public class Actor extends PersonInvolved{
     @ManyToMany(mappedBy = "actors")
     private List<Film> films = new ArrayList<>();
 
+    public  Actor(){}
+
+    public Actor(String actorName, String bio, String birthName, String dateOfBirth, String height, String placeOfBirth, String urlPhoto) {
+        this.actorName = actorName;
+        this.bio = bio;
+        this.birthName = birthName;
+        this.dateOfBirth = dateOfBirth;
+        this.height = height;
+        this.placeOfBirth = placeOfBirth;
+        this.urlPhoto = urlPhoto;
+    }
+
     @Override
     public boolean isDirector() {
         return false;

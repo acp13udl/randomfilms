@@ -34,6 +34,10 @@ public class Film {
 
     @XmlElement private String plot;
 
+    public String getGenres() {
+        return genres;
+    }
+
     @XmlElement private String rated;
 
     @XmlElement private float rating;
@@ -86,6 +90,21 @@ public class Film {
         return idIMDB;
     }
 
+    public Film(String idIMDB, String genres, String metascore, String plot, String rated, float rating, int releaseDate, String runTime, String simplePlot, String urlIMDB, String urlPoster, int year, String title) {
+        this.idIMDB = idIMDB;
+        this.genres = genres;
+        this.metascore = metascore;
+        this.plot = plot;
+        this.rated = rated;
+        this.rating = rating;
+        this.releaseDate = releaseDate;
+        this.runTime = runTime;
+        this.simplePlot = simplePlot;
+        this.urlIMDB = urlIMDB;
+        this.urlPoster = urlPoster;
+        this.year = year;
+        this.title = title;
+    }
 
     public String getMetascore() {
         return metascore;
