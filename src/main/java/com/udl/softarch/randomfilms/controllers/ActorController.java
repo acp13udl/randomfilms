@@ -18,7 +18,7 @@ import javax.validation.Valid;
  * Created by Allu on 21/04/2015.
  */
 @Controller
-@RequestMapping("/actors")
+@RequestMapping("/films/{id}/actors")
 public class ActorController {
 
     @Autowired

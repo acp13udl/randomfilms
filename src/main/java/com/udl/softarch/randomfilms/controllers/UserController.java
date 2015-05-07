@@ -45,7 +45,7 @@ public class UserController {
         List<Film> films= Webservice.getInstance().getFilmByTitle("Batman", 3);
         Film film =filmRepository.save(films.get(0));
         Film film1 = filmRepository.findOne(film.getId());
-
+        List<Actor> actors= Webservice.getInstance().getActorsByIMDBId("tt0096895");
         PageRequest pageRequest = new PageRequest(page, size);
         return userRepository.findAll(pageRequest).getContent();
     }

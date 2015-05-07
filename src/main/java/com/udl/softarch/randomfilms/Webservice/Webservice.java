@@ -1,10 +1,12 @@
 package com.udl.softarch.randomfilms.Webservice;
 
+import com.udl.softarch.randomfilms.models.Actor;
 import com.udl.softarch.randomfilms.models.Film;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.xquery.*;
 import java.io.IOException;
 import java.net.URL;
@@ -37,13 +39,19 @@ public class Webservice {
             +"<genres>{"+genresQuery+"}</genres>"
             +"</film>";
 
-    String actorsQuery = "\"declare variable $doc external;\\n\"\n" +
-            "            +\"for $m in $doc//movies/movie\\n\"\n" +
-            "            +\"return\\n\"\n" +
-            "            +\"<film>\\n\"\n" +
-            "            +\"<title>{$m/title/text()}</title>\\n\"\n" +
-            "            +\"<genres>{\"+genresQuery+\"}</genres>\"\n" +
-            "            +\"</film>\";";
+    String actorQuery = "declare variable $doc external;\n"
+                        +"for $a in $doc//movie/actors/actor\n"
+                        +"return\n"
+                        +"<actor>\n"
+                        +"<bio>{$a/biography/bio/text()}</bio>\n"
+                        +"<actorName>{$a/actorName/text()}</actorName>\n"
+                        +"<birthName>{$a/biography/birthName/text()}</birthName>\n"
+                        +"<dateOfBirth>{$a/biography/dateOfBirth/text()}</dateOfBirth>\n"
+                        +"<height>{$a/biography/height/text()}</height>\n"
+                        +"<placeOfBirth>{$a/biography/placeOfBirth/text()}</placeOfBirth>\n"
+                        +"<urlPhoto>{$a/biography/urlPhoto/text()}</urlPhoto>\n"
+                        +"</actor>";
+
 
     private Webservice(){}
 
@@ -65,8 +73,8 @@ public class Webservice {
         return recoveryFilms();
     }
 
-    private ArrayList<Film> recoveryFilms(){
-        ArrayList<Film> films = new ArrayList<>();
+    private List<Film> recoveryFilms(){
+        List<Film> films = new ArrayList<>();
 
         try {
             XQResultSequence xqResultSequence = preparedExpression.executeQuery();
@@ -93,13 +101,55 @@ public class Webservice {
 
     }
 
+
+    private List<Actor> recoveryActors(){
+        List<Actor> actors = new ArrayList<>();
+
+        try {
+            XQResultSequence xqResultSequence = preparedExpression.executeQuery();
+            while (xqResultSequence.next()){
+                XQItem  item = xqResultSequence.getItem();
+                Actor actor = (Actor) unmarshaller.unmarshal(item.getNode());
+                actors.add(actor);
+            }
+        } catch (XQException e) {
+            e.printStackTrace();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            preparedExpression.close();
+            xqConnection.close();
+        } catch (XQException e) {
+            e.printStackTrace();
+        }
+
+        return actors;
+
+    }
+
+    public List<Actor> getActorsByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
+
+        final String url  = URL_BASE+"imdb?idIMDB="+IMDBId+"&format=XML&actors=S&biography=1&bornDied=1";
+        connectionToAPI(url, Actor.class);
+        return recoveryActors();
+
+    }
+
     private void connectionToAPI(String url,Class type) throws XQException, JAXBException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
 
         URLConnection urlConnection = new URL(url).openConnection();
 
         XQDataSource xqDataSource =(XQDataSource) Class.forName("net.sf.saxon.xqj.SaxonXQDataSource").newInstance();
         xqConnection = xqDataSource.getConnection();
-        preparedExpression = xqConnection.prepareExpression(filmQuery);
+        String fake = type.getName();
+        if (type.getName().equalsIgnoreCase("com.udl.softarch.randomfilms.models.Film")){
+            preparedExpression = xqConnection.prepareExpression(filmQuery);
+        }else if (type.getName().equalsIgnoreCase("com.udl.softarch.randomfilms.models.Actor")){
+            preparedExpression = xqConnection.prepareExpression(actorQuery);
+        }
         preparedExpression.bindDocument(new javax.xml.namespace.QName("doc"),urlConnection.getInputStream(),null,null);
         context = JAXBContext.newInstance(type);
         unmarshaller = context.createUnmarshaller();

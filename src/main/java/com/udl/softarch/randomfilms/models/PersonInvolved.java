@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by Allu on 21/04/2015.
  */
 @Entity
-@XmlRootElement
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class PersonInvolved {
 

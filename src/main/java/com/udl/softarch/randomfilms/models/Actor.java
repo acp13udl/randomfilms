@@ -1,6 +1,8 @@
 package com.udl.softarch.randomfilms.models;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,21 +10,22 @@ import java.util.List;
  * Created by Allu on 21/04/2015.
  */
 @Entity
+@XmlRootElement
 public class Actor extends PersonInvolved{
 
-    private String actorName;
+    @XmlElement private String actorName;
 
-    private String bio;
+    @XmlElement private String bio;
 
-    private String birthName;
+    @XmlElement private String birthName;
 
-    private String dateOfBirth;
+    @XmlElement private String dateOfBirth;
 
-    private String height;
+    @XmlElement private String height;
 
-    private String placeOfBirth;
+    @XmlElement private String placeOfBirth;
 
-    private String urlPhoto;
+    @XmlElement private String urlPhoto;
 
     @ManyToMany(mappedBy = "actors")
     private List<Film> films = new ArrayList<>();
@@ -41,64 +44,31 @@ public class Actor extends PersonInvolved{
         return actorName;
     }
 
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
-    }
-
-
     public String getBio() {
         return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public String getBirthName() {
         return birthName;
     }
 
-    public void setBirthName(String birthName) {
-        this.birthName = birthName;
-    }
-
     public String getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPlaceOfBirth() {
-        return placeOfBirth;
-    }
-
-    public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
-    }
-
-    public String getUrlPhoto() {
-        return urlPhoto;
-    }
-
-    public void setUrlPhoto(String urlPhoto) {
-        this.urlPhoto = urlPhoto;
-    }
-
-    public List<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<Film> films) {
-        this.films = films;
     }
 
     public String getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
-        this.height = height;
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public List<Film> getFilms() {
+        return films;
     }
 }
