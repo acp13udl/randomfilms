@@ -51,8 +51,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView listHTML(@RequestParam(required = false, defaultValue = "0") int page,
-                                 @RequestParam(required = false, defaultValue = "10") int size) throws IllegalAccessException, XQException, IOException, JAXBException, InstantiationException, ClassNotFoundException {
+     public ModelAndView listHTML(@RequestParam(required = false, defaultValue = "0") int page,
+                                  @RequestParam(required = false, defaultValue = "10") int size) throws IllegalAccessException, XQException, IOException, JAXBException, InstantiationException, ClassNotFoundException {
         PageRequest pageRequest = new PageRequest(page, size);
         return new ModelAndView("users", "users", list(page, size));
     }

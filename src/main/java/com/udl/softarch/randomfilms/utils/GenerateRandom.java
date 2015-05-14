@@ -2,6 +2,7 @@ package com.udl.softarch.randomfilms.utils;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -9,11 +10,17 @@ import java.util.Random;
  */
 public class GenerateRandom {
 
-//    public static Greeting RandomGreeting(Iterable<Greeting> greetins){
-//
-//        Random random = new Random();
-//        ArrayList<Greeting> greetings =(ArrayList<Greeting>) greetins;
-//        int randomint = random.nextInt(greetings.size());
-//        return greetings.get(randomint);
-//    }
+    public static List<Long> randomLongValues(long size){
+        List<Long> res = new ArrayList<>();
+        Random random = new Random();
+        int x = 0;
+        while(x<10){
+            long aux = random.nextLong()%size;
+            if(!res.contains(aux)){
+                res.add(aux);
+                x++;
+            }
+        }
+        return res;
+    }
 }

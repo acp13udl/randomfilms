@@ -36,7 +36,6 @@ public class FilmController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
-
     public ModelAndView receiveHTML(@PathVariable("id")Long id){
         createFilm();
         return new ModelAndView("film","film",receive(id));
