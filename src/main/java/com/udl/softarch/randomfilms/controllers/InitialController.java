@@ -1,6 +1,7 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.utils.GenerateRandom;
@@ -15,6 +16,7 @@ import javax.xml.xquery.XQException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lluís on 13/05/2015.
@@ -23,6 +25,7 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class InitialController {
 
+    //TODO Change repository to service
     @Autowired
     FilmRepository filmRepository;
 
@@ -52,8 +55,42 @@ public class InitialController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView listHTML(){
-        return new ModelAndView("initialPage", "films", listRandomFilm());
+    public ModelAndView listHTML(@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
+            required = false) final String search){
+        ModelAndView modelAndView = new ModelAndView("initialPage");
+        modelAndView.addObject("films",listRandomFilm());
+
+        if(search!= null){
+            try {
+                //TODO Hay que hacerlo en otro método compo el listRandomFilm?
+                List <Film> searchedFilms = Webservice.getInstance().getFilmByTitle(search, 10);
+//                for(Film f : searchedFilms){
+//                    Film film = filmRepository.findFimlByIdIMDB(f.getIdIMDB());
+//                    if(film == null){
+//                        filmRepository.save(f);
+//                        System.out.println("A::: "+f.toString());
+//                    }else {
+//                        f = filmRepository.findFimlByIdIMDB(f.getIdIMDB());
+//                        System.out.println("B::: "+f.toString());
+//                    }
+//                }
+                modelAndView.addObject("searchFilms",searchedFilms);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (XQException e) {
+                e.printStackTrace();
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return modelAndView;
     }
 
     //BORRAR

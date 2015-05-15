@@ -81,6 +81,7 @@ public class Webservice {
             while (xqResultSequence.next()){
                 XQItem  item = xqResultSequence.getItem();
                 Film film = (Film) unmarshaller.unmarshal(item.getNode());
+                //System.out.println("::: "+film.toString());
                 films.add(film);
             }
         } catch (XQException e) {

@@ -22,8 +22,7 @@ public class FilmController {
 
     @Autowired
     FilmsPersonInvolvedService filmsPersonInvolvedService;
-    @Autowired
-    FilmRepository filmRepository;
+
     @Autowired
     FilmService filmService;
 
@@ -31,18 +30,13 @@ public class FilmController {
     @ResponseBody
     public Film receive(@PathVariable("id")Long id){
         Film film = filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
+        System.out.println(film.toString());
         Preconditions.checkNotNull(film, "Film not found");
         return film;
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveHTML(@PathVariable("id")Long id){
-        createFilm();
         return new ModelAndView("film","film",receive(id));
-    }
-
-    private Film createFilm(){
-        Film film = new Film("tt0096895","Accion asesinato","89","Van dos y se cae en el de enmedio","ffds",8.5f,1999,"120m","POLE","fafafa","asfafaf",1999,"Batman");
-        return filmRepository.save(film);
     }
 }

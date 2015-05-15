@@ -160,4 +160,27 @@ public class Film {
     public Long getId() {
         return Id;
     }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "Id=" + Id +
+                ", directors=" + directors +
+                ", actors=" + actors +
+                ", reviews=" + reviews +
+                ", idIMDB='" + idIMDB + '\'' +
+                ", genres='" + genres + '\'' +
+                ", metascore='" + metascore + '\'' +
+                ", plot='" + plot + '\'' +
+                ", rated='" + rated + '\'' +
+                ", rating=" + rating +
+                ", releaseDate=" + releaseDate +
+                ", runTime='" + runTime + '\'' +
+                ", simplePlot='" + simplePlot + '\'' +
+                ", urlIMDB='" + urlIMDB + '\'' +
+                ", urlPoster='" + urlPoster + '\'' +
+                ", year=" + year +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

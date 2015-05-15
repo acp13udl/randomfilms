@@ -12,5 +12,5 @@ import org.springframework.data.repository.query.Param;
 public interface FilmRepository extends JpaRepository<Film,Long> {
 
     Film findFilmByTitle(@Param("title") String title);
-
+    Film findFimlByIdIMDB(@Param("idIMDB") String idIMDB);
 }

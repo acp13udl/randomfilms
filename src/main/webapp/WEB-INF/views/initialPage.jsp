@@ -16,6 +16,11 @@
     <%--<link rel="stylesheet" href="../css/foundation.min.css">--%>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript">
+        function mySearch(){
+            $('#searchButton').attr('href',"/?search="+$('#searchInput').val());
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -28,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">RandomFilms</a>
+                <a class="navbar-brand" href="/">RandomFilms</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -37,8 +42,8 @@
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <a class="input-group-addon" href="">Search</a>
+                        <input type="text" id="searchInput" class="form-control" onchange="mySearch()" placeholder="Search">
+                        <a id="searchButton" class="input-group-addon" href="/">Search</a>
                     </div>
                     <%--<button type="submit" class="btn btn-default">Submit</button>--%>
                 </form>
@@ -47,13 +52,9 @@
     </nav>
 
     <div class="row">
-        <%--<div class="form-inline col-md-offset-3">--%>
-            <%--<div class="input-group">--%>
-                <%--<input type="text" class="form-control" id="exampleInputAmount" placeholder="Title">--%>
-                <%--<a class="input-group-addon" href="">Search</a>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+
     </div>
+
     <div class="row">
         <div class="col-md-6">
             <table id="randomFilmsTable" class="table table-striped">
@@ -82,7 +83,29 @@
             </table>
         </div>
         <div class="col-md-6">
-
+            <c:choose>
+                <c:when test="${not empty searchFilms}">
+                    <table id="searchFilmsTable" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">ID</th>
+                            <th class="col-md-2">Title</th>
+                            <th class="col-md-2"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="film" items="${searchFilms}">
+                                <tr>
+                                    <td>${film.getId()}</td>
+                                    <td>${film.getTitle()}</td>
+                                    <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
+                                </tr>
+                                </li>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+            </c:choose>
         </div>
     </div>
 </body>
