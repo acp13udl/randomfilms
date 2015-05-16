@@ -1,6 +1,7 @@
 package com.udl.softarch.randomfilms.Webservice;
 
 import com.udl.softarch.randomfilms.models.Actor;
+import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
 
 import javax.xml.bind.JAXBContext;
@@ -31,13 +32,28 @@ public class Webservice {
 
     String genresQuery = "string-join($m//genres/genre, \", \")";
 
+    String directorsIMDBQuery = "string-join($m//directors/director/nameId, \", \")";
+
     String filmQuery = "declare variable $doc external;\n"
             +"for $m in $doc//movies/movie\n"
             +"return\n"
             +"<film>\n"
             +"<title>{$m/title/text()}</title>\n"
+            +"<idIMBD>{$m/idIMDB/text()}</idIMBD>\n"
+            +"<metascore>{$m/metascore/text()}</metascore>\n"
+            +"<plot>{$m/plot/text()}</plot>\n"
+            +"<rated>{$m/rated/text()}</rated>\n"
+            +"<rating>{$m/rating/text()}</rating>\n"
+            +"<releaseDate>{$m/releaseDate/text()}</releaseDate>\n"
+            +"<runTime>{$m/runTime/text()}</runTime>\n"
+            +"<simplePlot>{$m/simplePlot/text()}</simplePlot>\n"
+            +"<urlIMDB>{$m/urlIMBD/text()}</urlIMDB>\n"
+            +"<urlPoster>{$m/title/text()}</urlPoster>\n"
+            +"<year>{$m/year/text()}</year>\n"
             +"<genres>{"+genresQuery+"}</genres>"
+            //+"<directorsIMDB>{"+directorsIMDBQuery+"}</directorsIMDB>"
             +"</film>";
+
 
     String actorQuery = "declare variable $doc external;\n"
                         +"for $a in $doc//movie/actors/actor\n"
@@ -51,6 +67,19 @@ public class Webservice {
                         +"<placeOfBirth>{$a/biography/placeOfBirth/text()}</placeOfBirth>\n"
                         +"<urlPhoto>{$a/biography/urlPhoto/text()}</urlPhoto>\n"
                         +"</actor>";
+
+    String directorQuery = "declare variable $doc external;\n"
+            +"for $d in $doc//biography\n"
+            +"return\n"
+            +"<director>\n"
+            +"<bio>{$d/bio/text()}</bio>\n"
+            +"<directorName>{$d/name/text()}</directorName>\n"
+            +"<birthName>{$d/birthName/text()}</birthName>\n"
+            +"<dateOfBirth>{$d/dateOfBirth/text()}</dateOfBirth>\n"
+            +"<height>{$d/height/text()}</height>\n"
+            +"<placeOfBirth>{$d/placeOfBirth/text()}</placeOfBirth>\n"
+            +"<urlPhoto>{$d/urlPhoto/text()}</urlPhoto>\n"
+            +"</director>";
 
 
     private Webservice(){}
@@ -138,6 +167,43 @@ public class Webservice {
         return recoveryActors();
 
     }
+
+    public List<Director> getDirectorsByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
+
+        final String url  = URL_BASE+"imdb?idIMDB="+IMDBId+"&format=XML&bornDied=1";
+        connectionToAPI(url, Director.class);
+        return recoveryDirectors();
+
+    }
+
+    private List<Director> recoveryDirectors(){
+        List<Director> directors = new ArrayList<>();
+
+        try {
+            XQResultSequence xqResultSequence = preparedExpression.executeQuery();
+            while (xqResultSequence.next()){
+                XQItem  item = xqResultSequence.getItem();
+                Director director = (Director) unmarshaller.unmarshal(item.getNode());
+                directors.add(director);
+            }
+        } catch (XQException e) {
+            e.printStackTrace();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            preparedExpression.close();
+            xqConnection.close();
+        } catch (XQException e) {
+            e.printStackTrace();
+        }
+
+        return directors;
+
+    }
+
 
     private void connectionToAPI(String url,Class type) throws XQException, JAXBException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
 
