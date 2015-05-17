@@ -132,8 +132,9 @@ public class Film {
         return rated;
     }
 
-    public int getReleaseDate() {
-        return releaseDate;
+    public String getReleaseDate() {
+        String res = Integer.toString(this.releaseDate);
+        return res.substring(0,4) + " - " + res.substring(4,6) + " - " + res.substring(6,res.length());
     }
 
     public String getSimplePlot() {
