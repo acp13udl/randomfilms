@@ -1,6 +1,8 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.udl.softarch.randomfilms.Webservice.Webservice;
+import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.xquery.XQException;
+import java.io.IOException;
 import java.util.List;
 
 /**

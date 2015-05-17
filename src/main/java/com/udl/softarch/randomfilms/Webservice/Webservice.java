@@ -32,7 +32,7 @@ public class Webservice {
 
     String genresQuery = "string-join($m//genres/genre, \", \")";
 
-    String directorsIMDBQuery = "string-join($m//directors/director/nameId, \", \")";
+    String directorsIMDBQuery = "string-join($m//directors/director/nameId, \",\")";
 
     String filmQuery = "declare variable $doc external;\n"
             +"for $m in $doc//movies/movie\n"
@@ -51,7 +51,7 @@ public class Webservice {
             +"<urlPoster>{$m/urlPoster/text()}</urlPoster>\n"
             +"<year>{$m/year/text()}</year>\n"
             +"<genres>{"+genresQuery+"}</genres>"
-            //+"<directorsIMDB>{"+directorsIMDBQuery+"}</directorsIMDB>"
+            +"<directorsIMDB>{"+directorsIMDBQuery+"}</directorsIMDB>"
             +"</film>";
 
 

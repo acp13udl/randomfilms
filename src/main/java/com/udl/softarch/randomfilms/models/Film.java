@@ -1,9 +1,14 @@
 package com.udl.softarch.randomfilms.models;
 
+import com.sun.xml.internal.fastinfoset.Encoder;
+import sun.nio.cs.ext.DoubleByte;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +37,11 @@ public class Film {
 
     @XmlElement private String metascore;
 
+    @XmlElement private String directorsIMDB;
+
     @Lob
     @Column(length = 100000)
     @XmlElement private String plot;
-
-    public String getGenres() {
-        return genres;
-    }
 
     @XmlElement private String rated;
 
@@ -58,7 +61,7 @@ public class Film {
 
     @XmlElement private String title;
 
-    public  Film(){}
+    public Film(){}
 
     public Film(String title) {
         this.title = title;
@@ -92,7 +95,11 @@ public class Film {
         return idIMDB;
     }
 
-    public Film(String idIMDB, String genres, String metascore, String plot, String rated, float rating, int releaseDate, String runTime, String simplePlot, String urlIMDB, String urlPoster, int year, String title) {
+    public String getGenres() {
+        return genres;
+    }
+
+    public Film(String idIMDB, String genres, String metascore, String plot, String rated, float rating, int releaseDate, String runTime, String simplePlot, String urlIMDB, String urlPoster, int year, String title,String directorsIMDB) {
         this.idIMDB = idIMDB;
         this.genres = genres;
         this.metascore = metascore;
@@ -106,6 +113,7 @@ public class Film {
         this.urlPoster = urlPoster;
         this.year = year;
         this.title = title;
+        this.directorsIMDB = directorsIMDB;
     }
 
     public String getMetascore() {
@@ -152,9 +160,14 @@ public class Film {
         return title;
     }
 
+    public String getDirectorsIMDB() {
+        return directorsIMDB;
+    }
+
     public void addActor(Actor actor){
         actors.add(actor);
     }
+
     public void addDirector(Director director){
         directors.add(director);
     }
@@ -163,43 +176,24 @@ public class Film {
         return Id;
     }
 
-    public String createUrlParams(){
+    public String createUrlParams() throws UnsupportedEncodingException {
 
-        return "?idIMDB=" + idIMDB +
+        String url = "?idIMDB=" + idIMDB +
                 "&genres=" + genres +
                 "&metascore=" + metascore+
-                "&plot=" + plot +
+                "&plot=" + URLEncoder.encode(plot, Encoder.UTF_8) +
                 "&rated=" + rated +
                 "&rating=" + rating +
                 "&releaseDate=" + releaseDate +
                 "&runTime=" + runtime+
-                "&simplePlot=" + simplePlot +
+                "&simplePlot=" + URLEncoder.encode(simplePlot, Encoder.UTF_8) +
                 "&urlIMDB=" + urlIMDB +
                 "&urlPoster=" +  urlPoster +
                 "&year=" + year +
-                "&title=" + title;
+                "&title=" + title +
+                "&directorsIMDB="+directorsIMDB;
+
+        return url;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Film{" +
-//                "Id=" + Id +
-//                ", directors=" + directors +
-//                ", actors=" + actors +
-//                ", reviews=" + reviews +
-//                ", idIMDB='" + idIMDB + '\'' +
-//                ", genres='" + genres + '\'' +
-//                ", metascore='" + metascore + '\'' +
-//                ", plot='" + plot + '\'' +
-//                ", rated='" + rated + '\'' +
-//                ", rating=" + rating +
-//                ", releaseDate=" + releaseDate +
-//                ", runTime='" + runtime + '\'' +
-//                ", simplePlot='" + simplePlot + '\'' +
-//                ", urlIMDB='" + urlIMDB + '\'' +
-//                ", urlPoster='" + urlPoster + '\'' +
-//                ", year=" + year +
-//                ", title='" + title + '\'' +
-//                '}';
-//    }
 }

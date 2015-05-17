@@ -1,6 +1,7 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.sun.xml.internal.fastinfoset.Encoder;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.xml.bind.JAXBException;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,21 +108,27 @@ public class InitialController {
                          @RequestParam(value = "rating",required=true) String rating,@RequestParam(value = "releaseDate",required=true) String releaseDate,
                          @RequestParam(value = "runTime",required=true) String runTime,@RequestParam(value = "simplePlot",required=true) String simplePlot,
                          @RequestParam(value = "genres",required=true) String genres,@RequestParam(value = "urlIMDB",required=true) String urlIMDB,
-                         @RequestParam(value = "idIMDB",required=true) String idIMDB){
+                         @RequestParam(value = "idIMDB",required=true) String idIMDB,@RequestParam(value = "directorsIMDB",required=true) String directorsIMDB) throws UnsupportedEncodingException {
 
-        Film film = new Film(idIMDB,genres,metascore,plot,rated,Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,simplePlot,urlIMDB,urlPoster,Integer.parseInt(year),title);
+        Film film = new Film(idIMDB,genres,metascore,decode(plot),rated,
+                Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,decode(simplePlot),
+                urlIMDB,urlPoster,Integer.parseInt(year),title,directorsIMDB);
         Film filmWithId = filmRepository.save(film);
 
-            logger.info(title);
         return "redirect:/films/"+filmWithId.getId();
 
+    }
+
+    private String decode(String decode) throws UnsupportedEncodingException {
+
+        return URLDecoder.decode(decode, Encoder.UTF_8);
     }
 
 
 
     //BORRAR
     private Film createFilm() {
-        Film film = new Film("tt0096895", "Accion asesinato", "89", "Van dos y se cae en el de enmedio", "ffds", 8.5f, 1999, "120m", "POLE", "http://www.imdb.com/title/tt1751105/?ref_=nv_sr_1", "http://4.bp.blogspot.com/-SsASfxYejeM/UmOJaLOiTTI/AAAAAAAAAe0/iCSMsuikU84/s1600/2.png", 1999, "Batman");
+        Film film = new Film("tt0096895", "Accion asesinato", "89", "Van dos y se cae en el de enmedio", "ffds", 8.5f, 1999, "120m", "POLE", "http://www.imdb.com/title/tt1751105/?ref_=nv_sr_1", "http://4.bp.blogspot.com/-SsASfxYejeM/UmOJaLOiTTI/AAAAAAAAAe0/iCSMsuikU84/s1600/2.png", 1999, "Batman","nm0634240");
         return filmRepository.save(film);
     }
 }
