@@ -25,11 +25,8 @@
         <a href="/actors/${film.getId()}">Ver actores</a>
         <p>runTime: ${fn:escapeXml(film.getRunTime())}</p>
         <p>simplePlot: ${fn:escapeXml(film.getSimplePlot())}</p>
-        <p>urlIMDB: ${fn:escapeXml(film.getUrlIMDB())}</p>
-        <p>urlPoster: ${fn:escapeXml(film.getUrlPoster())}</p>
-        <p>urlIMDB: ${fn:escapeXml(film.getUrlIMDB())}</p>
         <p>genres: ${fn:escapeXml(film.getGenres())}</p>
-        <a href="${getUrlIMDB()}">Go to IMDB</a>
+        <a href="${film.getUrlIMDB()}">Go to IMDB</a>
     </c:when>
     <c:otherwise>
         <p>User info not available</p>
@@ -37,6 +34,6 @@
 
 </c:choose>
 
-<a href="/users/${user.getId()}/films">Return to list</a>
+<a href="/">Return to mainpage</a>
 </body>
 </html>

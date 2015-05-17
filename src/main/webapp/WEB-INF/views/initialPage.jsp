@@ -62,7 +62,7 @@
                 <tr>
                     <th class="col-md-1">ID</th>
                     <th class="col-md-2">Title</th>
-                    <th class="col-md-2"></th>
+                    <th class="col-md-2">Year</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -72,6 +72,7 @@
                             <tr>
                                 <td>${film.getId()}</td>
                                 <td>${film.getTitle()}</td>
+                                <td>${film.getYear()}</td>
                                 <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
                             </tr>
                             <%--<a href="/films/${film.getId()}">${film.getId()} - ${film.getTitle()}</a></br>--%>
@@ -90,7 +91,7 @@
                         <tr>
                             <th class="col-md-1">ID</th>
                             <th class="col-md-2">Title</th>
-                            <th class="col-md-2"></th>
+                            <th class="col-md-2">Year</th>
                         </tr>
                         </thead>
                         <tbody>
