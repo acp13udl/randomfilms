@@ -9,31 +9,147 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>Random Films</title>
+    <%--<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>--%>
+    <%--<link rel="stylesheet" href="../css/foundation.min.css">--%>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript">
+        function validateKey(e){
+            $('#searchButton').attr('href',"/?search="+$('#searchInput').val());
+            if(e.keyCode == 13){
+                window.location.assign("/?search="+$('#searchInput').val());
+                return false;
+            }
+        }
+    </script>
+</head>
 <body>
-<h3>Pelicula:</h3>
-<c:choose>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">RandomFilms</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
 
-    <c:when test="${not empty film}">
-        <img src="${film.getUrlPoster()}" />
-        <p>Title: ${fn:escapeXml(film.getTitle())}</p>
-        <p>Year: ${fn:escapeXml(film.getYear())}</p>
-        <p>Metascore: ${fn:escapeXml(film.getMetascore())}</p>
-        <p>Plot: ${fn:escapeXml(film.getPlot())}</p>
-        <p>Rated: ${fn:escapeXml(film.getRated())}</p>
-        <p>Rating: ${fn:escapeXml(film.getRating())}</p>
-        <p>ReleaseDate: ${fn:escapeXml(film.getReleaseDate())}</p>
-        <a href="films/${film.getId()}/actors">Ver actores</a>
-        <p>runTime: ${fn:escapeXml(film.getRunTime())}</p>
-        <p>simplePlot: ${fn:escapeXml(film.getSimplePlot())}</p>
-        <p>genres: ${fn:escapeXml(film.getGenres())}</p>
-        <a href="${film.getUrlIMDB()}">Go to IMDB</a>
-    </c:when>
-    <c:otherwise>
-        <p>User info not available</p>
-    </c:otherwise>
+                </ul>
+                <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
+                        <a id="searchButton" class="input-group-addon" href="/">Search</a>
+                    </div>
+                    <%--<button type="submit" class="btn btn-default">Submit</button>--%>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div id="container" style="margin-left: 10px; margin-right: 10px;">
+        <c:choose>
+            <c:when test="${not empty film}">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="inputTitle">Title:</label>
+                                        <input id="inputTitle" type="text" class="form-control" value="${fn:escapeXml(film.getTitle())}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputYear">Year:</label>
+                                        <input id="inputYear" type="number" class="form-control" value="${fn:escapeXml(film.getYear())}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputMetascore">Metascore:</label>
+                                        <input id="inputMetascore" type="text" class="form-control" value="${fn:escapeXml(film.getMetascore())}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputRated">Rated:</label>
+                                        <input id="inputRated" type="text" class="form-control" value="${fn:escapeXml(film.getRated())}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputRating">Rating:</label>
+                                        <input id="inputRating" type="text" class="form-control" value="${fn:escapeXml(film.getRating())}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputRunTime">Run time:</label>
+                                        <input id="inputRunTime" type="text" class="form-control" value="${fn:escapeXml(film.getRunTime())}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="inputGenres">Genres:</label>
+                                        <input id="inputGenres" type="text" class="form-control" value="${fn:escapeXml(film.getGenres())}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="inputRelesedate">Release date:</label>
+                                        <input id="inputRelesedate" type="text" class="form-control" value="${fn:escapeXml(film.getReleaseDate())}" readonly>
+                                    </div>
+                                </div>
+                            </div>
 
-</c:choose>
+                            <div class="form-group">
+                                <label for="inputSimplePlot">Simple plot:</label>
+                                <textarea id="inputSimplePlot" class="form-control" readonly>${fn:escapeXml(film.getSimplePlot())}</textarea>
+                            </div>
 
-<a href="/">Return to mainpage</a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="${film.getUrlPoster()}" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="inputPlot">Plot:</label>
+                            <textarea id="inputPlot" class="form-control" rows="5" readonly>${fn:escapeXml(film.getPlot())}</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a class="btn btn-success" href="films/${film.getId()}/actors">Actores</a>
+                        <a class="btn btn-success" href="films/${film.getId()}/actors">Directores</a>
+
+                        <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
+
+                        <a class="btn btn-primary" href="/" style="float: right;">Back</a>
+                    </div>
+                </form>
+
+
+
+            </c:when>
+            <c:otherwise>
+                <p>User info not available</p>
+            </c:otherwise>
+
+        </c:choose>
+
+
+    </div>
 </body>
 </html>

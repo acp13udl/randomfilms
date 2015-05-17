@@ -17,8 +17,12 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script type="text/javascript">
-        function mySearch(){
+        function validateKey(e){
             $('#searchButton').attr('href',"/?search="+$('#searchInput').val());
+            if(e.keyCode == 13){
+                window.location.assign("/?search="+$('#searchInput').val());
+                return false;
+            }
         }
     </script>
 </head>
@@ -40,9 +44,9 @@
                 <ul class="nav navbar-nav">
 
                 </ul>
-                <form class="navbar-form navbar-right" role="search">
+                <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
                     <div class="input-group">
-                        <input type="text" id="searchInput" class="form-control" onchange="mySearch()" placeholder="Search">
+                        <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
                         <a id="searchButton" class="input-group-addon" href="/">Search</a>
                     </div>
                     <%--<button type="submit" class="btn btn-default">Submit</button>--%>
@@ -51,50 +55,47 @@
         </div>
     </nav>
 
-    <div class="row">
-
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <table id="randomFilmsTable" class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="col-md-1">ID</th>
-                    <th class="col-md-2">Title</th>
-                    <th class="col-md-2">Year</th>
-                </tr>
-                </thead>
-                <tbody>
+    <div id="container" style="margin-left: 10px; margin-right: 10px;">
+        <div class="row">
+            <div class="col-md-6">
+                <table id="randomFilmsTable" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">ID</th>
+                        <th class="col-md-2">Title</th>
+                        <th class="col-md-2">Year</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:choose>
+                        <c:when test="${not empty films}">
+                            <c:forEach var="film" items="${films}">
+                                <tr>
+                                    <td>${film.getId()}</td>
+                                    <td>${film.getTitle()}</td>
+                                    <td>${film.getYear()}</td>
+                                    <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
+                                </tr>
+                                <%--<a href="/films/${film.getId()}">${film.getId()} - ${film.getTitle()}</a></br>--%>
+                                </li>
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
                 <c:choose>
-                    <c:when test="${not empty films}">
-                        <c:forEach var="film" items="${films}">
+                    <c:when test="${not empty searchFilms}">
+                        <table id="searchFilmsTable" class="table table-striped">
+                            <thead>
                             <tr>
-                                <td>${film.getId()}</td>
-                                <td>${film.getTitle()}</td>
-                                <td>${film.getYear()}</td>
-                                <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
+                                <th class="col-md-1">ID</th>
+                                <th class="col-md-2">Title</th>
+                                <th class="col-md-2">Year</th>
                             </tr>
-                            <%--<a href="/films/${film.getId()}">${film.getId()} - ${film.getTitle()}</a></br>--%>
-                            </li>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <c:choose>
-                <c:when test="${not empty searchFilms}">
-                    <table id="searchFilmsTable" class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th class="col-md-1">ID</th>
-                            <th class="col-md-2">Title</th>
-                            <th class="col-md-2">Year</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             <c:forEach var="film" items="${searchFilms}">
                                 <tr>
                                     <td>${film.getId()}</td>
@@ -105,10 +106,11 @@
                                 </tr>
                                 </li>
                             </c:forEach>
-                        </tbody>
-                    </table>
-                </c:when>
-            </c:choose>
+                            </tbody>
+                        </table>
+                    </c:when>
+                </c:choose>
+            </div>
         </div>
     </div>
 </body>
