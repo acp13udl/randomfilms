@@ -32,6 +32,8 @@ public class Film {
 
     @XmlElement private String metascore;
 
+    @Lob
+    @Column(length = 100000)
     @XmlElement private String plot;
 
     public String getGenres() {
@@ -44,7 +46,7 @@ public class Film {
 
     @XmlElement private int releaseDate;
 
-    @XmlElement private String runTime;
+    @XmlElement private String runtime;
 
     @XmlElement private String simplePlot;
 
@@ -98,7 +100,7 @@ public class Film {
         this.rated = rated;
         this.rating = rating;
         this.releaseDate = releaseDate;
-        this.runTime = runTime;
+        this.runtime = runTime;
         this.simplePlot = simplePlot;
         this.urlIMDB = urlIMDB;
         this.urlPoster = urlPoster;
@@ -143,7 +145,7 @@ public class Film {
     }
 
     public String getRunTime() {
-        return runTime;
+        return runtime;
     }
 
     public String getTitle() {
@@ -161,6 +163,23 @@ public class Film {
         return Id;
     }
 
+    public String createUrlParams(){
+
+        return "?idIMDB=" + idIMDB +
+                "&genres=" + genres +
+                "&metascore=" + metascore+
+                "&plot=" + plot +
+                "&rated=" + rated +
+                "&rating=" + rating +
+                "&releaseDate=" + releaseDate +
+                "&runTime=" + runtime+
+                "&simplePlot=" + simplePlot +
+                "&urlIMDB=" + urlIMDB +
+                "&urlPoster=" +  urlPoster +
+                "&year=" + year +
+                "&title=" + title;
+    }
+
     @Override
     public String toString() {
         return "Film{" +
@@ -175,7 +194,7 @@ public class Film {
                 ", rated='" + rated + '\'' +
                 ", rating=" + rating +
                 ", releaseDate=" + releaseDate +
-                ", runTime='" + runTime + '\'' +
+                ", runTime='" + runtime + '\'' +
                 ", simplePlot='" + simplePlot + '\'' +
                 ", urlIMDB='" + urlIMDB + '\'' +
                 ", urlPoster='" + urlPoster + '\'' +

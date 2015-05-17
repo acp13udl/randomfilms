@@ -16,12 +16,14 @@ public class FilmServiceImpl implements FilmService {
     FilmRepository filmRepository;
 
 
+    @Transactional
     @Override
     public Film saveFilm(Film film) {
 
         return filmRepository.save(film);
     }
 
+    @Transactional
     @Override
     public void removeFilm(Film film) {
         filmRepository.delete(film);

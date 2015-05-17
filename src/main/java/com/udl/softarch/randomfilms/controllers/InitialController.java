@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
+import com.udl.softarch.randomfilms.services.FilmService;
 import com.udl.softarch.randomfilms.utils.GenerateRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by Lluís on 13/05/2015.
@@ -25,6 +27,7 @@ import java.util.Map;
 @RequestMapping(value = "/")
 public class InitialController {
 
+    private static Logger logger = Logger.getLogger(InitialController.class.getName());
     //TODO Change repository to service
     @Autowired
     FilmRepository filmRepository;
@@ -92,6 +95,29 @@ public class InitialController {
 
         return modelAndView;
     }
+
+
+
+    @RequestMapping(value = "/save",method = RequestMethod.GET)
+    public String saveFilm(@RequestParam(value = "title",required=true) String title,@RequestParam(value = "year",required=true) String year,
+                         @RequestParam(value = "urlPoster",required=true) String urlPoster,@RequestParam(value = "metascore",required=true) String metascore,
+                         @RequestParam(value = "plot",required=true) String plot,@RequestParam(value = "rated",required=true) String rated,
+                         @RequestParam(value = "rating",required=true) String rating,@RequestParam(value = "releaseDate",required=true) String releaseDate,
+                         @RequestParam(value = "runTime",required=true) String runTime,@RequestParam(value = "simplePlot",required=true) String simplePlot,
+                         @RequestParam(value = "genres",required=true) String genres,@RequestParam(value = "urlIMDB",required=true) String urlIMDB,
+                         @RequestParam(value = "idIMDB",required=true) String idIMDB){
+
+        Film film = new Film(idIMDB,genres,metascore,plot,rated,Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,simplePlot,urlIMDB,urlPoster,Integer.parseInt(year),title);
+        Film filmWithId = filmRepository.save(film);
+
+            logger.info(title);
+        return "redirect:/films/"+filmWithId.getId();
+
+    }
+
+
+
+
 
     //BORRAR
     private Film createFilm() {

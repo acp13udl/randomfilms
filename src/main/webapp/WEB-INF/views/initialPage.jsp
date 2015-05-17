@@ -99,7 +99,7 @@
                                     <td>${film.getId()}</td>
                                     <td>${film.getTitle()}</td>
                                     <td>${film.getYear()}</td>
-                                    <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
+                                    <td><a class="btn btn-success btn-sm" href="/save/${film.createUrlParams()}">Link</a></td>
                                 </tr>
                                 </li>
                             </c:forEach>
