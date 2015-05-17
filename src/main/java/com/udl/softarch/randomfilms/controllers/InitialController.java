@@ -95,7 +95,7 @@ public class InitialController {
 
     //BORRAR
     private Film createFilm() {
-        Film film = new Film("tt0096895", "Accion asesinato", "89", "Van dos y se cae en el de enmedio", "ffds", 8.5f, 1999, "120m", "POLE", "fafafa", "asfafaf", 1999, "Batman");
+        Film film = new Film("tt0096895", "Accion asesinato", "89", "Van dos y se cae en el de enmedio", "ffds", 8.5f, 1999, "120m", "POLE", "http://www.imdb.com/title/tt1751105/?ref_=nv_sr_1", "http://4.bp.blogspot.com/-SsASfxYejeM/UmOJaLOiTTI/AAAAAAAAAe0/iCSMsuikU84/s1600/2.png", 1999, "Batman");
         return filmRepository.save(film);
     }
 }

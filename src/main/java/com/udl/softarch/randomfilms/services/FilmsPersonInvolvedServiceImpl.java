@@ -27,6 +27,9 @@ public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedServic
     @Override
     public Film getFilmAndPersonInvolved(Long filmId) {
         Film film = filmRepository.findOne(filmId);
+        film.getActors().size();
+        film.getDirectors().size();
+        film.getReviews().size();
         return film;
     }
 
