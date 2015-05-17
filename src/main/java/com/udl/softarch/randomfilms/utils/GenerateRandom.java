@@ -15,7 +15,10 @@ public class GenerateRandom {
         Random random = new Random();
         int x = 0;
         while(x<10){
-            long aux = random.nextLong()%size;
+            long aux = Math.abs(random.nextLong()%size);
+            if (aux==0){
+                aux = size;
+            }
             if(!res.contains(aux)){
                 res.add(aux);
                 x++;

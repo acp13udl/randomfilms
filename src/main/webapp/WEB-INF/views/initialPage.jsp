@@ -100,6 +100,7 @@
                                     <td>${film.getId()}</td>
                                     <td>${film.getTitle()}</td>
                                     <td>${film.getYear()}</td>
+                                    <td>${film.getTitle()}</td>
                                     <td><a class="btn btn-success btn-sm" href="/save/${film.createUrlParams()}">Link</a></td>
                                 </tr>
                                 </li>

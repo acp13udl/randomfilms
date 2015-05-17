@@ -51,7 +51,7 @@ public class InitialController {
         List<Film> res = new ArrayList<>();
         List<Long> random = GenerateRandom.randomLongValues(filmRepository.count());
         for(Long value : random){
-            res.add(filmRepository.getOne(value));
+            res.add(filmRepository.findOne(value));
         }
 
         return res;
@@ -114,8 +114,6 @@ public class InitialController {
         return "redirect:/films/"+filmWithId.getId();
 
     }
-
-
 
 
 
