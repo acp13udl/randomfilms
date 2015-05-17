@@ -13,6 +13,8 @@ import java.util.List;
 public interface FilmsPersonInvolvedService {
 
     Film getFilmAndPersonInvolved(Long filmId);
-    Film addActorToFilm(Long actorId,Long filmId);
-    Film addDirectorToFilm(Long directorId, Long filmId);
+    Film addActorToFilm(Long filmId,Actor actor);
+    Film addActorsToFilm(Long filmId,List<Actor> actors);
+    Film addDirectorToFilm(Long filmId,Director director);
+    Film addDirectorsToFilm(Long filmId,List<Director> actors);
 }

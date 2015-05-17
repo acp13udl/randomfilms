@@ -59,6 +59,7 @@ public class Webservice {
                         +"for $a in $doc//movie/actors/actor\n"
                         +"return\n"
                         +"<actor>\n"
+                        +"<actorId>{$a/actorId/text()}</actorId>\n"
                         +"<bio>{$a/biography/bio/text()}</bio>\n"
                         +"<actorName>{$a/actorName/text()}</actorName>\n"
                         +"<birthName>{$a/biography/birthName/text()}</birthName>\n"

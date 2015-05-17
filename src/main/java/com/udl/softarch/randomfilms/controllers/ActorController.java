@@ -7,19 +7,12 @@ import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.services.ActorService;
-import com.udl.softarch.randomfilms.services.FilmService;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebService;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
@@ -33,20 +26,24 @@ import java.util.List;
 public class ActorController {
 
     @Autowired
-    FilmsPersonInvolvedService filmsPersonInvolvedService;
-
-    @Autowired
     ActorService actorService;
-
     @Autowired
-    FilmRepository filmRepository;
+    FilmsPersonInvolvedService filmsPersonInvolvedService;
 
     @RequestMapping(value = "/{id}/actors",method = RequestMethod.GET)
     @ResponseBody
     public List<Actor> receive(@PathVariable("id")Long id) throws XQException, IOException, JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        List<Actor> actor = Webservice.getInstance().getActorsByIMDBId(filmRepository.findOne(id).getIdIMDB());
-        Preconditions.checkNotNull(actor, "Film not found");
-        return actor;
+        Film film = filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
+        List<Actor> actors;
+        if (film.getActors().isEmpty()){
+            actors = Webservice.getInstance().getActorsByIMDBId(film.getIdIMDB());
+            List<Actor> actorsWithId = actorService.saveActors(id,actors);
+            filmsPersonInvolvedService.addActorsToFilm(id,actorsWithId);
+        }else{
+            actors = film.getActors();
+        }
+        Preconditions.checkNotNull(actors, "Actors not found");
+        return actors;
     }
 
     @RequestMapping(value = "/{id}/actors",method = RequestMethod.GET,produces = "text/html")

@@ -131,8 +131,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <a class="btn btn-success" href="films/${film.getId()}/actors">Actores</a>
-                        <a class="btn btn-success" href="films/${film.getId()}/actors">Directores</a>
+                        <a class="btn btn-success" href="${film.getId()}/actors">Actores</a>
+                        <a class="btn btn-success" href="${film.getId()}/actors">Directores</a>
 
                         <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
 

@@ -70,16 +70,6 @@ public class InitialController {
             try {
                 //TODO Hay que hacerlo en otro método compo el listRandomFilm?
                 List <Film> searchedFilms = Webservice.getInstance().getFilmByTitle(search, 10);
-//                for(Film f : searchedFilms){
-//                    Film film = filmRepository.findFimlByIdIMDB(f.getIdIMDB());
-//                    if(film == null){
-//                        filmRepository.save(f);
-//                        System.out.println("A::: "+f.toString());
-//                    }else {
-//                        f = filmRepository.findFimlByIdIMDB(f.getIdIMDB());
-//                        System.out.println("B::: "+f.toString());
-//                    }
-//                }
                 modelAndView.addObject("searchFilms",searchedFilms);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,10 +103,20 @@ public class InitialController {
         Film film = new Film(idIMDB,genres,metascore,decode(plot),rated,
                 Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,decode(simplePlot),
                 urlIMDB,urlPoster,Integer.parseInt(year),title,directorsIMDB);
-        Film filmWithId = filmRepository.save(film);
+
+        Film filmWithId = filmRepository.findFimlByIdIMDB(idIMDB);
+
+        if (notExistFilm(filmWithId)){
+
+            filmWithId = filmRepository.save(film);
+        }
 
         return "redirect:/films/"+filmWithId.getId();
 
+    }
+
+    private boolean notExistFilm(Film film){
+        return film == null;
     }
 
     private String decode(String decode) throws UnsupportedEncodingException {

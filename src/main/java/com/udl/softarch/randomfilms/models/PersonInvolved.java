@@ -6,12 +6,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by Allu on 21/04/2015.
  */
-@Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class PersonInvolved {
 
     @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long Id;
 
     public abstract boolean isDirector();
