@@ -83,4 +83,18 @@ public class Actor extends PersonInvolved{
     public List<Film> getFilms() {
         return films;
     }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "actorName='" + actorName + '\'' +
+                ", bio='" + bio + '\'' +
+                ", birthName='" + birthName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", height='" + height + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", urlPhoto='" + urlPhoto + '\'' +
+                ", films=" + films +
+                '}';
+    }
 }

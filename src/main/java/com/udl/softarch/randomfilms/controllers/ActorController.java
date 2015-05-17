@@ -1,9 +1,14 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Actor;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
+import com.udl.softarch.randomfilms.repositories.FilmRepository;
+import com.udl.softarch.randomfilms.services.ActorService;
+import com.udl.softarch.randomfilms.services.FilmService;
+import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -12,95 +17,45 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.xml.bind.JAXBException;
+import javax.xml.xquery.XQException;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Allu on 21/04/2015.
  */
 @Controller
-@RequestMapping("/films/{id}/actors")
+@RequestMapping("/films/")
 public class ActorController {
 
     @Autowired
-    ActorRepository actorsRepository;
+    FilmsPersonInvolvedService filmsPersonInvolvedService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Autowired
+    ActorService actorService;
+
+    @Autowired
+    FilmRepository filmRepository;
+
+    @RequestMapping(value = "/{id}/actors",method = RequestMethod.GET)
     @ResponseBody
-    public Actor retrieve(@PathVariable("id") Long id) {
-        Preconditions.checkNotNull(actorsRepository.findOne(id), "actor with id %s not found", id);
-        return actorsRepository.findOne(id);
+    public List<Actor> receive(@PathVariable("id")Long id) throws XQException, IOException, JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        List<Actor> actor = Webservice.getInstance().getActorsByIMDBId(filmRepository.findOne(id).getIdIMDB());
+        Preconditions.checkNotNull(actor, "Film not found");
+        return actor;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView retrieveHTML(@PathVariable( "id" ) Long id) {
-        createActor();
-        return new ModelAndView("actor", "actor", retrieve(id));
+    @RequestMapping(value = "/{id}/actors",method = RequestMethod.GET,produces = "text/html")
+    public ModelAndView receiveHTML(@PathVariable("id")Long id) throws XQException, IOException, JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        ModelAndView modelAndView = new ModelAndView("actor");
+        modelAndView.addObject("filmId", id+"");
+        modelAndView.addObject("actors",receive(id));
+        return modelAndView;
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public Actor create(@Valid @RequestBody Actor actor, HttpServletResponse response) {
-        return actorsRepository.save(actor);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded", produces = "text/html")
-    public String createHtml(@Valid @ModelAttribute("actor") Actor actor, BindingResult binding, HttpServletResponse response) {
-        if(binding.hasErrors()) {
-            return "form";
-        }
-        return "redirect:/actors/" + create(actor, response).getId();
-    }
-
-    /*@RequestMapping(value = "/form", method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView createForm() {
-        Actor emptyActor = new Actor();
-        return new ModelAndView("form", "actor", emptyActor);
-    }*/
-
-    // UPDATE
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public Actor update(@PathVariable("id") Long id, @Valid @RequestBody Actor actor) {
-        Actor oldActor = actorsRepository.findOne(id);
-        return actorsRepository.save(oldActor);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
-    @ResponseStatus(HttpStatus.OK)
-    public String updateHTML(@PathVariable("id") Long id, @Valid @ModelAttribute("actor") Actor actor,
-                             BindingResult binding) {
-        if (binding.hasErrors()) {
-            return "form";
-        }
-        return "redirect:/actors/" + update(id, actor).getId();
-    }
-
-    // Update form
-    @RequestMapping(value = "/{id}/form", method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView updateForm(@PathVariable("id") Long id) {
-        return new ModelAndView("form", "actor", actorsRepository.findOne(id));
-    }
-
-    // DELETE
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
-        actorsRepository.delete(actorsRepository.findOne(id));
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
-    @ResponseStatus(HttpStatus.OK)
-    public String deleteHTML(@PathVariable("id") Long id) {
-        delete(id);
-        return "redirect:/actors";
-    }
-
-    private Actor createActor(){
-        Actor actor = new Actor("Bruce","Esta to loco","dfsdfs","afaf","afaafa","afaf","http://fc03.deviantart.net/fs71/f/2011/202/7/4/batman_icon_3_by_jeremymallin-d417owb.png");
-        return actorsRepository.save(actor);
-    }
-
 }
+
+

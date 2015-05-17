@@ -13,7 +13,8 @@
 <h3>Actores:</h3>
 <c:choose>
 
-    <c:when test="${not empty actor}">
+    <c:when test="${not empty actors}">
+        <c:forEach var="actor" items="${actors}">
         <img src="${actor.getUrlPhoto()}" />
         <p>Nombre artistico: ${fn:escapeXml(actor.getActorName())}</p>
         <p>Nombre real: ${fn:escapeXml(actor.getBirthName())}</p>
@@ -21,6 +22,8 @@
         <p>Lugar de nacimiento: ${fn:escapeXml(actor.getPlaceOfBirth())}</p>
         <p>Estatura: ${fn:escapeXml(actor.getHeight())}</p>
         <p>Biografia: ${fn:escapeXml(actor.getBio())}</p>
+            <hr/>
+        </c:forEach>
     </c:when>
     <c:otherwise>
         <p>User info not available</p>
@@ -28,6 +31,6 @@
 
 </c:choose>
 
-<a href="/users/${user.getId()}/films">Return to film</a>
+<a href="/films/${filmId}">Return to film</a>
 </body>
 </html>
