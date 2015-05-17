@@ -28,6 +28,6 @@
 
 </c:choose>
 
-<a href="/users/${user.getId()}/films">Return to list</a>
+<a href="/users/${user.getId()}/films">Return to film</a>
 </body>
 </html>

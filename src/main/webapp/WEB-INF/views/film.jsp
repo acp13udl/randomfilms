@@ -22,7 +22,7 @@
         <p>Rated: ${fn:escapeXml(film.getRated())}</p>
         <p>Rating: ${fn:escapeXml(film.getRating())}</p>
         <p>ReleaseDate: ${fn:escapeXml(film.getReleaseDate())}</p>
-        <a href="/actors/${film.getId()}">Ver actores</a>
+        <a href="films/${film.getId()}/actors">Ver actores</a>
         <p>runTime: ${fn:escapeXml(film.getRunTime())}</p>
         <p>simplePlot: ${fn:escapeXml(film.getSimplePlot())}</p>
         <p>genres: ${fn:escapeXml(film.getGenres())}</p>

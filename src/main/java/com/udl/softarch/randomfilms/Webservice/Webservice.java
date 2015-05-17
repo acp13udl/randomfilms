@@ -48,7 +48,7 @@ public class Webservice {
             +"<runtime>{$m/runtime/text()}</runtime>\n"
             +"<simplePlot>{$m/simplePlot/text()}</simplePlot>\n"
             +"<urlIMDB>{$m/urlIMDB/text()}</urlIMDB>\n"
-            +"<urlPoster>{$m/title/text()}</urlPoster>\n"
+            +"<urlPoster>{$m/urlPoster/text()}</urlPoster>\n"
             +"<year>{$m/year/text()}</year>\n"
             +"<genres>{"+genresQuery+"}</genres>"
             //+"<directorsIMDB>{"+directorsIMDBQuery+"}</directorsIMDB>"
