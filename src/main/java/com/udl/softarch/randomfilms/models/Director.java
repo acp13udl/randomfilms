@@ -1,7 +1,6 @@
 package com.udl.softarch.randomfilms.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
@@ -17,9 +16,13 @@ public class Director extends PersonInvolved{
     @XmlElement
     private String directorName;
 
+    @Lob
+    @Column(length = 100000)
     @XmlElement private String bio;
 
     @XmlElement private String birthName;
+
+    @XmlElement private String directorId;
 
     @XmlElement private String dateOfBirth;
 
@@ -34,7 +37,8 @@ public class Director extends PersonInvolved{
 
     public Director(){}
 
-    public Director(String directorName, String bio, String birthName, String dateOfBirth, String height, String urlPhoto, String placeOfBirth) {
+    public Director(String directorId,String directorName, String bio, String birthName, String dateOfBirth, String height, String urlPhoto, String placeOfBirth) {
+        this.directorId = directorId;
         this.directorName = directorName;
         this.bio = bio;
         this.birthName = birthName;
@@ -84,5 +88,24 @@ public class Director extends PersonInvolved{
 
     public String getBio() {
         return bio;
+    }
+
+    public String getDirectorId() {
+        return directorId;
+    }
+
+    @Override
+    public String toString() {
+        return "Director{" +
+                "directorName='" + directorName + '\'' +
+                ", bio='" + bio + '\'' +
+                ", birthName='" + birthName + '\'' +
+                ", directorId='" + directorId + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", height='" + height + '\'' +
+                ", placeOfBirth='" + placeOfBirth + '\'' +
+                ", urlPhoto='" + urlPhoto + '\'' +
+                ", films=" + films +
+                '}';
     }
 }

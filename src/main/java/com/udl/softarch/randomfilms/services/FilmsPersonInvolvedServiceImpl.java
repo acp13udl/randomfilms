@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Allu on 21/04/2015.
  */
@@ -30,15 +32,25 @@ public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedServic
         film.getActors().size();
         film.getDirectors().size();
         film.getReviews().size();
+
         return film;
     }
 
     @Transactional
     @Override
-    public Film addActorToFilm(Long actorId,Long filmId) {
-        Actor actor = actorRepository.findOne(actorId);
-        Film film = filmRepository.findOne(actorId);
+    public Film addActorToFilm(Long filmId,Actor actor) {
+        Film film = getFilmAndPersonInvolved(filmId);
         film.addActor(actor);
+        filmRepository.save(film);
+
+        return film;
+    }
+
+    @Transactional
+    @Override
+    public Film addActorsToFilm(Long filmId,List<Actor> actors) {
+        Film film = getFilmAndPersonInvolved(filmId);
+        film.setActors(actors);
 
         filmRepository.save(film);
 
@@ -47,11 +59,19 @@ public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedServic
 
     @Transactional
     @Override
-    public Film addDirectorToFilm(Long directorId,Long filmId) {
-        Director director = directorRepository.findOne(directorId);
+    public Film addDirectorsToFilm(Long filmId,List<Director> directors) {
+        Film film = getFilmAndPersonInvolved(filmId);
+        film.setDirectors(directors);
+        filmRepository.save(film);
+
+        return film;
+    }
+
+    @Transactional
+    @Override
+    public Film addDirectorToFilm(Long filmId,Director director) {
         Film film = filmRepository.findOne(filmId);
         film.addDirector(director);
-
         filmRepository.save(film);
 
         return film;

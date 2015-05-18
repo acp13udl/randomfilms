@@ -15,9 +15,13 @@ public class Actor extends PersonInvolved{
 
     @XmlElement private String actorName;
 
+    @Lob
+    @Column(length = 100000)
     @XmlElement private String bio;
 
     @XmlElement private String birthName;
+
+    @XmlElement private String actorId;
 
     @XmlElement private String dateOfBirth;
 
@@ -32,7 +36,8 @@ public class Actor extends PersonInvolved{
 
     public  Actor(){}
 
-    public Actor(String actorName, String bio, String birthName, String dateOfBirth, String height, String placeOfBirth, String urlPhoto) {
+    public Actor(String actorId,String actorName, String bio, String birthName, String dateOfBirth, String height, String placeOfBirth, String urlPhoto) {
+        this.actorId = actorId;
         this.actorName = actorName;
         this.bio = bio;
         this.birthName = birthName;
@@ -82,6 +87,10 @@ public class Actor extends PersonInvolved{
 
     public List<Film> getFilms() {
         return films;
+    }
+
+    public String getActorId() {
+        return actorId;
     }
 
     @Override

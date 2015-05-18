@@ -83,6 +83,7 @@ public class Film {
         this.actors = actors;
     }
 
+
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
@@ -172,6 +173,7 @@ public class Film {
     public void addDirector(Director director){
         directors.add(director);
     }
+
 
     public Long getId() {
         return Id;

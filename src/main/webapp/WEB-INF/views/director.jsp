@@ -10,17 +10,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<h3>Actores:</h3>
+<h3>Directores:</h3>
 <c:choose>
 
-    <c:when test="${not empty director}">
+    <c:when test="${not empty directors}">
+        <c:forEach var="director" items="${directors}">
         <img src="${director.getUrlPhoto()}" />
-        <p>Nombre artistico: ${fn:escapeXml(director.getActorName())}</p>
+        <p>Nombre artistico: ${fn:escapeXml(director.getDirectorName())}</p>
         <p>Nombre real: ${fn:escapeXml(director.getBirthName())}</p>
         <p>Fecha de nacimiento: ${fn:escapeXml(director.getDateOfBirth())}</p>
         <p>Lugar de nacimiento: ${fn:escapeXml(director.getPlaceOfBirth())}</p>
         <p>Estatura: ${fn:escapeXml(director.getHeight())}</p>
         <p>Biografia: ${fn:escapeXml(director.getBio())}</p>
+            <hr/>
+        </c:forEach>
     </c:when>
     <c:otherwise>
         <p>User info not available</p>
@@ -28,6 +31,6 @@
 
 </c:choose>
 
-<a href="/users/${user.getId()}/films">Return to list</a>
+<a href="/films/${filmId}">Return to film</a>
 </body>
 </html>

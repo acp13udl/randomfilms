@@ -59,6 +59,7 @@ public class Webservice {
                         +"for $a in $doc//movie/actors/actor\n"
                         +"return\n"
                         +"<actor>\n"
+                        +"<actorId>{$a/actorId/text()}</actorId>\n"
                         +"<bio>{$a/biography/bio/text()}</bio>\n"
                         +"<actorName>{$a/actorName/text()}</actorName>\n"
                         +"<birthName>{$a/biography/birthName/text()}</birthName>\n"
@@ -73,6 +74,7 @@ public class Webservice {
             +"return\n"
             +"<director>\n"
             +"<bio>{$d/bio/text()}</bio>\n"
+            +"<directorId>{$d/idIMDB/text()}</directorId>\n"
             +"<directorName>{$d/name/text()}</directorName>\n"
             +"<birthName>{$d/birthName/text()}</birthName>\n"
             +"<dateOfBirth>{$d/dateOfBirth/text()}</dateOfBirth>\n"
@@ -168,23 +170,22 @@ public class Webservice {
 
     }
 
-    public List<Director> getDirectorsByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
+    public Director getDirectorByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
 
-        final String url  = URL_BASE+"imdb?idIMDB="+IMDBId+"&format=XML&bornDied=1";
+        final String url  = URL_BASE+"imdb?idName="+IMDBId+"&format=XML&bornDied=1";
         connectionToAPI(url, Director.class);
-        return recoveryDirectors();
+        return recoveryDirector();
 
     }
 
-    private List<Director> recoveryDirectors(){
-        List<Director> directors = new ArrayList<>();
+    private Director recoveryDirector(){
+        Director director = new Director();
 
         try {
             XQResultSequence xqResultSequence = preparedExpression.executeQuery();
             while (xqResultSequence.next()){
                 XQItem  item = xqResultSequence.getItem();
-                Director director = (Director) unmarshaller.unmarshal(item.getNode());
-                directors.add(director);
+                director = (Director) unmarshaller.unmarshal(item.getNode());
             }
         } catch (XQException e) {
             e.printStackTrace();
@@ -200,7 +201,7 @@ public class Webservice {
             e.printStackTrace();
         }
 
-        return directors;
+        return director;
 
     }
 
@@ -216,6 +217,8 @@ public class Webservice {
             preparedExpression = xqConnection.prepareExpression(filmQuery);
         }else if (type.getName().equalsIgnoreCase("com.udl.softarch.randomfilms.models.Actor")){
             preparedExpression = xqConnection.prepareExpression(actorQuery);
+        }else if (type.getName().equalsIgnoreCase("com.udl.softarch.randomfilms.models.Director")){
+            preparedExpression = xqConnection.prepareExpression(directorQuery);
         }
         preparedExpression.bindDocument(new javax.xml.namespace.QName("doc"),urlConnection.getInputStream(),null,null);
         context = JAXBContext.newInstance(type);

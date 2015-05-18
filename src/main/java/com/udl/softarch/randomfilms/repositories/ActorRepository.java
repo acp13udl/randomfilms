@@ -12,5 +12,5 @@ import java.util.List;
  * Created by Allu on 21/04/2015.
  */
 public interface ActorRepository extends JpaRepository<Actor,Long> {
-
+    Actor findActorByactorId(@Param("actorId") String actorId);
 }
