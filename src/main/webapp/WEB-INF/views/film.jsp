@@ -69,7 +69,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inputYear">Year:</label>
-                                        <input id="inputYear" type="number" class="form-control" value="${fn:escapeXml(film.getYear())}" readonly>
+                                        <input id="inputYear" type="text" class="form-control" value="${fn:escapeXml(film.getYear())}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -124,32 +124,26 @@
                             <img src="${film.getUrlPoster()}" />
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-left: 5px; margin-right: 5px;">
                         <div class="form-group">
                             <label for="inputPlot">Plot:</label>
                             <textarea id="inputPlot" class="form-control" rows="5" readonly>${fn:escapeXml(film.getPlot())}</textarea>
                         </div>
                     </div>
-                    <div class="row">
-                        <a class="btn btn-success" href="films/${film.getId()}/actors">Actores</a>
-                        <a class="btn btn-success" href="films/${film.getId()}/actors">Directores</a>
+                    <div class="row" style="margin-left: 5px; margin-right: 5px;">
+                        <a class="btn btn-success" href="${film.getId()}/actors">Actores</a>
+                        <a class="btn btn-success" href="${film.getId()}/directors">Directores</a>
 
                         <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
 
                         <a class="btn btn-primary" href="/" style="float: right;">Back</a>
                     </div>
                 </form>
-
-
-
             </c:when>
             <c:otherwise>
                 <p>User info not available</p>
             </c:otherwise>
-
         </c:choose>
-
-
     </div>
 </body>
 </html>
