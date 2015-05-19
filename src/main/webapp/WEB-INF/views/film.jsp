@@ -138,16 +138,30 @@
 
                         <a class="btn btn-primary" href="/" style="float: right;">Back</a>
                     </div>
+
                 </form>
 
+                <form action="/films/${film.getId()}" method="post">
 
-
+                    <input name="author" value="Anonimo"/>
+                    <input name="comment" />
+                    <input name="rating" type="number" max="10" min="0" value="5"/>
+                    <input type="submit" value="Post">
+                </form>
+                <ul>
+                    <c:if test="${not empty film.getReviews()}">
+                        <%--<c:forEach var="review" items="${film.getReviews()}">--%>
+                            <p>${film.getReviews().get(0).getComment()}</p>
+                        <%--</c:forEach>--%>
+                    </c:if>
+                </ul>
             </c:when>
             <c:otherwise>
                 <p>User info not available</p>
             </c:otherwise>
 
         </c:choose>
+
 
 
     </div>

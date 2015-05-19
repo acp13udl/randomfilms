@@ -1,6 +1,8 @@
 package com.udl.softarch.randomfilms.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,10 +12,11 @@ import javax.persistence.Id;
 public class Review {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     private String author;
     private String comment;
-    private float  filmRating;
+    private float  rating;
 
     public String getAuthor() {
         return author;
@@ -31,5 +34,11 @@ public class Review {
         this.comment = comment;
     }
 
+    public float getFilmRating() {
+        return rating;
+    }
 
+    public void setFilmRating(float rating) {
+        this.rating = rating;
+    }
 }

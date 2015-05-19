@@ -1,22 +1,19 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
-import com.udl.softarch.randomfilms.Webservice.Webservice;
-import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
-import com.udl.softarch.randomfilms.models.User;
+import com.udl.softarch.randomfilms.models.Review;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.services.FilmService;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.xquery.XQException;
-import java.io.IOException;
-import java.util.List;
+import javax.validation.Valid;
 
 /**
  * Created by Allu on 21/04/2015.
@@ -25,6 +22,10 @@ import java.util.List;
 @RequestMapping("/films")
 public class FilmController {
 
+    @Autowired
+    FilmRepository filmRepository;
+    @Autowired
+    ReviewRepository reviewRepository;
     @Autowired
     FilmsPersonInvolvedService filmsPersonInvolvedService;
 
@@ -43,5 +44,22 @@ public class FilmController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveHTML(@PathVariable("id")Long id){
         return new ModelAndView("film","film",receive(id));
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Long createReview(@PathVariable("id") Long id,@Valid @RequestBody Review review){
+
+        filmsPersonInvolvedService.addReviewToFilm(id,review);
+        return id;
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded", produces = "text/html")
+    public String createHtml(@PathVariable("id") Long id,@Valid @ModelAttribute("review") Review review, BindingResult binding) {
+        if(binding.hasErrors()) {
+            return "form";
+        }
+        return "redirect:/films/"+createReview(id, review);
     }
 }

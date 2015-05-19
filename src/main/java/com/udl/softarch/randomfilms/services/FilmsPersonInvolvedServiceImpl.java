@@ -3,6 +3,7 @@ package com.udl.softarch.randomfilms.services;
 import com.udl.softarch.randomfilms.models.Actor;
 import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
+import com.udl.softarch.randomfilms.models.Review;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import com.udl.softarch.randomfilms.repositories.DirectorRepository;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
@@ -72,6 +73,16 @@ public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedServic
     public Film addDirectorToFilm(Long filmId,Director director) {
         Film film = filmRepository.findOne(filmId);
         film.addDirector(director);
+        filmRepository.save(film);
+
+        return film;
+    }
+
+    @Transactional
+    @Override
+    public Film addReviewToFilm(Long filmId,Review review){
+        Film film = getFilmAndPersonInvolved(filmId);
+        film.addReview(review);
         filmRepository.save(film);
 
         return film;

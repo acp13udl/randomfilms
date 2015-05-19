@@ -174,9 +174,12 @@ public class Film {
         directors.add(director);
     }
 
-
     public Long getId() {
         return Id;
+    }
+
+    public void addReview(Review review){
+        reviews.add(review);
     }
 
     public String createUrlParams() throws UnsupportedEncodingException {
