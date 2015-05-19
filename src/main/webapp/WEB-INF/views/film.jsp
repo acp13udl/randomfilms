@@ -58,7 +58,10 @@
             <c:when test="${not empty film}">
                 <form>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <img src="${film.getUrlPoster()}" />
+                        </div>
+                        <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="form-group">
@@ -69,7 +72,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inputYear">Year:</label>
-                                        <input id="inputYear" type="number" class="form-control" value="${fn:escapeXml(film.getYear())}" readonly>
+                                        <input id="inputYear" type="text" class="form-control" value="${fn:escapeXml(film.getYear())}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -120,17 +123,14 @@
                             </div>
 
                         </div>
-                        <div class="col-md-6">
-                            <img src="${film.getUrlPoster()}" />
-                        </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-left: 5px; margin-right: 5px;">
                         <div class="form-group">
                             <label for="inputPlot">Plot:</label>
                             <textarea id="inputPlot" class="form-control" rows="5" readonly>${fn:escapeXml(film.getPlot())}</textarea>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-left: 5px; margin-right: 5px;">
                         <a class="btn btn-success" href="${film.getId()}/actors">Actores</a>
                         <a class="btn btn-success" href="${film.getId()}/directors">Directores</a>
 
@@ -159,11 +159,7 @@
             <c:otherwise>
                 <p>User info not available</p>
             </c:otherwise>
-
         </c:choose>
-
-
-
     </div>
 </body>
 </html>
