@@ -9,6 +9,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>Random Films</title>
+    <%--<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>--%>
+    <%--<link rel="stylesheet" href="../css/foundation.min.css">--%>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript">
+        function validateKey(e){
+            $('#searchButton').attr('href',"/?search="+$('#searchInput').val());
+            if(e.keyCode == 13){
+                window.location.assign("/?search="+$('#searchInput').val());
+                return false;
+            }
+        }
+    </script>
+</head>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -41,23 +57,24 @@
     <c:choose>
         <c:when test="${not empty actors}">
             <form>
-                <c:forEach var="actor" items="${actors}">
+                <c:forEach var="director" items="${actors}">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="${actor.getUrlPhoto()}" />
+                            <img src="${director.getUrlPhoto()}" />
                         </div>
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputActorName">Artistic name:</label>
-                                        <input id="inputActorName" type="text" class="form-control" value="${fn:escapeXml(actor.getActorName())}" readonly>
+                                        <input id="inputActorName" type="text" class="form-control" value="${fn:escapeXml(director.getActorName())}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="inputActorRealName">Real name:</label>
-                                        <input id="inputActorRealName" type="text" class="form-control" value="${fn:escapeXml(actor.getBirthName())}" readonly>
+                                    <label for="inputActorRealName">Real name:</label>
+                                    <div class="input-group">
+                                        <input id="inputActorRealName" type="text" class="form-control" value="${fn:escapeXml(director.getBirthName())}" readonly>
+                                        <a href="http://www.imdb.com/name/${director.getActorId()}" class="input-group-addon">Link IMDB</a>
                                     </div>
                                 </div>
                             </div>
@@ -65,37 +82,36 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inputActorHeight">Height:</label>
-                                        <input id="inputActorHeight" type="text" class="form-control" value="${fn:escapeXml(actor.getHeight())}" readonly>
+                                        <input id="inputActorHeight" type="text" class="form-control" value="${fn:escapeXml(director.getHeight())}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inputActorDateOfBirth">Date of birth:</label>
-                                        <input id="inputActorDateOfBirth" type="text" class="form-control" value="${fn:escapeXml(actor.getDateOfBirth())}" readonly>
+                                        <input id="inputActorDateOfBirth" type="text" class="form-control" value="${fn:escapeXml(director.getDateOfBirth())}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputActorPlaceOfBirth">Place of birth:</label>
-                                        <input id="inputActorPlaceOfBirth" type="text" class="form-control" value="${fn:escapeXml(actor.getPlaceOfBirth())}" readonly>
+                                        <input id="inputActorPlaceOfBirth" type="text" class="form-control" value="${fn:escapeXml(director.getPlaceOfBirth())}" readonly>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" style="margin-left: 5px; margin-right: 5px;">
                                 <div class="form-group">
                                     <label for="inputActorBio">Bio:</label>
-                                    <input id="inputActorBio" type="text" class="form-control" value="${fn:escapeXml(actor.getBio())}" readonly>
+                                    <textarea id="inputActorBio" type="text" class="form-control" rows="6" readonly>${fn:escapeXml(director.getBio())}</textarea>
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="http://www.imdb.com/name/${actor.getActorId()}" class="btn btn-info">Link IMDB</a>
-                                <a class="btn btn-primary" href="/" style="float: right;">Back</a>
-                                <a href="/films/${filmId}">Return to film</a>
-                                <hr/>
+
                             </div>
                         </div>
                     </div>
+                    <hr/>
                 </c:forEach>
+                <a class="btn btn-primary" href="/films/${filmId}" style="float: right;">Return to film</a>
             </form>
         </c:when>
         <c:otherwise>

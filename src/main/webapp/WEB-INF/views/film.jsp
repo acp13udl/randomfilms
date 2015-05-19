@@ -58,7 +58,10 @@
             <c:when test="${not empty film}">
                 <form>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <img src="${film.getUrlPoster()}" />
+                        </div>
+                        <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="form-group">
@@ -119,9 +122,6 @@
                                 <textarea id="inputSimplePlot" class="form-control" readonly>${fn:escapeXml(film.getSimplePlot())}</textarea>
                             </div>
 
-                        </div>
-                        <div class="col-md-6">
-                            <img src="${film.getUrlPoster()}" />
                         </div>
                     </div>
                     <div class="row" style="margin-left: 5px; margin-right: 5px;">
