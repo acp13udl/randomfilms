@@ -35,19 +35,10 @@ public class InitialController {
     @Autowired
     FilmRepository filmRepository;
 
-    boolean first = true;//borrar
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     @ResponseBody
     public List<Film> listRandomFilm(){
-        //////// BORRAR
-        if(first){
-            for(int i = 0; i <10; i++){
-                filmRepository.save(createFilm());
-            }
-            first = false;
-        }
-        ///////////////
         if(filmRepository.count()< 11){
             return filmRepository.findAll();
         }
@@ -125,10 +116,4 @@ public class InitialController {
     }
 
 
-
-    //BORRAR
-    private Film createFilm() {
-        Film film = new Film("tt0096895", "Accion asesinato", "89", "Van dos y se cae en el de enmedio", "ffds", 8.5f, 1999, "120m", "POLE", "http://www.imdb.com/title/tt1751105/?ref_=nv_sr_1", "http://4.bp.blogspot.com/-SsASfxYejeM/UmOJaLOiTTI/AAAAAAAAAe0/iCSMsuikU84/s1600/2.png", 1999, "Batman","nm0634240");
-        return filmRepository.save(film);
-    }
 }
