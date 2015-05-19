@@ -143,16 +143,18 @@
 
                 <form action="/films/${film.getId()}" method="post">
 
-                    <input name="author" value="Anonimo"/>
+                    <input name="author" value="Anonimo" readonly/>
                     <input name="comment" />
                     <input name="rating" type="number" max="10" min="0" value="5"/>
                     <input type="submit" value="Post">
                 </form>
                 <ul>
                     <c:if test="${not empty film.getReviews()}">
-                        <%--<c:forEach var="review" items="${film.getReviews()}">--%>
-                            <p>${film.getReviews().get(0).getComment()}</p>
-                        <%--</c:forEach>--%>
+                        <c:forEach var="review" items="${film.getReviews()}">
+                            <p>Author: ${review.getAuthor()}</p>
+                            <p>Rating:${review.getRating()}</p>
+                            <p>Comment: ${review.getComment()}</p>
+                        </c:forEach>
                     </c:if>
                 </ul>
             </c:when>

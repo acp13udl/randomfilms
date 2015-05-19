@@ -34,11 +34,11 @@ public class Review {
         this.comment = comment;
     }
 
-    public float getFilmRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setFilmRating(float rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 }

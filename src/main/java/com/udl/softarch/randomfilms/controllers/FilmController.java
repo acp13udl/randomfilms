@@ -25,8 +25,6 @@ public class FilmController {
     @Autowired
     FilmRepository filmRepository;
     @Autowired
-    ReviewRepository reviewRepository;
-    @Autowired
     FilmsPersonInvolvedService filmsPersonInvolvedService;
 
     @Autowired

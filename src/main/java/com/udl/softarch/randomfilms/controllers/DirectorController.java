@@ -2,23 +2,18 @@ package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
-import com.udl.softarch.randomfilms.models.Actor;
 import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
-import com.udl.softarch.randomfilms.repositories.DirectorRepository;
-import com.udl.softarch.randomfilms.services.ActorService;
 import com.udl.softarch.randomfilms.services.DirectorService;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
