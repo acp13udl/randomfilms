@@ -3,6 +3,7 @@ package com.udl.softarch.randomfilms.controllers;
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Actor;
+
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
@@ -57,7 +58,7 @@ public class UserController {
         return new ModelAndView("users", "users", list(page, size));
     }
 
-    @RequestMapping(value = "/{id}/films",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET)
     @ResponseBody
     public User receiveFavorites(@PathVariable("id")Long id){
 
@@ -65,10 +66,10 @@ public class UserController {
         return userFilmsService.getUserFilms(id);
     }
 
-    @RequestMapping(value = "/{id}/films",method = RequestMethod.GET,produces = "text/html")
+    @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveFavoritesHTML(@PathVariable("id")Long id){
         createUser();
-        return new ModelAndView("favoritesFilms","user",receiveFavorites(id));
+        return new ModelAndView("favorites","user",receiveFavorites(id));
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
@@ -119,6 +120,10 @@ public class UserController {
 
     private User createUser(){
         User user = new User("Allu","alluesan@hotmail.com");
+        user.addToFavorites(filmRepository.findOne((long) 1));
+        user.addToFavorites(filmRepository.findOne((long) 2));
+        user.addToFavorites(filmRepository.findOne((long) 3));
+        user.addToFavorites(filmRepository.findOne((long) 4));
         return userRepository.save(user);
     }
 

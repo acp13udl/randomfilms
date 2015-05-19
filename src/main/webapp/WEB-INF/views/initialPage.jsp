@@ -64,6 +64,7 @@
                         <th class="col-md-1">ID</th>
                         <th class="col-md-2">Title</th>
                         <th class="col-md-2">Year</th>
+                        <th>Description</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,7 @@
                                     <td>${film.getId()}</td>
                                     <td>${film.getTitle()}</td>
                                     <td>${film.getYear()}</td>
+                                    <td>${film.getSimplePlot()}</td>
                                     <td><a class="btn btn-success btn-sm" href="/films/${film.getId()}">Link</a></td>
                                 </tr>
                                 <%--<a href="/films/${film.getId()}">${film.getId()} - ${film.getTitle()}</a></br>--%>
@@ -90,18 +92,17 @@
                         <table id="searchFilmsTable" class="table table-striped">
                             <thead>
                             <tr>
-                                <th class="col-md-1">ID</th>
-                                <th class="col-md-2">Title</th>
+                                <th class="col-md-1">Title</th>
                                 <th class="col-md-2">Year</th>
+                                <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach var="film" items="${searchFilms}">
                                 <tr>
-                                    <td>${film.getId()}</td>
                                     <td>${film.getTitle()}</td>
                                     <td>${film.getYear()}</td>
-                                    <td>${film.getTitle()}</td>
+                                    <td>${film.getSimplePlot()}</td>
                                     <td><a class="btn btn-success btn-sm" href="/save/${film.createUrlParams()}">Link</a></td>
                                 </tr>
                                 </li>
