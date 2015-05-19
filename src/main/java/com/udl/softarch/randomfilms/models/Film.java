@@ -51,6 +51,8 @@ public class Film {
 
     @XmlElement private String runtime;
 
+    @Lob
+    @Column(length = 100000)
     @XmlElement private String simplePlot;
 
     @XmlElement private String urlIMDB;

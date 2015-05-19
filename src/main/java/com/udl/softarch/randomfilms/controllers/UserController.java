@@ -38,23 +38,20 @@ public class UserController {
     @Autowired
     FilmRepository filmRepository;
 
+    private boolean first = true;
+
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public Iterable<User> list(@RequestParam(required = false, defaultValue = "0") int page,
-                               @RequestParam(required = false, defaultValue = "10") int size) throws IllegalAccessException, XQException, JAXBException, IOException, InstantiationException, ClassNotFoundException {
-        List<Film> films= Webservice.getInstance().getFilmByTitle("Batman", 3);
-        Film film =filmRepository.save(films.get(0));
-        Film film1 = filmRepository.findOne(film.getId());
-        List<Actor> actors= Webservice.getInstance().getActorsByIMDBId("tt0096895");
+                               @RequestParam(required = false, defaultValue = "10") int size){
         PageRequest pageRequest = new PageRequest(page, size);
         return userRepository.findAll(pageRequest).getContent();
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
      public ModelAndView listHTML(@RequestParam(required = false, defaultValue = "0") int page,
-                                  @RequestParam(required = false, defaultValue = "10") int size) throws IllegalAccessException, XQException, IOException, JAXBException, InstantiationException, ClassNotFoundException {
-        PageRequest pageRequest = new PageRequest(page, size);
+                                  @RequestParam(required = false, defaultValue = "10") int size){
         return new ModelAndView("users", "users", list(page, size));
     }
 
@@ -100,7 +97,7 @@ public class UserController {
         }
         return "redirect:/user/" + create(user, response).getId();
     }
-    // UPDATE
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -119,12 +116,19 @@ public class UserController {
     }
 
     private User createUser(){
-        User user = new User("Allu","alluesan@hotmail.com");
-        user.addToFavorites(filmRepository.findOne((long) 1));
-        user.addToFavorites(filmRepository.findOne((long) 2));
-        user.addToFavorites(filmRepository.findOne((long) 3));
-        user.addToFavorites(filmRepository.findOne((long) 4));
-        return userRepository.save(user);
+        if (first){
+            User user = new User("Allu","alluesan@hotmail.com");
+            user.addToFavorites(filmRepository.findOne((long) 1));
+            user.addToFavorites(filmRepository.findOne((long) 2));
+            user.addToFavorites(filmRepository.findOne((long) 3));
+            user.addToFavorites(filmRepository.findOne((long) 4));
+            first = false;
+            return
+
+                    userRepository.save(user);
+        }
+        return null;
+
     }
 
 }
