@@ -44,11 +44,17 @@
                 <ul class="nav navbar-nav">
 
                 </ul>
+                <form class="navbar-form navbar-left" onsubmit="return false;">
+                    <div class="input-group">
+                        <a id="FavoritesButton" class="btn btn-danger" href="">Favorites</a>
+                    </div>
+                </form>
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
                         <a id="searchButton" class="input-group-addon" href="/">Search</a>
                     </div>
+
                     <%--<button type="submit" class="btn btn-default">Submit</button>--%>
                 </form>
             </div>
@@ -58,13 +64,18 @@
     <div id="container" style="margin-left: 10px; margin-right: 10px;">
         <div class="row">
             <div class="col-md-6">
+                <div style="text-align: center;">
+                    <h1 style="font-family: cursive; font-weight: bold;">Random Films</h1>
+                    </br></br>
+                </div>
                 <table id="randomFilmsTable" class="table table-striped">
                     <thead>
                     <tr>
                         <th class="col-md-1">ID</th>
                         <th class="col-md-2">Title</th>
                         <th class="col-md-2">Year</th>
-                        <th>Description</th>
+                        <th >Description</th>
+                        <th class="col-md-1"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -89,12 +100,17 @@
             <div class="col-md-6">
                 <c:choose>
                     <c:when test="${not empty searchFilms}">
+                        <div style="text-align: center;">
+                            <h1 style="font-family: cursive; font-weight: bold;">Search Result</h1>
+                            </br></br>
+                        </div>
                         <table id="searchFilmsTable" class="table table-striped">
                             <thead>
                             <tr>
-                                <th class="col-md-1">Title</th>
+                                <th class="col-md-2">Title</th>
                                 <th class="col-md-2">Year</th>
                                 <th>Description</th>
+                                <th class="col-md-1"></th>
                             </tr>
                             </thead>
                             <tbody>

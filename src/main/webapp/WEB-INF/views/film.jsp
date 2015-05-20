@@ -43,6 +43,11 @@
                 <ul class="nav navbar-nav">
 
                 </ul>
+                <form class="navbar-form navbar-left" onsubmit="return false;">
+                    <div class="input-group">
+                        <a id="FavoritesButton" class="btn btn-danger" href="">Favorites</a>
+                    </div>
+                </form>
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
@@ -137,17 +142,28 @@
                         <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
 
                         <a class="btn btn-primary" href="/" style="float: right;">Back</a>
+                        <a class="btn btn-warning" href="/" style="float: right;">Add Favorites</a>
                     </div>
-
                 </form>
-
+                <hr/>
                 <form action="/films/${film.getId()}" method="post">
-
-                    <input name="author" value="Anonimo" readonly/>
-                    <input name="comment" />
-                    <input name="rating" type="number" max="10" min="0" value="5"/>
-                    <input type="submit" value="Post">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="inputComment">Comment:</label>
+                                <textarea id="inputComment" class="form-control" type="text" name="comment" rows="4" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="inputRat">Rating:</label>
+                                <input id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
+                                <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+                <hr/>
                 <ul>
                     <c:if test="${not empty film.getReviews()}">
                         <c:forEach var="review" items="${film.getReviews()}">

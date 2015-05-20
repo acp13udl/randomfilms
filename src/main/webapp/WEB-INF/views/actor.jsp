@@ -43,6 +43,11 @@
             <ul class="nav navbar-nav">
 
             </ul>
+            <form class="navbar-form navbar-left" onsubmit="return false;">
+                <div class="input-group">
+                    <a id="FavoritesButton" class="btn btn-danger" href="">Favorites</a>
+                </div>
+            </form>
             <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
                 <div class="input-group">
                     <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
