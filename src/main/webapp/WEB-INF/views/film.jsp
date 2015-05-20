@@ -142,7 +142,7 @@
                         <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
 
                         <a class="btn btn-primary" href="/" style="float: right;">Back</a>
-                        <a class="btn btn-warning" href="/" style="float: right;">Add Favorites</a>
+                        <a class="btn btn-warning" href="/" style="float: right; margin-right: 5px;">Add Favorites</a>
                     </div>
                 </form>
                 <hr/>
@@ -167,9 +167,26 @@
                 <ul>
                     <c:if test="${not empty film.getReviews()}">
                         <c:forEach var="review" items="${film.getReviews()}">
-                            <p>Author: ${review.getAuthor()}</p>
-                            <p>Rating:${review.getRating()}</p>
-                            <p>Comment: ${review.getComment()}</p>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="inputReviewAuthor">Author:</label>
+                                        <input id="inputReviewAuthor" type="text" class="form-control" value="${review.getAuthor()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="inputReviewRate">Rating:</label>
+                                        <input id="inputReviewRate" type="text" class="form-control" value="${review.getRating()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-8"></div>
+                            </div>
+                            <div class="row" style="margin-right: 5px; margin-left: 1px">
+                                <label for="inputReviewComment">Comment:</label>
+                                <textarea id="inputReviewComment" class="form-control" readonly>${review.getComment()}</textarea>
+                            </div>
+                            <hr/>
                         </c:forEach>
                     </c:if>
                 </ul>
