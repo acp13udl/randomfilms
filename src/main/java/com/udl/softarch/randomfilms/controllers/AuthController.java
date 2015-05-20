@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 /**
  * Created by Allu on 19/05/2015.
  */
@@ -24,21 +26,15 @@ public class AuthController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public User validateUser(String username,String password){
-        User user = userRepository.findUserByUsername(username);
-        if(user==null){
-            user = new User(username,password);
-        }else if (!user.getPassword().equals(password)){
-            return null;
-        }
+    public User validateUser(Principal principal){
+        User user = userRepository.findUserByUsername(principal.getName());
         return user;
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public String listFavorites(){
-        String username = "Allu";
-        String password = "alluesan";
-        User user = validateUser(username,password);
+    public String listFavorites(Principal principal){
+
+        User user = validateUser(principal);
         if(user==null){
             return "redirect:/";
         }
