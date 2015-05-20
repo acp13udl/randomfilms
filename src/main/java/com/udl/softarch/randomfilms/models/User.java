@@ -21,8 +21,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Email should be valid")
-    private String email;
+    private String password;
 
     @OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Film> favoritesList = new ArrayList<Film>();
@@ -30,9 +29,9 @@ public class User {
 
     public User(){}
 
-    public User(String username, String email){
+    public User(String username, String password){
         this.username=username;
-        this.email=email;
+        this.password =password;
     }
 
 
@@ -52,12 +51,12 @@ public class User {
         Id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Film> getFavoritesList() {

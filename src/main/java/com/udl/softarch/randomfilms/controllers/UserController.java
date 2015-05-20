@@ -117,7 +117,7 @@ public class UserController {
 
     private User createUser(){
         if (first){
-            User user = new User("Allu","alluesan@hotmail.com");
+            User user = new User("Allu","alluesan");
             user.addToFavorites(filmRepository.findOne((long) 1));
             user.addToFavorites(filmRepository.findOne((long) 2));
             user.addToFavorites(filmRepository.findOne((long) 3));
