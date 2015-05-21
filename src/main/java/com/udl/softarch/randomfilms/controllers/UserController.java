@@ -65,7 +65,6 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveFavoritesHTML(@PathVariable("id")Long id){
-        createUser();
         return new ModelAndView("favorites","user",receiveFavorites(id));
     }
 
@@ -115,20 +114,5 @@ public class UserController {
         return "redirect:/user/" + update(id,user).getId();
     }
 
-    private User createUser(){
-        if (first){
-            User user = new User("Allu","alluesan");
-            user.addToFavorites(filmRepository.findOne((long) 1));
-            user.addToFavorites(filmRepository.findOne((long) 2));
-            user.addToFavorites(filmRepository.findOne((long) 3));
-            user.addToFavorites(filmRepository.findOne((long) 4));
-            first = false;
-            return
-
-                    userRepository.save(user);
-        }
-        return null;
-
-    }
 
 }

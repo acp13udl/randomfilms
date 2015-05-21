@@ -46,7 +46,7 @@
                 </ul>
                 <form class="navbar-form navbar-left" onsubmit="return false;">
                     <div class="input-group">
-                        <a id="FavoritesButton" class="btn btn-danger" href="">Favorites</a>
+                        <a id="FavoritesButton" class="btn btn-danger" href="/validation">Favorites</a>
                     </div>
                 </form>
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">

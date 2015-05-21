@@ -45,7 +45,7 @@
                 </ul>
                 <form class="navbar-form navbar-left" onsubmit="return false;">
                     <div class="input-group">
-                        <a id="FavoritesButton" class="btn btn-danger" href="">Favorites</a>
+                        <a id="FavoritesButton" class="btn btn-danger" href="/validation">Favorites</a>
                     </div>
                 </form>
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
@@ -142,7 +142,7 @@
                         <a class="btn btn-info" href="${film.getUrlIMDB()}">Link IMDB</a>
 
                         <a class="btn btn-primary" href="/" style="float: right;">Back</a>
-                        <a class="btn btn-warning" href="/" style="float: right; margin-right: 5px;">Add Favorites</a>
+                        <a class="btn btn-warning" href="/validation/add?filmId=${film.getId()}" style="float: right; margin-right: 5px;">Add Favorites</a>
                     </div>
                 </form>
                 <hr/>

@@ -1,8 +1,11 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
+import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.repositories.UserRepository;
+import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -24,20 +27,32 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public User validateUser(Principal principal){
-        User user = userRepository.findUserByUsername(principal.getName());
-        return user;
-    }
+    @Autowired
+    FilmsPersonInvolvedService filmRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public String listFavorites(Principal principal){
+    public String authFavorites(Principal principal){
 
-        User user = validateUser(principal);
+        User user = userRepository.findUserByUsername(principal.getName());
         if(user==null){
             return "redirect:/";
         }
+        return "redirect:/users/"+user.getId()+"/favorites";
+    }
+
+    @RequestMapping(value = "/add",method = RequestMethod.GET, produces = "text/html")
+    public String AuthAddToFavorites(Principal principal,@RequestParam(value = "filmId",
+            required = true) final Long filmId){
+
+        User user = userRepository.findUserByUsername(principal.getName());
+
+        if(user==null){
+            return "redirect:/";
+        }
+
+        Film film = filmRepository.getFilmAndPersonInvolved(filmId);
+        if(film!=null) user.addToFavorites(film);
+
         return "redirect:/users/"+user.getId()+"/favorites";
     }
 

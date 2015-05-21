@@ -61,6 +61,10 @@
     <div id="container" style="margin-left: 10px; margin-right: 10px;">
         <div class="row">
             <div class="col-md-6">
+                <div style="text-align: center;">
+                    <h1 style="font-family: cursive; font-weight: bold;">Favorites Films</h1>
+                    </br></br>
+                </div>
                 <c:choose>
                     <c:when test="${not empty user}">
                         <table id="searchFilmsTable" class="table table-striped">
