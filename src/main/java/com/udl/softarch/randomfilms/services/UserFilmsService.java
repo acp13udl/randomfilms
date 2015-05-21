@@ -10,6 +10,5 @@ import com.udl.softarch.randomfilms.models.User;
 public interface UserFilmsService {
 
     User getUserFilms(Long userId);
-    User addFilmToUser(Long userId, Film film);
-    void removeFilmFromUser(Long userId,Long filmId);
+    User addFilmToUser(String name, Film film);
 }

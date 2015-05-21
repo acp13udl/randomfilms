@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 /**
  * Created by Allu on 21/04/2015.
@@ -40,8 +41,14 @@ public class FilmController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
-    public ModelAndView receiveHTML(@PathVariable("id")Long id){
-        return new ModelAndView("film","film",receive(id));
+    public ModelAndView receiveHTML(Principal principal,@PathVariable("id")Long id){
+        ModelAndView modelAndView = new ModelAndView("film");
+        modelAndView.addObject("film",receive(id));
+        if (principal != null){
+            modelAndView.addObject("username",principal.getName());
+        }
+        return modelAndView;
+
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.POST)

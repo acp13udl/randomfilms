@@ -146,24 +146,30 @@
                     </div>
                 </form>
                 <hr/>
-                <form action="/films/${film.getId()}" method="post">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label for="inputComment">Comment:</label>
-                                <textarea id="inputComment" class="form-control" type="text" name="comment" rows="4" required></textarea>
+                <c:if test="${not empty username}">
+                    <form action="/films/${film.getId()}" method="post">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="inputComment">Comment:</label>
+                                    <textarea id="inputComment" class="form-control" type="text" name="comment" rows="4" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="inputRat">Rating:</label>
+                                    <input type="hidden"
+                                           name="${_csrf.parameterName}"
+                                           value="${_csrf.token}"/>
+                                    <input id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
+                                    <input type="hidden" name="author" value="${username}"/>
+                                    <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="inputRat">Rating:</label>
-                                <input id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
-                                <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <hr/>
+                    </form>
+                    <hr/>
+                </c:if>
                 <ul>
                     <c:if test="${not empty film.getReviews()}">
                         <c:forEach var="review" items="${film.getReviews()}">

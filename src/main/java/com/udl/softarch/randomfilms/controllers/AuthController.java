@@ -6,6 +6,7 @@ import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.repositories.UserRepository;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
+import com.udl.softarch.randomfilms.services.UserFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
+    UserFilmsService userfilmsRepository;
+
+    @Autowired
     FilmsPersonInvolvedService filmRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
@@ -44,15 +48,12 @@ public class AuthController {
     public String AuthAddToFavorites(Principal principal,@RequestParam(value = "filmId",
             required = true) final Long filmId){
 
-        User user = userRepository.findUserByUsername(principal.getName());
-
-        if(user==null){
-            return "redirect:/";
-        }
-
         Film film = filmRepository.getFilmAndPersonInvolved(filmId);
-        if(film!=null) user.addToFavorites(film);
-
+        User user = null;
+        if(film!=null)
+           user = userfilmsRepository.addFilmToUser(principal.getName(),film);
+        if (user == null)
+            return "redirect:/";
         return "redirect:/users/"+user.getId()+"/favorites";
     }
 

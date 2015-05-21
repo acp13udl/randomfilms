@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -18,39 +19,42 @@ import java.util.logging.Logger;
 @Service
 public class UserFilmsServiceImpl implements UserFilmsService {
 
-    final org.jboss.logging.Logger logger = LoggerFactory.logger(UserFilmsServiceImpl.class);
-
-
 
     @Autowired
     FilmRepository filmRepository;
     @Autowired
     UserRepository userRepository;
 
+
     @Transactional(readOnly = true)
     @Override
-    public User getUserFilms(Long userId) {
-        User user = userRepository.findOne(userId);
-        logger.info("Cargado usuario " + user.getUsername() +
-                "con " + user.getFavoritesList().size());
+    public User getUserFilms(Long id) {
+        User user = userRepository.findOne(id);
+        user.getFavoritesList().size();
         return user;
     }
 
     @Transactional
     @Override
-    public User addFilmToUser(Long userId, Film film){
-        User user = userRepository.findOne(userId);
-        user.addToFavorites(film);
-        userRepository.save(user);
+    public User addFilmToUser(String username, Film film) {
+        User user = userRepository.findUserByUsername(username);
+        if (user != null) {
+            user.getFavoritesList().size();
+            if (!existFilm(user.getFavoritesList(),film)){
+                user.addToFavorites(film);
+            }
+            userRepository.save(user);
+        }
         return user;
     }
 
-    @Transactional
-    @Override
-    public void removeFilmFromUser(Long userId,Long filmId) {
-        User user = userRepository.findOne(userId);
-        Film film = filmRepository.findOne(filmId);
-        user.removeFilm(film);
-        userRepository.save(user);
+    private boolean existFilm(List<Film> films, Film film) {
+
+        for (Film f : films) {
+            if (f.getId().longValue() == film.getId().longValue()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -16,9 +16,16 @@ public class RepositoryUserDetailsService implements UserDetailsService{
     @Autowired
     public RepositoryUserDetailsService(UserRepository repository) {
         this.repository = repository;
+
         User u = new User("admin", "admin");
-        u.getFavoritesList().size();
         this.repository.save(u);
+        User u2 = new User("adrian","adrian");
+        this.repository.save(u2);
+        User u3 = new User("alejandro","alejandro");
+        this.repository.save(u3);
+        User u4 = new User("lluis","lluis");
+        this.repository.save(u4);
+
     }
 
     @Override

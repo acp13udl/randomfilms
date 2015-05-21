@@ -27,7 +27,7 @@ public class User implements UserDetails{
     @NotBlank(message = "Email cannot be blank")
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Film> favoritesList = new ArrayList<Film>();
 
 

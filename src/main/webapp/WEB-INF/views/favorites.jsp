@@ -60,6 +60,7 @@
 
     <div id="container" style="margin-left: 10px; margin-right: 10px;">
         <div class="row">
+            <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div style="text-align: center;">
                     <h1 style="font-family: cursive; font-weight: bold;">Favorites Films</h1>
@@ -93,6 +94,7 @@
                     </c:when>
                 </c:choose>
             </div>
+            <div class="col-md-3"></div>
         </div>
         <div class="row" style="margin-left: 5px; margin-right: 5px;">
             <a class="btn btn-primary" href="/" style="float: right;">Back</a>
