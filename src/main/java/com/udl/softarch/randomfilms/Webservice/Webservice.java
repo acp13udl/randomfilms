@@ -34,6 +34,12 @@ public class Webservice {
 
     String directorsIMDBQuery = "string-join($m//directors/director/nameId, \",\")";
 
+    String token = "2c5bbcb7-4848-40f7-ab5d-e97447352e67";
+    //more tokens
+    //e1fcca91-1fca-4b75-8006-f292380f6e66
+    //14937c71-b3de-4b72-b1c8-1c93c0ae3a7e
+    //6907e50a-2158-422e-b9ae-9af315ed2118
+
     String filmQuery = "declare variable $doc external;\n"
             +"for $m in $doc//movies/movie\n"
             +"return\n"
@@ -98,7 +104,7 @@ public class Webservice {
     public List<Film> getFilmByTitle(String title, int limit) throws IOException, ClassNotFoundException,InstantiationException
                                                         ,IllegalAccessException,XQException,JAXBException {
 
-        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit="+limit;
+        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit="+limit+"&token="+token;
         connectionToAPI(url,Film.class);
 
         return recoveryFilms();
@@ -164,7 +170,7 @@ public class Webservice {
 
     public List<Actor> getActorsByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
 
-        final String url  = URL_BASE+"imdb?idIMDB="+IMDBId+"&format=XML&actors=S&biography=1&bornDied=1";
+        final String url  = URL_BASE+"imdb?idIMDB="+IMDBId+"&format=XML&actors=S&biography=1&bornDied=1"+"&token="+token;
         connectionToAPI(url, Actor.class);
         return recoveryActors();
 
@@ -172,7 +178,7 @@ public class Webservice {
 
     public Director getDirectorByIMDBId(String IMDBId) throws XQException, IOException, IllegalAccessException, JAXBException, InstantiationException, ClassNotFoundException {
 
-        final String url  = URL_BASE+"imdb?idName="+IMDBId+"&format=XML&bornDied=1";
+        final String url  = URL_BASE+"imdb?idName="+IMDBId+"&format=XML&bornDied=1"+"&token="+token;
         connectionToAPI(url, Director.class);
         return recoveryDirector();
 
