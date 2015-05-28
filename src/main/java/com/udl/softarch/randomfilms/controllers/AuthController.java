@@ -41,7 +41,7 @@ public class AuthController {
         if(user==null){
             return "redirect:/";
         }
-        return "redirect:/users/"+user.getId()+"/favorites";
+        return "redirect:/users/"+user.getUsername()+"/favorites";
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.GET, produces = "text/html")
@@ -54,7 +54,7 @@ public class AuthController {
            user = userfilmsRepository.addFilmToUser(principal.getName(),film);
         if (user == null)
             return "redirect:/";
-        return "redirect:/users/"+user.getId()+"/favorites";
+        return "redirect:/users/"+user.getUsername()+"/favorites";
     }
 
 }

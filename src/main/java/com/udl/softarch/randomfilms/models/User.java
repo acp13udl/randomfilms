@@ -17,11 +17,9 @@ import java.util.List;
  */
 @Entity
 public class User implements UserDetails{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
 
     @NotBlank(message = "Username cannot be blank")
+    @Id
     private String username;
 
     @NotBlank(message = "Email cannot be blank")
@@ -39,9 +37,6 @@ public class User implements UserDetails{
     }
 
 
-    public Long getId() {
-        return Id;
-    }
 
     public String getUsername() {
         return username;
@@ -69,10 +64,6 @@ public class User implements UserDetails{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setId(Long id) {
-        Id = id;
     }
 
     @Override

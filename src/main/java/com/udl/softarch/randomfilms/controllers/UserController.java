@@ -90,11 +90,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded", produces = "text/html")
-    public String createHtml(@Valid @ModelAttribute("user") User user, BindingResult binding, HttpServletResponse response) {
+    public String createHtml(@Valid @PathVariable(value = "username")String username,@Valid @PathVariable(value = "password")String password, BindingResult binding, HttpServletResponse response) {
         if(binding.hasErrors()) {
             return "form";
         }
-        return "redirect:/user/" + create(user, response).getId();
+        create(new User(username,password), response);
+        return "redirect:/users/";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -111,7 +112,7 @@ public class UserController {
         if (binding.hasErrors()) {
             return "form";
         }
-        return "redirect:/user/" + update(id,user).getId();
+        return "redirect:/user/" + update(id,user).getUsername();
     }
 
 

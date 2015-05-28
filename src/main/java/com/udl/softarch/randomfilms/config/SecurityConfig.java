@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/validation").authenticated()
                 .antMatchers(HttpMethod.GET, "/validation/add").authenticated()
+                .antMatchers(HttpMethod.GET, "/register").hasRole("ADMIN")
                 .anyRequest().permitAll().and()
                 .addFilterAfter(new CSRFCookieFilter(), CsrfFilter.class)
                 .csrf().csrfTokenRepository(csrfTokenRepository());
