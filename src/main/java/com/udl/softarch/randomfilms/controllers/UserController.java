@@ -6,6 +6,7 @@ import com.udl.softarch.randomfilms.models.Actor;
 
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
+import com.udl.softarch.randomfilms.models.UserPostWrapper;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.repositories.UserRepository;
 import com.udl.softarch.randomfilms.services.UserFilmsService;
@@ -38,8 +39,6 @@ public class UserController {
     @Autowired
     FilmRepository filmRepository;
 
-    private boolean first = true;
-
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -57,27 +56,27 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET)
     @ResponseBody
-    public User receiveFavorites(@PathVariable("id")Long id){
+    public User receiveFavorites(@PathVariable("id")String id){
 
-        Preconditions.checkNotNull(userRepository.findOne(id), "User not exist");
+        Preconditions.checkNotNull(userRepository.findUserByUsername(id), "User not exist");
         return userFilmsService.getUserFilms(id);
     }
 
     @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET,produces = "text/html")
-    public ModelAndView receiveFavoritesHTML(@PathVariable("id")Long id){
+    public ModelAndView receiveFavoritesHTML(@PathVariable("id")String id){
         return new ModelAndView("favorites","user",receiveFavorites(id));
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public User receiveProfile(@PathVariable("id")Long id){
-        User user = userRepository.findOne(id);
+    public User receiveProfile(@PathVariable("id")String id){
+        User user = userRepository.findUserByUsername(id);
         Preconditions.checkNotNull(user, "Test user not found");
         return user;
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
-    public ModelAndView receiveProfileHTML(@PathVariable("id")Long id){
+    public ModelAndView receiveProfileHTML(@PathVariable("id")String id){
 
         return new ModelAndView("user","user",receiveProfile(id));
     }
@@ -85,16 +84,16 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public User create(@Valid @RequestBody User user, HttpServletResponse response) {
-        return userRepository.save(user);
+    public User create(@Valid @ModelAttribute UserPostWrapper user, HttpServletResponse response) {
+        return userRepository.save(new User(user.getUsername(),user.getPassword()));
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded", produces = "text/html")
-    public String createHtml(@Valid @PathVariable(value = "username")String username,@Valid @PathVariable(value = "password")String password, BindingResult binding, HttpServletResponse response) {
+    public String createHtml(@Valid @ModelAttribute UserPostWrapper user, BindingResult binding, HttpServletResponse response) {
         if(binding.hasErrors()) {
             return "form";
         }
-        create(new User(username,password), response);
+        create(user, response);
         return "redirect:/users/";
     }
 

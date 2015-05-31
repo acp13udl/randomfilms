@@ -90,5 +90,7 @@ public class User implements UserDetails{
     public void removeFilm(Film film){
         favoritesList.remove(film);
     }
+
+
 }
 

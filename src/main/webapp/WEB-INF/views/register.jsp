@@ -32,7 +32,7 @@
   </script>
 </head>
 <body>
-<form method="get" action="/users" onsubmit="checkFields()">
+<form method="post" action="/users" onsubmit="checkFields()">
   <input type="hidden"
          name="${_csrf.parameterName}"
          value="${_csrf.token}"/>

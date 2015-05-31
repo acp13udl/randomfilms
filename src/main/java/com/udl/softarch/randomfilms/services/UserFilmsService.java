@@ -9,6 +9,6 @@ import com.udl.softarch.randomfilms.models.User;
  */
 public interface UserFilmsService {
 
-    User getUserFilms(Long userId);
+    User getUserFilms(String userId);
     User addFilmToUser(String name, Film film);
 }

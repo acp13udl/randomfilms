@@ -28,8 +28,8 @@ public class UserFilmsServiceImpl implements UserFilmsService {
 
     @Transactional(readOnly = true)
     @Override
-    public User getUserFilms(Long id) {
-        User user = userRepository.findOne(id);
+    public User getUserFilms(String id) {
+        User user = userRepository.findUserByUsername(id);
         user.getFavoritesList().size();
         return user;
     }
