@@ -157,10 +157,8 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <label for="inputRat">Rating:</label>
-                                    <input type="hidden"
-                                           name="${_csrf.parameterName}"
-                                           value="${_csrf.token}"/>
                                     <input id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
                                     <input type="hidden" name="author" value="${username}"/>
                                     <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
