@@ -1,0 +1,8 @@
+language: java
+notifications:
+  email: adri-907@hotmail.com
+  on_success: change
+  on_failure: alway
+branches:
+  only:
+  - master
