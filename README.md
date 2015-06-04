@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/acp13udl/randomfilms.svg?branch=master)](https://travis-ci.org/acp13udl/randomfilms)
 
-This is a simple Spring demo of a Greetings application providing a RESTFul JSON API also available from an HTML user interface.
+This is random films application providing a RESTFul JSON API also available from an HTML user interface.
 ...
 To run locally, first build WAR package:
 
