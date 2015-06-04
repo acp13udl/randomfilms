@@ -3,9 +3,12 @@ package com.udl.softarch.randomfilms.controllers;
 import com.sun.xml.internal.fastinfoset.Encoder;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
+import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
+import com.udl.softarch.randomfilms.services.UserFilmsService;
 import com.udl.softarch.randomfilms.utils.GenerateRandom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,7 @@ import javax.xml.xquery.XQException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +38,8 @@ public class InitialController {
     //TODO Change repository to service
     @Autowired
     FilmRepository filmRepository;
-
+    @Autowired
+    UserFilmsService userFilmsService;
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     @ResponseBody
@@ -52,10 +57,14 @@ public class InitialController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView listHTML(@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
+    public ModelAndView listHTML(Principal principal,@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
             required = false) final String search){
         ModelAndView modelAndView = new ModelAndView("initialPage");
         modelAndView.addObject("films",listRandomFilm());
+
+        if (principal !=null && isAdminUser(principal))
+            modelAndView.addObject("isAdminUser",true);
+
 
         if(search!= null){
             try {
@@ -113,6 +122,13 @@ public class InitialController {
     private String decode(String decode) throws UnsupportedEncodingException {
 
         return URLDecoder.decode(decode, Encoder.UTF_8);
+    }
+
+    private boolean isAdminUser(Principal principal){
+
+        User user = userFilmsService.getUserFilms(principal.getName());
+
+        return user.getAuthorities().toString().equals(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN").toString());
     }
 
 

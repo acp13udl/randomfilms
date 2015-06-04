@@ -44,17 +44,23 @@
                 <ul class="nav navbar-nav">
 
                 </ul>
-                <form class="navbar-form navbar-left" onsubmit="return false;">
-                    <div class="input-group">
-                        <a id="FavoritesButton" class="btn btn-danger" href="/validation">Favorites</a>
-                    </div>
-                </form>
+                    <form class="navbar-form navbar-left" onsubmit="return false;">
+                        <div class="input-group">
+                            <a id="FavoritesButton" class="btn btn-danger" href="/validation">Favorites</a>
+                        </div>
+                    </form>
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
+                    <c:choose>
+                        <c:when test="${not empty isAdminUser}">
+                            <div class="input-group" style="margin-right: 10px;">
+                                <a id="adminButton" class="btn btn-warning" href="/register">Register new user</a>
+                            </div>
+                        </c:when>
+                    </c:choose>
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
                         <a id="searchButton" class="input-group-addon" href="/">Search</a>
                     </div>
-
                     <%--<button type="submit" class="btn btn-default">Submit</button>--%>
                 </form>
             </div>
