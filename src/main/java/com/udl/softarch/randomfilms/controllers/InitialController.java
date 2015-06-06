@@ -1,6 +1,5 @@
 package com.udl.softarch.randomfilms.controllers;
 
-import com.sun.xml.internal.fastinfoset.Encoder;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
@@ -121,7 +120,7 @@ public class InitialController {
 
     private String decode(String decode) throws UnsupportedEncodingException {
 
-        return URLDecoder.decode(decode, Encoder.UTF_8);
+        return URLDecoder.decode(decode, "UTF-8");
     }
 
     private boolean isAdminUser(Principal principal){
