@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "name": "RandomFilms",
+  "description": "AngularJS client for the RandomFilms",
+  "repository": "https://github.com/acp13udl/randomfilms",
+  "license": "MIT",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "http-server app/ -a 0.0.0.0 -p $PORT",
+    "server": "http-server app/ -a 0.0.0.0 -p 8000"
+  },
+  "dependencies": {
+    "http-server": "^0.8.0"
+  }
+}
