@@ -133,7 +133,11 @@ public class Film {
 
     public String getReleaseDate() {
         String res = Integer.toString(this.releaseDate);
-        return res.substring(0,4) + " - " + res.substring(4,6) + " - " + res.substring(6,res.length());
+        try {
+            return res.substring(0, 4) + " - " + res.substring(4, 6) + " - " + res.substring(6, res.length());
+        }catch (Exception exception){
+            return "";
+        }
     }
 
     public String getSimplePlot() {
