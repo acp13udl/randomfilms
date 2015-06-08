@@ -4,6 +4,8 @@ import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.User;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
+import com.udl.softarch.randomfilms.services.FilmService;
+import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import com.udl.softarch.randomfilms.services.UserFilmsService;
 import com.udl.softarch.randomfilms.utils.GenerateRandom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +41,21 @@ public class InitialController {
     FilmRepository filmRepository;
     @Autowired
     UserFilmsService userFilmsService;
+    @Autowired
+    FilmsPersonInvolvedService filmsPersonInvolvedService;
+    @Autowired
+    FilmService filmService;
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     @ResponseBody
     public List<Film> listRandomFilm(){
         if(filmRepository.count()< 11){
-            return filmRepository.findAll();
+            return filmService.getFilmsList();
         }
         List<Film> res = new ArrayList<>();
         List<Long> random = GenerateRandom.randomLongValues(filmRepository.count());
         for(Long value : random){
-            res.add(filmRepository.findOne(value));
+            res.add(filmsPersonInvolvedService.getFilmAndPersonInvolved(value));
         }
 
         return res;
@@ -129,6 +135,4 @@ public class InitialController {
 
         return user.getAuthorities().toString().equals(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN").toString());
     }
-
-
 }
