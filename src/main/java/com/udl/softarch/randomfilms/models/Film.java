@@ -1,11 +1,7 @@
 package com.udl.softarch.randomfilms.models;
 
-import com.sun.xml.internal.fastinfoset.Encoder;
-import sun.nio.cs.ext.DoubleByte;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -189,12 +185,12 @@ public class Film {
         String url = "?idIMDB=" + idIMDB +
                 "&genres=" + genres +
                 "&metascore=" + metascore+
-                "&plot=" + URLEncoder.encode(plot, Encoder.UTF_8) +
+                "&plot=" + URLEncoder.encode(plot, "UTF-8") +
                 "&rated=" + rated +
                 "&rating=" + rating +
                 "&releaseDate=" + releaseDate +
                 "&runTime=" + runtime+
-                "&simplePlot=" + URLEncoder.encode(simplePlot, Encoder.UTF_8) +
+                "&simplePlot=" + URLEncoder.encode(simplePlot, "UTF-8") +
                 "&urlIMDB=" + urlIMDB +
                 "&urlPoster=" +  urlPoster +
                 "&year=" + year +
