@@ -1,29 +1,40 @@
 
 (function(){
-    var app = angular.module("randomfilmsJS",["randomFilmsModule"]);
-    console.log("paso inicio");
-    app.controller("InitialController", ["$http",
+    var app = angular.module("randomfilmsJS", []);
+    console.log("aqui");
+    app.controller("RandomFilmsController", ["$http",
         function($http) {
-            this.INITIALCONTROLLER_API = "https://randomfilms.herokuapp.com/";
+            this.RANDOM_API = "../";
             this.loading = false;
-            var randomFilmsController = this;
-            console.log("initialcontroller");
+            var randomFilmsCrt = this;
+            var config = {headers: {
+                'Accept': 'application/json'
+            }
+            }
+            randomFilmsCrt.films = []
+            console.log("entre medio");
             this.isLoading = function(){
                 return this.loading;
             };
 
             this.randomFilmsEmpty = function(){
-                console.log("entro?");
-                return undefined;
+
+                return randomFilmsCrt.films == [];
+            };
+
+            this.getFilms = function(){
+                return randomFilmsCrt.films;
             };
 
             this.listFilms = function(){
                 this.loading = true;
-                $http.get(this.INITIALCONTROLLER_API)
+                console.log("entro aqui");
+                $http.get(this.RANDOM_API,config)
                     .success(function (data) {
-                        randomFilmsController.films = data;
-                        console.log("Print");
+                        console.log(JSON.stringify(data));
+                        randomFilmsCrt.films = data;
                     });
             };
+
         }]);
-});
+}());
