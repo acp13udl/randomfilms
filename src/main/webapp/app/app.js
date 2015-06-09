@@ -1,6 +1,6 @@
-// principal configuration for randomfilms app
+
 (function(){
-    var app = angular.module('randomfilmsJS', ['random-films']);
+    var app = angular.module("randomfilmsJS",["randomFilmsModule"]);
     console.log("paso inicio");
     app.controller("InitialController", ["$http",
         function($http) {
@@ -26,5 +26,4 @@
                     });
             };
         }]);
-}());
-
+});
