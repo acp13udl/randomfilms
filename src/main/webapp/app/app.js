@@ -5,25 +5,16 @@
     app.controller("RandomFilmsController", ["$http",
         function($http) {
             this.RANDOM_API = "../";
-            this.loading = false;
+            var randomFilmsSuccess = false;
             var randomFilmsCrt = this;
             var config = {headers: {
                 'Accept': 'application/json'
             }
             }
-            randomFilmsCrt.films = []
             console.log("entre medio");
-            this.isLoading = function(){
-                return this.loading;
-            };
 
-            this.randomFilmsEmpty = function(){
-
-                return randomFilmsCrt.films == [];
-            };
-
-            this.getFilms = function(){
-                return randomFilmsCrt.films;
+            this.randomFilmsRequestSuccess = function(){
+                return randomFilmsSuccess;
             };
 
             this.listFilms = function(){
@@ -33,6 +24,7 @@
                     .success(function (data) {
                         console.log(JSON.stringify(data));
                         randomFilmsCrt.films = data;
+                        randomFilmsSuccess = true;
                     });
             };
 
