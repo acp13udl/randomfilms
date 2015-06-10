@@ -10,6 +10,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.xquery.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -118,7 +119,11 @@ public class Webservice {
             while (xqResultSequence.next()){
                 XQItem  item = xqResultSequence.getItem();
                 Film film = (Film) unmarshaller.unmarshal(item.getNode());
-                //System.out.println("::: "+film.toString());
+                try {
+                    film.createUrlParams();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 films.add(film);
             }
         } catch (XQException e) {

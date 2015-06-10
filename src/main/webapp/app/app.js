@@ -17,16 +17,28 @@
                 return randomFilmsSuccess;
             };
 
+            this.searchFilmsSuccess = function(){
+                if(randomFilmsSuccess) {
+                    console.log('undefined ' + randomFilmsCrt.films.searchList);
+                    return randomFilmsCrt.films.searchList != undefined;
+                }
+                return false;
+            };
+
             this.listFilms = function(){
-                this.loading = true;
-                console.log("entro aqui");
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
-                        console.log(JSON.stringify(data));
+                        console.log(JSON.stringify(data.randomList));
                         randomFilmsCrt.films = data;
                         randomFilmsSuccess = true;
                     });
             };
+
+            this.listFilms();
+
+            this.searchFilm = function () {
+
+            }
 
         }]);
 }());

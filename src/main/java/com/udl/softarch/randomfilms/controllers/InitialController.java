@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -48,34 +49,28 @@ public class InitialController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     @ResponseBody
-    public List<Film> listRandomFilm(){
-        if(filmRepository.count()< 11){
-            return filmService.getFilmsList();
-        }
-        List<Film> res = new ArrayList<>();
-        List<Long> random = GenerateRandom.randomLongValues(filmRepository.count());
-        for(Long value : random){
-            res.add(filmsPersonInvolvedService.getFilmAndPersonInvolved(value));
-        }
-
-        return res;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, produces = "text/html")
-    public ModelAndView listHTML(Principal principal,@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
+    public Map<String,List<Film>> listRandomFilm(Principal principal,@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
             required = false) final String search){
-        ModelAndView modelAndView = new ModelAndView("initialPage");
-        modelAndView.addObject("films",listRandomFilm());
+        Map<String,List<Film>> map = new HashMap<>();
+        List<Film> randomList = new ArrayList<>();
+        List<Film> searchList = new ArrayList<>();
 
-        if (principal !=null && isAdminUser(principal))
-            modelAndView.addObject("isAdminUser",true);
+        if(filmRepository.count()< 11){
+            randomList.addAll(filmService.getFilmsList());
+        }else{
+            List<Long> random = GenerateRandom.randomLongValues(filmRepository.count());
+            for(Long value : random){
+                randomList.add(filmsPersonInvolvedService.getFilmAndPersonInvolved(value));
+            }
+        }
 
+        map.put("randomList",randomList);
 
         if(search!= null){
             try {
                 //TODO Hay que hacerlo en otro método compo el listRandomFilm?
-                List <Film> searchedFilms = Webservice.getInstance().getFilmByTitle(search, 10);
-                modelAndView.addObject("searchFilms",searchedFilms);
+                searchList.addAll(Webservice.getInstance().getFilmByTitle(search, 10));
+                map.put("searchList",searchList);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -91,6 +86,25 @@ public class InitialController {
             }
         }
 
+        return map;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "text/html")
+    public ModelAndView listHTML(Principal principal,@RequestParam Map<String, String> parameters, @RequestParam(value = "search",
+            required = false) final String search){
+
+        Map<String,List<Film>> map = listRandomFilm(principal,parameters,search);
+
+        ModelAndView modelAndView = new ModelAndView("initialPage");
+        modelAndView.addObject("films",map.get("randomList"));
+
+        if (principal !=null && isAdminUser(principal))
+            modelAndView.addObject("isAdminUser",true);
+
+        if (map.containsKey("searchList")){
+            modelAndView.addObject("searchFilms",map.get("searchList"));
+        }
+
         return modelAndView;
     }
 
@@ -103,7 +117,8 @@ public class InitialController {
                          @RequestParam(value = "rating",required=true) String rating,@RequestParam(value = "releaseDate",required=true) String releaseDate,
                          @RequestParam(value = "runTime",required=true) String runTime,@RequestParam(value = "simplePlot",required=true) String simplePlot,
                          @RequestParam(value = "genres",required=true) String genres,@RequestParam(value = "urlIMDB",required=true) String urlIMDB,
-                         @RequestParam(value = "idIMDB",required=true) String idIMDB,@RequestParam(value = "directorsIMDB",required=true) String directorsIMDB) throws UnsupportedEncodingException {
+                         @RequestParam(value = "idIMDB",required=true) String idIMDB,@RequestParam(value = "directorsIMDB",required=true) String directorsIMDB,
+                           @RequestParam(value = "isAngular",required=true) String isAngular) throws UnsupportedEncodingException {
 
         Film film = new Film(idIMDB,genres,metascore,decode(plot),rated,
                 Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,decode(simplePlot),
