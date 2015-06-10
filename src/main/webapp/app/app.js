@@ -32,8 +32,9 @@
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
                         console.log(JSON.stringify(data));
-                        randomFilmsCrt.films = data;
+                        //randomFilmsCrt.films.push(data);
                     });
+                return true;
             };
 
         }]);

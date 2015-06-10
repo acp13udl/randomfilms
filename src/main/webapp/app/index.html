@@ -54,29 +54,26 @@
                     <h1 style="font-family: cursive; font-weight: bold;">Random Films</h1>
                     </br></br>
                 </div>
-                <table id="randomFilmsTable" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">ID</th>
-                        <th class="col-md-2">Title</th>
-                        <th class="col-md-2">Year</th>
-                        <th >Description</th>
-                        <th class="col-md-1"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <div ng-controller="RandomFilmsController as randomFilmsController">
-                            <div ng-show="randomFilmsController.listFilms()">
-                                    <tr ng-repeat="film in randomFilmsController.getFilms()">
-                                    </tr>
-                            </div>
-                            <!--<script type="text/javascript">-->
-                                <!--$('#clickable').click();-->
-                                <!--console.log("creo que click");-->
-                            <!--</script>-->
-                        </div>
-                    </tbody>
-                </table>
+                <div ng-controller="RandomFilmsController as randomFilmsController">
+                    <div ng-show="randomFilmsController.listFilms()">
+                        <table id="randomFilmsTable" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">ID</th>
+                                <th class="col-md-2">Title</th>
+                                <th class="col-md-2">Year</th>
+                                <th >Description</th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <tr ng-repeat="film in randomFilmsController.films">
+                                    <td>{{film}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <!--<c:choose>-->
