@@ -15,14 +15,42 @@
     <script src="app.js"></script>
     <script src="random-films/random-films.js"></script>
     <script type="text/javascript">
+        var searchUrl="";
         function validateKey(e){
-            $('#searchButton').attr('href',"/app/?search="+$('#searchInput').val());
+            searchUrl = "?search="+$('#searchInput').val();
+
             if(e.keyCode == 13){
-                window.location.assign("/app/?search="+$('#searchInput').val());
+                searchUrl = "?search="+$('#searchInput').val();
+
                 return false;
             }
         }
+        $(window).load(function() {
+            $('#loading').hide();
+        });
+
     </script>
+    <style type="text/css">
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            display: block;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 99;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            z-index: 100;
+        }
+    </style>
 
 </head>
 
@@ -52,40 +80,43 @@
                 <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
-                        <a id="searchButton" class="input-group-addon" ng-click="">Search</a>
+                        <a id="searchButton" class="input-group-addon" ng-click="randomFilmsController.listSearchFilms()" style="cursor:pointer">Search</a>
                     </div>
                 </form>
             </div>
         </div>
     </nav>
+    <div id="loading">
+        <img id="loading-image" src="images/482.gif" alt="Loading..." />
+    </div>
 
-    <div class="container" id="container" style="margin-left: 10px; margin-right: 10px;">
+    <div id="container" style="margin-left: 10px; margin-right: 10px;">
             <div class="row">
                 <div class="col-md-6" >
                     <div style="text-align: center;">
                         <h1 style="font-family: cursive; font-weight: bold;">Random Films</h1>
                         </br></br>
                     </div>
-                            <table id="randomFilmsTable" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-1" >ID</th>
-                                        <th class="col-md-2">Title</th>
-                                        <th class="col-md-2">Year</th>
-                                        <th >Description</th>
-                                        <th class="col-md-1"></th>
-                                    </tr>
-                                </thead>
-                                    <tbody ng-show="randomFilmsController.randomFilmsRequestSuccess()">
-                                        <tr ng-repeat="film in randomFilmsController.films.randomList">
-                                            <td>{{film.id}}</td>
-                                            <td>{{film.title}}</td>
-                                            <td>{{film.year}}</td>
-                                            <td>{{film.simplePlot}}</td>
-                                            <td><a class="btn btn-success btn-sm" href="../films/{{film.id}}">Link</a></td>
-                                        </tr>
-                                    </tbody>
-                            </table>
+                    <table id="randomFilmsTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1" >ID</th>
+                                <th class="col-md-2">Title</th>
+                                <th class="col-md-2">Year</th>
+                                <th >Description</th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                        </thead>
+                            <tbody ng-show="randomFilmsController.randomFilmsRequestSuccess()">
+                                <tr ng-repeat="film in randomFilmsController.films.randomList">
+                                    <td>{{film.id}}</td>
+                                    <td>{{film.title}}</td>
+                                    <td>{{film.year}}</td>
+                                    <td>{{film.simplePlot}}</td>
+                                    <td><a class="btn btn-success btn-sm" href="../films/{{film.id}}">Link</a></td>
+                                </tr>
+                            </tbody>
+                    </table>
                 </div>
                 <div class="col-md-6">
                     <div ng-show="randomFilmsController.searchFilmsSuccess()">
@@ -103,14 +134,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <div ng-repeat="film in randomFilmsController.films.searchList">
-                                <tr>
+
+                                <tr ng-repeat="film in randomFilmsController.films.searchList">
                                     <td>{{film.title}}</td>
                                     <td>{{film.year}}</td>
-                                    <td>{{film.getSimplePlot}}</td>
-                                    <td><a class="btn btn-success btn-sm" href="/save/{{ (film.saveUrl + &isAngular=0) }}">Link</a></td>
+                                    <td>{{film.simplePlot}}</td>
+                                    <td><a class="btn btn-success btn-sm" ng-click="randomFilmsController.saveUrl(film.urlParams)">Link</a></td>
                                 </tr>
-                            </div>
+
                             </tbody>
                         </table>
                     </div>

@@ -2,8 +2,8 @@
 (function(){
     var app = angular.module("randomfilmsJS", []);
     console.log("aqui");
-    app.controller("RandomFilmsController", ["$http",
-        function($http) {
+    app.controller("RandomFilmsController", ["$scope","$http",
+        function($scope,$http) {
             this.RANDOM_API = "../";
             var randomFilmsSuccess = false;
             var randomFilmsCrt = this;
@@ -11,7 +11,6 @@
                 'Accept': 'application/json'
             }
             }
-            console.log("entre medio");
 
             this.randomFilmsRequestSuccess = function(){
                 return randomFilmsSuccess;
@@ -19,7 +18,6 @@
 
             this.searchFilmsSuccess = function(){
                 if(randomFilmsSuccess) {
-                    console.log('undefined ' + randomFilmsCrt.films.searchList);
                     return randomFilmsCrt.films.searchList != undefined;
                 }
                 return false;
@@ -28,17 +26,31 @@
             this.listFilms = function(){
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
-                        console.log(JSON.stringify(data.randomList));
                         randomFilmsCrt.films = data;
                         randomFilmsSuccess = true;
                     });
             };
 
-            this.listFilms();
+            this.listSearchFilms = function(){
+                $('#loading').show();
+                $http.get(this.RANDOM_API+searchUrl,config)
+                    .success(function (data) {
+                        console.log(data.searchList);
+                        randomFilmsCrt.films = data;
+                        randomFilmsSuccess = true;
+                        $('#loading').hide();
+                    });
+            };
 
-            this.searchFilm = function () {
-
+            this.saveUrl = function(param){
+                $('#loading').show();
+                console.log("../save/"+param);
+                $http.get("../save/"+param,config)
+                    .success(function (data) {
+                        $('#loading').hide();
+                    });
             }
 
+            this.listFilms();
         }]);
 }());
