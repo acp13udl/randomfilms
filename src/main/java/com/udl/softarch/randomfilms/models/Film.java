@@ -59,6 +59,8 @@ public class Film {
 
     @XmlElement private String title;
 
+    private String saveUrl;
+
     public Film(){}
 
     public Film(String title) {
@@ -98,7 +100,9 @@ public class Film {
         return genres;
     }
 
-    public Film(String idIMDB, String genres, String metascore, String plot, String rated, float rating, int releaseDate, String runTime, String simplePlot, String urlIMDB, String urlPoster, int year, String title,String directorsIMDB) {
+    public Film(String idIMDB, String genres, String metascore, String plot, String rated, float rating, int releaseDate,
+                String runTime, String simplePlot, String urlIMDB, String urlPoster, int year, String title,String directorsIMDB){
+
         this.idIMDB = idIMDB;
         this.genres = genres;
         this.metascore = metascore;
@@ -184,9 +188,8 @@ public class Film {
         reviews.add(review);
     }
 
-    public String createUrlParams() throws UnsupportedEncodingException {
-
-        String url = "?idIMDB=" + idIMDB +
+    public void createUrlParams() throws UnsupportedEncodingException{
+        this.saveUrl = "?idIMDB=" + idIMDB +
                 "&genres=" + genres +
                 "&metascore=" + metascore+
                 "&plot=" + URLEncoder.encode(plot, "UTF-8") +
@@ -200,8 +203,12 @@ public class Film {
                 "&year=" + year +
                 "&title=" + title +
                 "&directorsIMDB="+directorsIMDB;
+    }
 
-        return url;
+
+    public String getUrlParams() {
+
+        return this.saveUrl;
     }
 
 }

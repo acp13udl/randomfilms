@@ -5,37 +5,40 @@
     app.controller("RandomFilmsController", ["$http",
         function($http) {
             this.RANDOM_API = "../";
-            this.loading = false;
+            var randomFilmsSuccess = false;
             var randomFilmsCrt = this;
             var config = {headers: {
                 'Accept': 'application/json'
             }
             }
-            randomFilmsCrt.films = []
             console.log("entre medio");
-            this.isLoading = function(){
-                return this.loading;
+
+            this.randomFilmsRequestSuccess = function(){
+                return randomFilmsSuccess;
             };
 
-            this.randomFilmsEmpty = function(){
-
-                return randomFilmsCrt.films == [];
-            };
-
-            this.getFilms = function(){
-                return randomFilmsCrt.films;
+            this.searchFilmsSuccess = function(){
+                if(randomFilmsSuccess) {
+                    console.log('undefined ' + randomFilmsCrt.films.searchList);
+                    return randomFilmsCrt.films.searchList != undefined;
+                }
+                return false;
             };
 
             this.listFilms = function(){
-                this.loading = true;
-                console.log("entro aqui");
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
-                        console.log(JSON.stringify(data));
-                        //randomFilmsCrt.films.push(data);
+                        console.log(JSON.stringify(data.randomList));
+                        randomFilmsCrt.films = data;
+                        randomFilmsSuccess = true;
                     });
-                return true;
             };
+
+            this.listFilms();
+
+            this.searchFilm = function () {
+
+            }
 
         }]);
 }());

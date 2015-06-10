@@ -125,7 +125,7 @@
                                     <td>${film.getTitle()}</td>
                                     <td>${film.getYear()}</td>
                                     <td>${film.getSimplePlot()}</td>
-                                    <td><a class="btn btn-success btn-sm" href="/save/${film.createUrlParams()}">Link</a></td>
+                                    <td><a class="btn btn-success btn-sm" href="/save/${film.getUrlParams()}">Link</a></td>
                                 </tr>
                                 </li>
                             </c:forEach>
