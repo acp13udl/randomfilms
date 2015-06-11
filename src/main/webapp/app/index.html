@@ -9,11 +9,10 @@
     <title>Random Films app</title>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="base.css"/>-->
+    <link rel="stylesheet" href="css/base.css"/>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
     <script src="app.js"></script>
-    <script src="random-films/random-films.js"></script>
     <script type="text/javascript">
         var searchUrl="";
         function validateKey(e){
@@ -30,27 +29,6 @@
         });
 
     </script>
-    <style type="text/css">
-        #loading {
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            left: 0px;
-            position: fixed;
-            display: block;
-            opacity: 0.8;
-            background-color: #fff;
-            z-index: 99;
-            text-align: center;
-        }
-
-        #loading-image {
-            position: absolute;
-            top: 45%;
-            left: 45%;
-            z-index: 100;
-        }
-    </style>
 
 </head>
 
@@ -81,6 +59,7 @@
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
                         <a id="searchButton" class="input-group-addon" ng-click="randomFilmsController.listSearchFilms()" style="cursor:pointer">Search</a>
+
                     </div>
                 </form>
             </div>
@@ -139,7 +118,7 @@
                                     <td>{{film.title}}</td>
                                     <td>{{film.year}}</td>
                                     <td>{{film.simplePlot}}</td>
-                                    <td><a class="btn btn-success btn-sm" ng-click="randomFilmsController.saveUrl(film.urlParams)">Link</a></td>
+                                    <td><a id="saveRedirectbutton" class="btn btn-success btn-sm" ng-click="randomFilmsController.saveUrl(film.urlParams)">Link</a></td>
                                 </tr>
 
                             </tbody>
