@@ -99,11 +99,6 @@
                 return false;
             };
 
-            this.userIsAuthenticated = function (){
-
-                return randomFilmsCrt.user && authenticated;
-            };
-
             this.listFilms = function(){
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
@@ -165,6 +160,7 @@
 
             this.addReview = function(){
                 $('#loading').show();
+                console.log("review"+JSON.stringify(this.review));
                 $http.post(this.FILMS_URL+randomFilmsCrt.currentFilm.id,this.newReview)
                     .success(function (data) {
                         console.log(data);
@@ -197,22 +193,24 @@
                     });
             };
 
-            var authenticated;
+            randomFilmsCrt.authenticated = false;
             var authenticate = function(credentials, callback) {
                 $('#loading').show();
                 $http.get('../validation').success(function(data) {
                     console.log(JSON.stringify(data));
                     if (data.username) {
-                        authenticated = true;
+                        randomFilmsCrt.authenticated = true;
+                        console.log("auth");
                     } else {
-                        authenticated = false;
+                        randomFilmsCrt.authenticated = false;
+                        console.log("noAuth");
                     }
                     callback && callback();
                     showsFavoritesPage();
                     randomFilmsCrt.user = data;
                     $('#loading').hide();
                 }).error(function() {
-                    authenticated = false;
+                    randomFilmsCrt.authenticated = false;
                     callback && callback();
                 });
             };
@@ -220,7 +218,7 @@
             $scope.credentials = {};
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
-                    if (authenticated) {
+                    if (randomFilmsCrt.authenticated) {
                         $scope.error = false;
                     } else {
                         $scope.error = true;

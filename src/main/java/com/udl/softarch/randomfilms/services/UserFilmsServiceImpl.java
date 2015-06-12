@@ -30,7 +30,13 @@ public class UserFilmsServiceImpl implements UserFilmsService {
     @Override
     public User getUserFilms(String id) {
         User user = userRepository.findUserByUsername(id);
-        user.initializeLazyFavoritList();
+        user.getFavoritesList().size();
+
+        for (Film f :  user.getFavoritesList()){
+            f.getDirectors().size();
+            f.getActors().size();
+            f.getReviews().size();
+        }
         return user;
     }
 

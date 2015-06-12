@@ -2,11 +2,8 @@ package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
-import com.udl.softarch.randomfilms.models.Actor;
+import com.udl.softarch.randomfilms.models.*;
 
-import com.udl.softarch.randomfilms.models.Film;
-import com.udl.softarch.randomfilms.models.User;
-import com.udl.softarch.randomfilms.models.UserPostWrapper;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.repositories.UserRepository;
 import com.udl.softarch.randomfilms.services.UserFilmsService;
@@ -24,6 +21,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,7 +59,7 @@ public class UserController {
 
         Preconditions.checkNotNull(userRepository.findUserByUsername(id), "User not exist");
         User user = userFilmsService.getUserFilms(id);
-        return user;
+        return avoidLazy(user);
     }
 
     @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET,produces = "text/html")
@@ -114,6 +112,17 @@ public class UserController {
             return "form";
         }
         return "redirect:/user/" + update(id,user).getUsername();
+    }
+
+    private User avoidLazy(User user) {
+
+        for (Film f : user.getFavoritesList()) {
+            f.setActors(new ArrayList<Actor>());
+            f.setDirectors(new ArrayList<Director>());
+            f.setReviews(new ArrayList<Review>());
+        }
+
+        return user;
     }
 
 }

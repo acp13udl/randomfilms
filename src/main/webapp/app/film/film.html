@@ -80,9 +80,11 @@
                 <a class="btn btn-info" href="{{randomFilmsController.currentFilm.urlIMDB}}">Link IMDB</a>
 
                 <a class="btn btn-primary" href="/app" style="float: right;">Back</a>
-                <a class="btn btn-warning" ng-click="randomFilmsController.addFavorite()" style="float: right; margin-right: 5px;">Add Favorites</a>
+                    <a class="btn btn-warning" ng-click="randomFilmsController.addFavorite()" style="float: right; margin-right: 5px;">Add Favorites</a>
             </div>
         </form>
             <hr/>
+        <div ng-show="randomFilmsController.authenticated">
             <review-form></review-form>
+        </div>
 </section>

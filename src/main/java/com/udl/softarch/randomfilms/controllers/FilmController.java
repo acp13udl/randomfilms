@@ -1,6 +1,8 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.google.common.base.Preconditions;
+import com.udl.softarch.randomfilms.models.Actor;
+import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.models.Review;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 
 /**
  * Created by Allu on 21/04/2015.
@@ -37,13 +40,13 @@ public class FilmController {
         Film film = filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
         System.out.println(film.toString());
         Preconditions.checkNotNull(film, "Film not found");
-        return film;
+        return avoidLazy(film);
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html")
     public ModelAndView receiveHTML(Principal principal,@PathVariable("id")Long id){
         ModelAndView modelAndView = new ModelAndView("film");
-        modelAndView.addObject("film",receive(id));
+        modelAndView.addObject("film", receive(id));
         if (principal != null){
             modelAndView.addObject("username",principal.getName());
         }
@@ -67,5 +70,14 @@ public class FilmController {
         }
         createReview(id, review);
         return "redirect:/films/"+id;
+    }
+
+    private Film avoidLazy(Film film){
+
+        film.setDirectors(new ArrayList<Director>());
+        film.setActors(new ArrayList<Actor>());
+        film.setReviews(new ArrayList<Review>());
+
+        return film;
     }
 }

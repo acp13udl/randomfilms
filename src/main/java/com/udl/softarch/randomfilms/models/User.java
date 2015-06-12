@@ -36,8 +36,6 @@ public class User implements UserDetails{
         this.password =password;
     }
 
-
-
     public String getUsername() {
         return username;
     }
@@ -89,17 +87,6 @@ public class User implements UserDetails{
 
     public void removeFilm(Film film){
         favoritesList.remove(film);
-    }
-
-    public void initializeLazyFavoritList(){
-
-        this.favoritesList.size();
-
-        for (Film f : favoritesList){
-            f.getDirectors().size();
-            f.getActors().size();
-            f.getReviews().size();
-        }
     }
 
 

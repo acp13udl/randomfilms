@@ -1,8 +1,7 @@
 package com.udl.softarch.randomfilms.controllers;
 
 import com.udl.softarch.randomfilms.Webservice.Webservice;
-import com.udl.softarch.randomfilms.models.Film;
-import com.udl.softarch.randomfilms.models.User;
+import com.udl.softarch.randomfilms.models.*;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import com.udl.softarch.randomfilms.services.FilmService;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
@@ -64,13 +63,13 @@ public class InitialController {
             }
         }
 
-        map.put("randomList",randomList);
+        map.put("randomList",avoidLazy(randomList));
 
         if(search!= null){
             try {
                 //TODO Hay que hacerlo en otro método compo el listRandomFilm?
                 searchList.addAll(Webservice.getInstance().getFilmByTitle(search, 10));
-                map.put("searchList",searchList);
+                map.put("searchList",avoidLazy(searchList));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -96,7 +95,7 @@ public class InitialController {
         Map<String,List<Film>> map = listRandomFilm(principal,parameters,search);
 
         ModelAndView modelAndView = new ModelAndView("initialPage");
-        modelAndView.addObject("films",map.get("randomList"));
+        modelAndView.addObject("films", map.get("randomList"));
 
         if (principal !=null && isAdminUser(principal))
             modelAndView.addObject("isAdminUser",true);
@@ -150,4 +149,16 @@ public class InitialController {
 
         return user.getAuthorities().toString().equals(AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN").toString());
     }
+
+    private List<Film> avoidLazy(List<Film> list){
+        List<Film> listWithoutLazy = new ArrayList<>();
+        for (Film f: list){
+            f.setActors(new ArrayList<Actor>());
+            f.setReviews(new ArrayList<Review>());
+            f.setDirectors(new ArrayList<Director>());
+            listWithoutLazy.add(f);
+        }
+        return listWithoutLazy;
+    }
+
 }
