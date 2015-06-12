@@ -102,7 +102,7 @@
             this.userIsAuthenticated = function (){
 
                 return randomFilmsCrt.user && authenticated;
-            }
+            };
 
             this.listFilms = function(){
                 $http.get(this.RANDOM_API,config)
@@ -179,18 +179,8 @@
                 $http.get(this.FILMS_URL+randomFilmsCrt.currentFilm.id+'/actors',config)
                     .success(function (data) {
                         console.log(JSON.stringify(data));
-                        randomFilmsCrt.currentActors=data;
-                        showsActorsPage();
-                        $('#loading').hide();
-                    });
-            };
-
-            this.getActors = function(){
-                $('#loading').show();
-                $http.get(this.FILMS_URL+randomFilmsCrt.currentFilm.id+'/actors',config)
-                    .success(function (data) {
-                        console.log("actors"+JSON.stringify(data));
                         randomFilmsCrt.currentFilmActors=data;
+                        console.log("ENTRO lluis");
                         showsActorsPage();
                         $('#loading').hide();
                     });
