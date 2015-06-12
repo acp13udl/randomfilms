@@ -15,6 +15,7 @@
     <script src="app.js"></script>
     <script src="review-form/review-form.js"></script>
     <script src="film/film.js"></script>
+    <script src="favorites/favorites.js"></script>
     <script type="text/javascript">
         var searchUrl="";
         function validateKey(e){
@@ -130,7 +131,7 @@
     <div ng-show="randomFilmsController.isFilmsDetailPage()">
         <film-directive></film-directive>
     </div>
-    <div ng-show="randomFilmsController.isfavoritesPage()">
+    <div ng-show="randomFilmsController.isFavoritesPage()">
         <favorites-directive></favorites-directive>
     </div>
 </div>

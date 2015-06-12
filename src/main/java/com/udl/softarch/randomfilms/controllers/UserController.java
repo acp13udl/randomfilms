@@ -116,14 +116,4 @@ public class UserController {
         return "redirect:/user/" + update(id,user).getUsername();
     }
 
-    @RequestMapping(value = "/session",method = RequestMethod.GET)
-    @ResponseBody
-    public User getSessionUser(Principal principal){
-        if (principal!= null)
-            return  userRepository.findUserByUsername(principal.getName());
-        else
-           return new User();
-    }
-
-
 }

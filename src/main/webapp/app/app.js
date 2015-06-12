@@ -1,6 +1,6 @@
 
 (function(){
-    var app = angular.module("randomfilmsJS", ['filmDirective','reviewForm']);
+    var app = angular.module("randomfilmsJS", ['filmDirective','reviewForm','favoritesDirective']);
 
 
     app.controller("RandomFilmsController", ["$location","$http","$rootScope", "$scope",
@@ -140,7 +140,7 @@
                     }
                     callback && callback();
                     showsFavoritesPage();
-                    randomFilmsCrt.favoritesFilms = data;
+                    randomFilmsCrt.user = data;
                     $('#loading').hide();
                 }).error(function() {
                     $rootScope.authenticated = false;
