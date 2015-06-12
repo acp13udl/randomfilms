@@ -107,13 +107,20 @@
                     });
             }
 
-            this.getFavorites = function(param){
-
-                //$http.get("../users/admin/favorites",config)
-                $http.get("../validation")
+            this.addFavorite = function(credentials, callback){
+                $('#loading').show();
+                $http.get("../validation/add/?filmId="+this.currentFilm.id)
                     .success(function (data) {
                         console.log(JSON.stringify(data));
-
+                        if (data.username) {
+                            $rootScope.authenticated = true;
+                        } else {
+                            $rootScope.authenticated = false;
+                        }
+                        callback && callback();
+                        showsFavoritesPage();
+                        randomFilmsCrt.user = data;
+                        $('#loading').hide();
                     });
             }
 
