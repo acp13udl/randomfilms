@@ -54,10 +54,10 @@ public class FilmController {
     @RequestMapping(value = "/{id}",method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Long createReview(@PathVariable("id") Long id,@Valid @RequestBody Review review){
+    public Film createReview(@PathVariable("id") Long id,@Valid @RequestBody Review review){
 
-        filmsPersonInvolvedService.addReviewToFilm(id,review);
-        return id;
+        Film film = filmsPersonInvolvedService.addReviewToFilm(id,review);
+        return film;
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded", produces = "text/html")
@@ -65,6 +65,7 @@ public class FilmController {
         if(binding.hasErrors()) {
             return "form";
         }
-        return "redirect:/films/"+createReview(id, review);
+        createReview(id, review);
+        return "redirect:/films/"+id;
     }
 }

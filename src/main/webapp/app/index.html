@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/base.css"/>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
     <script src="app.js"></script>
+    <script src="review-form/review-form.js"></script>
+    <script src="film/film.js"></script>
     <script type="text/javascript">
         var searchUrl="";
         function validateKey(e){
@@ -65,69 +67,73 @@
             </div>
         </div>
     </nav>
-    <div id="loading">
-        <img id="loading-image" src="images/482.gif" alt="Loading..." />
-    </div>
+    <div ng-show="randomFilmsController.isInitialPage()">
 
-    <div id="container" style="margin-left: 10px; margin-right: 10px;">
-            <div class="row">
-                <div class="col-md-6" >
-                    <div style="text-align: center;">
-                        <h1 style="font-family: cursive; font-weight: bold;">Random Films</h1>
-                        </br></br>
-                    </div>
-                    <table id="randomFilmsTable" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th class="col-md-1" >ID</th>
-                                <th class="col-md-2">Title</th>
-                                <th class="col-md-2">Year</th>
-                                <th >Description</th>
-                                <th class="col-md-1"></th>
-                            </tr>
-                        </thead>
-                            <tbody ng-show="randomFilmsController.randomFilmsRequestSuccess()">
-                                <tr ng-repeat="film in randomFilmsController.films.randomList">
-                                    <td>{{film.id}}</td>
-                                    <td>{{film.title}}</td>
-                                    <td>{{film.year}}</td>
-                                    <td>{{film.simplePlot}}</td>
-                                    <td><a class="btn btn-success btn-sm" href="../films/{{film.id}}">Link</a></td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <div ng-show="randomFilmsController.searchFilmsSuccess()">
+        <div id="loading">
+            <img id="loading-image" src="images/482.gif" alt="Loading..." />
+        </div>
+
+        <div id="container" style="margin-left: 10px; margin-right: 10px;">
+                <div class="row">
+                    <div class="col-md-6" >
                         <div style="text-align: center;">
-                            <h1 style="font-family: cursive; font-weight: bold;">Search Result</h1>
+                            <h1 style="font-family: cursive; font-weight: bold;">Random Films</h1>
                             </br></br>
                         </div>
-                        <table id="searchFilmsTable" class="table table-striped">
+                        <table id="randomFilmsTable" class="table table-striped">
                             <thead>
-                            <tr>
-                                <th class="col-md-2">Title</th>
-                                <th class="col-md-2">Year</th>
-                                <th>Description</th>
-                                <th class="col-md-1"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr ng-repeat="film in randomFilmsController.films.searchList">
-                                    <td>{{film.title}}</td>
-                                    <td>{{film.year}}</td>
-                                    <td>{{film.simplePlot}}</td>
-                                    <td><a id="saveRedirectbutton" class="btn btn-success btn-sm" ng-click="randomFilmsController.saveUrl(film.urlParams)">Link</a></td>
+                                <tr>
+                                    <th class="col-md-1" >ID</th>
+                                    <th class="col-md-2">Title</th>
+                                    <th class="col-md-2">Year</th>
+                                    <th >Description</th>
+                                    <th class="col-md-1"></th>
                                 </tr>
-
-                            </tbody>
+                            </thead>
+                                <tbody ng-show="randomFilmsController.randomFilmsRequestSuccess()">
+                                    <tr ng-repeat="film in randomFilmsController.films.randomList">
+                                        <td>{{film.id}}</td>
+                                        <td>{{film.title}}</td>
+                                        <td>{{film.year}}</td>
+                                        <td>{{film.simplePlot}}</td>
+                                        <td><a class="btn btn-success btn-sm" href="../films/{{film.id}}">Link</a></td>
+                                    </tr>
+                                </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div ng-show="randomFilmsController.searchFilmsSuccess()">
+                            <div style="text-align: center;">
+                                <h1 style="font-family: cursive; font-weight: bold;">Search Result</h1>
+                                </br></br>
+                            </div>
+                            <table id="searchFilmsTable" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-2">Title</th>
+                                    <th class="col-md-2">Year</th>
+                                    <th>Description</th>
+                                    <th class="col-md-1"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="film in randomFilmsController.films.searchList">
+                                        <td>{{film.title}}</td>
+                                        <td>{{film.year}}</td>
+                                        <td>{{film.simplePlot}}</td>
+                                        <td><a id="saveRedirectbutton" class="btn btn-success btn-sm" ng-click="randomFilmsController.saveUrl(film.urlParams)">Link</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    <div ng-show="randomFilmsController.isFilmsDetailPage()">
+        <film-directive></film-directive>
     </div>
+</div>
 </body>
 </html>
 

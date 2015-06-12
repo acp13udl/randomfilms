@@ -35,7 +35,7 @@ public class Webservice {
 
     String directorsIMDBQuery = "string-join($m//directors/director/nameId, \",\")";
 
-    String token = "2c5bbcb7-4848-40f7-ab5d-e97447352e67";
+    String token = "e1fcca91-1fca-4b75-8006-f292380f6e66";
     //more tokens
     //e1fcca91-1fca-4b75-8006-f292380f6e66
     //14937c71-b3de-4b72-b1c8-1c93c0ae3a7e
@@ -105,7 +105,7 @@ public class Webservice {
     public List<Film> getFilmByTitle(String title, int limit) throws IOException, ClassNotFoundException,InstantiationException
                                                         ,IllegalAccessException,XQException,JAXBException {
 
-        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit="+limit+"&token="+token;
+        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit=2"+"&token="+token;
         connectionToAPI(url,Film.class);
 
         return recoveryFilms();

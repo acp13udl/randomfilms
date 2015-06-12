@@ -1,0 +1,88 @@
+<section>
+        <form>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="{{ randomFilmsController.currentFilm.urlPoster}}" />
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="inputTitle">Title:</label>
+                                <input id="inputTitle" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.title }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputYear">Year:</label>
+                                <input id="inputYear" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.year }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputMetascore">Metascore:</label>
+                                <input id="inputMetascore" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.metascore }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputRated">Rated:</label>
+                                <input id="inputRated" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.rated }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputRating">Rating:</label>
+                                <input id="inputRating" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.rating }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputRunTime">Run time:</label>
+                                <input id="inputRunTime" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.runTime }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="inputGenres">Genres:</label>
+                                <input id="inputGenres" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.genres }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputRelesedate">Release date:</label>
+                                <input id="inputRelesedate" type="text" class="form-control" value="{{ randomFilmsController.currentFilm.releaseDate }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSimplePlot">Simple plot:</label>
+                        <textarea id="inputSimplePlot" class="form-control" readonly>{{ randomFilmsController.currentFilm.simplePlot }}</textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-left: 5px; margin-right: 5px;">
+                <div class="form-group">
+                    <label for="inputPlot">Plot:</label>
+                    <textarea id="inputPlot" class="form-control" rows="5" readonly>{{ randomFilmsController.currentFilm.plot }}</textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-left: 5px; margin-right: 5px;">
+                <a class="btn btn-success" href="${film.getId()}/actors">Actores</a>
+                <a class="btn btn-success" href="${film.getId()}/directors">Directores</a>
+
+                <a class="btn btn-info" href="{{urlIMDB}}">Link IMDB</a>
+
+                <a class="btn btn-primary" href="/" style="float: right;">Back</a>
+                <a class="btn btn-warning" href="/validation/add?filmId=${film.getId()}" style="float: right; margin-right: 5px;">Add Favorites</a>
+            </div>
+        </form>
+            <hr/>
+            <review-form></review-form>
+</section>
