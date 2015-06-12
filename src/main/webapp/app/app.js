@@ -3,8 +3,8 @@
     var app = angular.module("randomfilmsJS", ['filmDirective','reviewForm']);
 
 
-    app.controller("RandomFilmsController", ["$location","$http",
-        function($location,$http) {
+    app.controller("RandomFilmsController", ["$location","$http","$rootScope", "$scope",
+        function($location,$http,$scope,$rootScope) {
 
 
             var isInitialPage = true;
@@ -93,6 +93,35 @@
                         randomFilmsCrt.currentFilm=data; //new films with reviews
                         showFilsmDetailPage();
                     });
+            };
+
+
+            var authenticate = function(credentials, callback) {
+
+                $http.get('../validation').success(function(data) {
+                    console.log(JSON.stringify(data));
+                    if (data.username) {
+                        $rootScope.authenticated = true;
+                    } else {
+                        $rootScope.authenticated = false;
+                    }
+                    callback && callback();
+                }).error(function() {
+                    $rootScope.authenticated = false;
+                    callback && callback();
+                });
+
+            };
+
+            $scope.credentials = {};
+            $scope.login = function() {
+                authenticate($scope.credentials, function() {
+                    if ($rootScope.authenticated) {
+                        $scope.error = false;
+                    } else {
+                        $scope.error = true;
+                    }
+                });
             };
 
             this.listFilms();

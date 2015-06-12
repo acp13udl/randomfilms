@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -59,7 +60,8 @@ public class UserController {
     public User receiveFavorites(@PathVariable("id")String id){
 
         Preconditions.checkNotNull(userRepository.findUserByUsername(id), "User not exist");
-        return userFilmsService.getUserFilms(id);
+        User user = userFilmsService.getUserFilms(id);
+        return user;
     }
 
     @RequestMapping(value = "/{id}/favorites",method = RequestMethod.GET,produces = "text/html")
@@ -112,6 +114,15 @@ public class UserController {
             return "form";
         }
         return "redirect:/user/" + update(id,user).getUsername();
+    }
+
+    @RequestMapping(value = "/session",method = RequestMethod.GET)
+    @ResponseBody
+    public User getSessionUser(Principal principal){
+        if (principal!= null)
+            return  userRepository.findUserByUsername(principal.getName());
+        else
+           return new User();
     }
 
 

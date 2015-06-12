@@ -91,6 +91,17 @@ public class User implements UserDetails{
         favoritesList.remove(film);
     }
 
+    public void initializeLazyFavoritList(){
+
+        this.favoritesList.size();
+
+        for (Film f : favoritesList){
+            f.getDirectors().size();
+            f.getActors().size();
+            f.getReviews().size();
+        }
+    }
+
 
 }
 
