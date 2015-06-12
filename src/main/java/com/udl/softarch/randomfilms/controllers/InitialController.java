@@ -117,8 +117,8 @@ public class InitialController {
                          @RequestParam(value = "rating",required=true) String rating,@RequestParam(value = "releaseDate",required=true) String releaseDate,
                          @RequestParam(value = "runTime",required=true) String runTime,@RequestParam(value = "simplePlot",required=true) String simplePlot,
                          @RequestParam(value = "genres",required=true) String genres,@RequestParam(value = "urlIMDB",required=true) String urlIMDB,
-                         @RequestParam(value = "idIMDB",required=true) String idIMDB,@RequestParam(value = "directorsIMDB",required=true) String directorsIMDB,
-                           @RequestParam(value = "isAngular",required=true) String isAngular) throws UnsupportedEncodingException {
+                         @RequestParam(value = "idIMDB",required=true) String idIMDB,
+                         @RequestParam(value = "directorsIMDB",required=true) String directorsIMDB) throws UnsupportedEncodingException {
 
         Film film = new Film(idIMDB,genres,metascore,decode(plot),rated,
                 Float.parseFloat(rating),Integer.parseInt(releaseDate),runTime,decode(simplePlot),

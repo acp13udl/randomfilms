@@ -22,7 +22,7 @@
 
             if(e.keyCode == 13){
                 searchUrl = "?search="+$('#searchInput').val();
-
+                $('#searchButton').click();
                 return false;
             }
         }
@@ -34,10 +34,10 @@
 
 </head>
 
-<body>
+<body style="padding-top: 70px;">
 
 <div ng-controller="RandomFilmsController as randomFilmsController">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">RandomFilms</a>
+                <a class="navbar-brand" href="/app">RandomFilms</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,18 +61,15 @@
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control" onkeyup="validateKey(event)" onblur="validateKey(event)" placeholder="Search">
                         <a id="searchButton" class="input-group-addon" ng-click="randomFilmsController.listSearchFilms()" style="cursor:pointer">Search</a>
-
                     </div>
                 </form>
             </div>
         </div>
     </nav>
+    <div id="loading">
+        <img id="loading-image" src="images/482.gif" alt="Loading..." />
+    </div>
     <div ng-show="randomFilmsController.isInitialPage()">
-
-        <div id="loading">
-            <img id="loading-image" src="images/482.gif" alt="Loading..." />
-        </div>
-
         <div id="container" style="margin-left: 10px; margin-right: 10px;">
                 <div class="row">
                     <div class="col-md-6" >
@@ -96,7 +93,7 @@
                                         <td>{{film.title}}</td>
                                         <td>{{film.year}}</td>
                                         <td>{{film.simplePlot}}</td>
-                                        <td><a class="btn btn-success btn-sm" href="../films/{{film.id}}">Link</a></td>
+                                        <td><a class="btn btn-success btn-sm" ng-click="randomFilmsController.getFilm(film.id)">Link</a></td>
                                     </tr>
                                 </tbody>
                         </table>
@@ -132,6 +129,9 @@
         </div>
     <div ng-show="randomFilmsController.isFilmsDetailPage()">
         <film-directive></film-directive>
+    </div>
+    <div ng-show="randomFilmsController.isfavoritesPage()">
+        <favorites-directive></favorites-directive>
     </div>
 </div>
 </body>

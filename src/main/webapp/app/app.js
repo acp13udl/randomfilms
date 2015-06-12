@@ -9,6 +9,7 @@
 
             var isInitialPage = true;
             var isFilmDetailPage = false;
+            var isFavoritesPage = false;
 
             this.newReview={};
 
@@ -27,11 +28,19 @@
             var showFilsmDetailPage = function(){
                 isInitialPage = false;
                 isFilmDetailPage = true;
+                isFavoritesPage = false;
             };
 
             var showsInitialPage = function(){
                 isInitialPage = true;
                 isFilmDetailPage = false;
+                isFavoritesPage = false;
+            };
+
+            var showsFavoritesPage = function(){
+                isInitialPage = false;
+                isFilmDetailPage = false;
+                isFavoritesPage = true;
             };
 
             this.isInitialPage = function(){
@@ -40,6 +49,10 @@
 
             this.isFilmsDetailPage = function () {
                 return isFilmDetailPage;
+            };
+
+            this.isFavoritesPage = function () {
+                return isFavoritesPage;
             };
 
             this.randomFilmsRequestSuccess = function(){
@@ -73,16 +86,36 @@
 
             this.saveUrl = function(param){
                 $('#loading').show();
-                $http.get("../save"+param+'&isAngular=0',config) //QUITAR PARAMETRO NO ES NECESARIO
+                $http.get("../save"+param,config)
                     .success(function (data) {
                         console.log(JSON.stringify(data));
-                        $('#loading').hide();
                         randomFilmsCrt.currentFilm=data;
                         showFilsmDetailPage();
-                        //$location.url('/films/'+data.id);
+                        $('#loading').hide();
                     });
 
             };
+
+            this.getFilm = function(param){
+                $('#loading').show();
+                $http.get("../films/"+param,config)
+                    .success(function (data) {
+                        console.log(JSON.stringify(data));
+                        randomFilmsCrt.currentFilm=data;
+                        showFilsmDetailPage();
+                        $('#loading').hide();
+                    });
+            }
+
+            this.getFavorites = function(param){
+
+                //$http.get("../users/admin/favorites",config)
+                $http.get("../validation")
+                    .success(function (data) {
+                        console.log(JSON.stringify(data));
+
+                    });
+            }
 
             this.addReview = function(){
                 $('#loading').show();
@@ -97,7 +130,7 @@
 
 
             var authenticate = function(credentials, callback) {
-
+                $('#loading').show();
                 $http.get('../validation').success(function(data) {
                     console.log(JSON.stringify(data));
                     if (data.username) {
@@ -106,6 +139,9 @@
                         $rootScope.authenticated = false;
                     }
                     callback && callback();
+                    showsFavoritesPage();
+                    randomFilmsCrt.favoritesFilms = data;
+                    $('#loading').hide();
                 }).error(function() {
                     $rootScope.authenticated = false;
                     callback && callback();
