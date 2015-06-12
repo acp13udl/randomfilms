@@ -105,7 +105,7 @@ public class Webservice {
     public List<Film> getFilmByTitle(String title, int limit) throws IOException, ClassNotFoundException,InstantiationException
                                                         ,IllegalAccessException,XQException,JAXBException {
 
-        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit=2"+"&token="+token;
+        final String url  = URL_BASE+"imdb?format=XML&title="+title+"&filter=M&limit="+limit+"&token="+token;
         connectionToAPI(url,Film.class);
 
         return recoveryFilms();
