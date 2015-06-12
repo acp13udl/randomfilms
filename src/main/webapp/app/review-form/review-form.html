@@ -1,46 +1,48 @@
 <section>
-    <form ng-submit="randomFilmsController.addReview()" novalidate>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label for="inputComment">Comment:</label>
-                    <textarea ng-model="randomFilmsController.newReview.comment" id="inputComment" class="form-control" type="text" name="comment" rows="4" required></textarea>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <label for="inputRat">Rating:</label>
-                    <input ng-model="randomFilmsController.newReview.rating" id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
-                    <input ng-model="randomFilmsController.newReview.author"  type="hidden" name="author" value="Anonimo"/>
-                    <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <div ng-repeat="review in randomFilmsController.currentFilm.reviews">
-        <ul>
+    <div ng-show="randomFilmsController">
+        <form ng-submit="randomFilmsController.addReview()" novalidate>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-10">
                     <div class="form-group">
-                        <label for="inputReviewAuthor">Author:</label>
-                        <input id="inputReviewAuthor" type="text" class="form-control" value="{{review.author}}" readonly>
+                        <label for="inputComment">Comment:</label>
+                        <textarea ng-model="randomFilmsController.newReview.comment" id="inputComment" class="form-control" type="text" name="comment" rows="4" required></textarea>
                     </div>
                 </div>
-                 <div class="col-md-2">
-                     <div class="form-group">
-                        <label for="inputReviewRate">Rating:</label>
-                        <input id="inputReviewRate" type="text" class="form-control" value="{{review.rating}}" readonly>
-                     </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <label for="inputRat">Rating:</label>
+                        <input ng-model="randomFilmsController.newReview.rating" id="inputRat" name="rating" class="form-control" type="number" max="10" min="0" value="5"/></br>
+                        <input ng-model="randomFilmsController.newReview.author"  type="hidden" name="author" value="Anonimo"/>
+                        <button class="btn btn-warning" type="submit" style="float: right;">Send</button>
+                    </div>
                 </div>
-                <div class="col-md-8"></div>
-             </div>
-             <div class="row" style="margin-right: 5px; margin-left: 1px">
-                <label for="inputReviewComment">Comment:</label>
-                <textarea id="inputReviewComment" class="form-control" readonly>{{review.comment}}</textarea>
-             </div>
-            <hr/>
-        </ul>
+            </div>
+        </form>
+
+        <div ng-repeat="review in randomFilmsController.currentFilm.reviews">
+            <ul>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="inputReviewAuthor">Author:</label>
+                            <input id="inputReviewAuthor" type="text" class="form-control" value="{{review.author}}" readonly>
+                        </div>
+                    </div>
+                     <div class="col-md-2">
+                         <div class="form-group">
+                            <label for="inputReviewRate">Rating:</label>
+                            <input id="inputReviewRate" type="text" class="form-control" value="{{review.rating}}" readonly>
+                         </div>
+                    </div>
+                    <div class="col-md-8"></div>
+                 </div>
+                 <div class="row" style="margin-right: 5px; margin-left: 1px">
+                    <label for="inputReviewComment">Comment:</label>
+                    <textarea id="inputReviewComment" class="form-control" readonly>{{review.comment}}</textarea>
+                 </div>
+                <hr/>
+            </ul>
+        </div>
     </div>
 </section>

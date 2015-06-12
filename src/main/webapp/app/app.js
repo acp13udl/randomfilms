@@ -4,7 +4,7 @@
 
 
     app.controller("RandomFilmsController", ["$location","$http","$rootScope", "$scope",
-        function($location,$http,$scope,$rootScope) {
+        function($location,$http,$rootScope,$scope) {
 
 
             var isInitialPage = true;
@@ -18,12 +18,12 @@
             var randomFilmsCrt = this;
 
             this.RANDOM_API = "../";
-            this.POST_REVIEW = "../films/"
+            this.POST_REVIEW = "../films/";
 
             var config = {headers: {
                 'Accept': 'application/json'
             }
-            }
+            };
 
             var showFilsmDetailPage = function(){
                 isInitialPage = false;
@@ -66,6 +66,11 @@
                 return false;
             };
 
+            this.userIsAuthenticated = function (){
+
+                return randomFilmsCrt.user && authenticated;
+            }
+
             this.listFilms = function(){
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {
@@ -80,6 +85,7 @@
                     .success(function (data) {
                         randomFilmsCrt.films = data;
                         randomFilmsSuccess = true;
+                        showsInitialPage();
                         $('#loading').hide();
                     });
             };
@@ -128,31 +134,30 @@
                     });
             };
 
-
+            var authenticated;
             var authenticate = function(credentials, callback) {
                 $('#loading').show();
                 $http.get('../validation').success(function(data) {
                     console.log(JSON.stringify(data));
                     if (data.username) {
-                        $rootScope.authenticated = true;
+                        authenticated = true;
                     } else {
-                        $rootScope.authenticated = false;
+                        authenticated = false;
                     }
                     callback && callback();
                     showsFavoritesPage();
                     randomFilmsCrt.user = data;
                     $('#loading').hide();
                 }).error(function() {
-                    $rootScope.authenticated = false;
+                    authenticated = false;
                     callback && callback();
                 });
-
             };
 
             $scope.credentials = {};
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
-                    if ($rootScope.authenticated) {
+                    if (authenticated) {
                         $scope.error = false;
                     } else {
                         $scope.error = true;

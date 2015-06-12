@@ -9,12 +9,7 @@
         return {
             restrict: 'E',
             templateUrl: 'favorites/favorites.html',
-            controller: function() {
 
-                var favoritesController = this;
-                //console.log(window.currentFilm);
-                //filmController.film = window.currentFilm
-            }
         };
     });
 
