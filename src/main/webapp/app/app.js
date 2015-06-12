@@ -1,6 +1,6 @@
 
 (function(){
-    var app = angular.module("randomfilmsJS", ['filmDirective','reviewForm','favoritesDirective']);
+    var app = angular.module("randomfilmsJS", ['filmDirective','reviewForm','favoritesDirective','actorsDirective','directorsDirective']);
 
 
     app.controller("RandomFilmsController", ["$location","$http","$rootScope", "$scope",
@@ -10,6 +10,8 @@
             var isInitialPage = true;
             var isFilmDetailPage = false;
             var isFavoritesPage = false;
+            var isDirectorPage = false;
+            var isActorPage = false;
 
             this.newReview={};
 
@@ -18,7 +20,7 @@
             var randomFilmsCrt = this;
 
             this.RANDOM_API = "../";
-            this.POST_REVIEW = "../films/";
+            this.FILMS_URL = "../films/";
 
             var config = {headers: {
                 'Accept': 'application/json'
@@ -29,18 +31,40 @@
                 isInitialPage = false;
                 isFilmDetailPage = true;
                 isFavoritesPage = false;
+                isDirectorPage = false;
+                isActorPage = false;
             };
 
             var showsInitialPage = function(){
                 isInitialPage = true;
                 isFilmDetailPage = false;
                 isFavoritesPage = false;
+                isDirectorPage = false;
+                isActorPage = false;
             };
 
             var showsFavoritesPage = function(){
                 isInitialPage = false;
                 isFilmDetailPage = false;
                 isFavoritesPage = true;
+                isDirectorPage = false;
+                isActorPage = false;
+            };
+
+            var showsDirectorsPage = function(){
+                isInitialPage = false;
+                isFilmDetailPage = false;
+                isFavoritesPage = false;
+                isDirectorPage = true;
+                isActorPage = false;
+            };
+
+            var showsActorsPage = function(){
+                isInitialPage = false;
+                isFilmDetailPage = false;
+                isFavoritesPage = false;
+                isDirectorPage = false;
+                isActorPage = true;
             };
 
             this.isInitialPage = function(){
@@ -54,6 +78,15 @@
             this.isFavoritesPage = function () {
                 return isFavoritesPage;
             };
+
+            this.isActorsPage = function () {
+                return isActorPage;
+            };
+
+            this.isDirectorsPage = function () {
+                return isDirectorPage;
+            };
+
 
             this.randomFilmsRequestSuccess = function(){
                 return randomFilmsSuccess;
@@ -132,12 +165,45 @@
 
             this.addReview = function(){
                 $('#loading').show();
-                $http.post(this.POST_REVIEW+randomFilmsCrt.currentFilm.id,this.newReview)
+                $http.post(this.FILMS_URL+randomFilmsCrt.currentFilm.id,this.newReview)
                     .success(function (data) {
                         console.log(data);
                         $('#loading').hide();
                         randomFilmsCrt.currentFilm=data; //new films with reviews
                         showFilsmDetailPage();
+                    });
+            };
+
+            this.getActors = function(){
+                $('#loading').show();
+                $http.get(this.FILMS_URL+randomFilmsCrt.currentFilm.id+'/actors',config)
+                    .success(function (data) {
+                        console.log(JSON.stringify(data));
+                        randomFilmsCrt.currentActors=data;
+                        showsActorsPage();
+                        $('#loading').hide();
+                    });
+            };
+
+            this.getActors = function(){
+                $('#loading').show();
+                $http.get(this.FILMS_URL+randomFilmsCrt.currentFilm.id+'/actors',config)
+                    .success(function (data) {
+                        console.log("actors"+JSON.stringify(data));
+                        randomFilmsCrt.currentFilmActors=data;
+                        showsActorsPage();
+                        $('#loading').hide();
+                    });
+            };
+
+            this.getDirectors = function(){
+                $('#loading').show();
+                $http.get(this.FILMS_URL+randomFilmsCrt.currentFilm.id+'/directors',config)
+                    .success(function (data) {
+                        console.log("DIrectors"+JSON.stringify(data));
+                        randomFilmsCrt.currentFilmDirectors=data;
+                        showsDirectorsPage();
+                        $('#loading').hide();
                     });
             };
 

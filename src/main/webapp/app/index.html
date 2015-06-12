@@ -16,6 +16,8 @@
     <script src="review-form/review-form.js"></script>
     <script src="film/film.js"></script>
     <script src="favorites/favorites.js"></script>
+    <script src="actors/actors.js"></script>
+    <script src="directors/directors.js"></script>
     <script type="text/javascript">
         var searchUrl="";
         function validateKey(e){
@@ -133,6 +135,12 @@
     </div>
     <div ng-show="randomFilmsController.isFavoritesPage()">
         <favorites-directive></favorites-directive>
+    </div>
+    <div ng-show="randomFilmsController.isActorsPage()">
+        <actors-directive></actors-directive>
+    </div>
+    <div ng-show="randomFilmsController.isDirectorsPage()">
+        <directors-directive></directors-directive>
     </div>
 </div>
 </body>
