@@ -14,4 +14,6 @@ Then run embedded Tomcat server:
 
 The application will be available at http://localhost:8080/
 
+Deployment in Heroku : http://randomfilms.herokuapp.com/ (Spring server) http://randomfilms.herokuapp.com/app (AngularJS client)
+
 Authors: Alejandro Allué, Adrián Carrera y Lluis Echeverria.
