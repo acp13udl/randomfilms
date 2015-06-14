@@ -76,7 +76,6 @@ public class FilmController {
 
         film.setDirectors(new ArrayList<Director>());
         film.setActors(new ArrayList<Actor>());
-        film.setReviews(new ArrayList<Review>());
 
         return film;
     }

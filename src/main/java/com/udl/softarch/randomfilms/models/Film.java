@@ -24,7 +24,7 @@ public class Film {
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Actor> actors = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
     @XmlElement private String idIMDB;

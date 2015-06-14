@@ -139,13 +139,12 @@
                         showFilsmDetailPage();
                         $('#loading').hide();
                     });
-            }
+            };
 
             this.addFavorite = function(credentials, callback){
                 $('#loading').show();
                 $http.get("../validation/add/?filmId="+this.currentFilm.id)
                     .success(function (data) {
-                        console.log(JSON.stringify(data));
                         if (data.username) {
                             $rootScope.authenticated = true;
                         } else {
@@ -156,11 +155,12 @@
                         randomFilmsCrt.user = data;
                         $('#loading').hide();
                     });
-            }
+            };
 
             this.addReview = function(){
                 $('#loading').show();
-                console.log("review"+JSON.stringify(this.review));
+                this.newReview.author = randomFilmsCrt.user.username;
+                console.log("review"+JSON.stringify(this.newReview));
                 $http.post(this.FILMS_URL+randomFilmsCrt.currentFilm.id,this.newReview)
                     .success(function (data) {
                         console.log(data);
@@ -218,9 +218,9 @@
             $scope.credentials = {};
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
-                    if (randomFilmsCrt.authenticated) {
+                    if (randomFilmsCrt.authenticated){
                         $scope.error = false;
-                    } else {
+                    }else {
                         $scope.error = true;
                     }
                 });
