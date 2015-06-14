@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by Allu on 21/04/2015.
  */
+
 @Service
 public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedService {
 
@@ -33,7 +34,6 @@ public class FilmsPersonInvolvedServiceImpl implements FilmsPersonInvolvedServic
         film.getActors().size();
         film.getDirectors().size();
         film.getReviews().size();
-
         return film;
     }
 

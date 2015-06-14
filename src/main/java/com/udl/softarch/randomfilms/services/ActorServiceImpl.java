@@ -1,6 +1,7 @@
 package com.udl.softarch.randomfilms.services;
 
 import com.udl.softarch.randomfilms.models.Actor;
+import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -99,6 +99,10 @@
                 return false;
             };
 
+            this.goToTheFilmDetail = function () {
+
+            };
+
             this.listFilms = function(){
                 $http.get(this.RANDOM_API,config)
                     .success(function (data) {

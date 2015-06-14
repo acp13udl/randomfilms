@@ -11,8 +11,6 @@
             restrict: 'E',
             templateUrl: 'directors/directors.html',
             controller: function() {
-
-                var filmController = this;
             }
         };
     });

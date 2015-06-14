@@ -1,10 +1,14 @@
 package com.udl.softarch.randomfilms.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.services.DirectorService;
+import com.udl.softarch.randomfilms.services.FilmService;
 import com.udl.softarch.randomfilms.services.FilmsPersonInvolvedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +36,8 @@ public class DirectorController {
     DirectorService directorService;
     @Autowired
     FilmsPersonInvolvedService filmsPersonInvolvedService;
+    @Autowired
+    FilmService filmService;
 
     @RequestMapping(value = "/{id}/directors",method = RequestMethod.GET)
     @ResponseBody
@@ -44,7 +50,6 @@ public class DirectorController {
                 Director director;
                 director = Webservice.getInstance().getDirectorByIMDBId(imdb);
                 directors.add(director);
-                System.out.print(director.toString());
             }
             List<Director> directorsWithId = directorService.saveDirectors(id, directors);
             filmsPersonInvolvedService.addDirectorsToFilm(id, directorsWithId);
@@ -62,4 +67,5 @@ public class DirectorController {
         modelAndView.addObject("directors", receive(id));
         return modelAndView;
     }
+
 }
