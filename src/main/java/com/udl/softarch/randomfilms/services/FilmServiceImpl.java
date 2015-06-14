@@ -1,5 +1,6 @@
 package com.udl.softarch.randomfilms.services;
 
+import com.udl.softarch.randomfilms.models.Director;
 import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Autowired
     FilmRepository filmRepository;
+
 
 
     @Transactional

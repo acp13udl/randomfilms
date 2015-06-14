@@ -1,5 +1,6 @@
 package com.udl.softarch.randomfilms.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Preconditions;
 import com.udl.softarch.randomfilms.Webservice.Webservice;
 import com.udl.softarch.randomfilms.models.Actor;
@@ -32,6 +33,7 @@ public class ActorController {
 
     @RequestMapping(value = "/{id}/actors",method = RequestMethod.GET)
     @ResponseBody
+    @JsonIgnoreProperties({"films"})
     public List<Actor> receive(@PathVariable("id")Long id) throws XQException, IOException, JAXBException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Film film = filmsPersonInvolvedService.getFilmAndPersonInvolved(id);
         List<Actor> actors;

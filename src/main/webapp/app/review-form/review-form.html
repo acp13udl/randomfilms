@@ -17,8 +17,7 @@
                 </div>
             </div>
         </form>
-
-        <div ng-repeat="review in randomFilmsController.currentFilm.reviews">
+        <div ng-repeat="review in randomFilmsController.reviews">
             <ul>
                 <div class="row">
                     <div class="col-md-2">
@@ -33,7 +32,8 @@
                             <input id="inputReviewRate" type="text" class="form-control" value="{{review.rating}}" readonly>
                          </div>
                     </div>
-                    <div class="col-md-8"></div>
+                    <div class="col-md-8">
+                    </div>
                  </div>
                  <div class="row" style="margin-right: 5px; margin-left: 1px">
                     <label for="inputReviewComment">Comment:</label>

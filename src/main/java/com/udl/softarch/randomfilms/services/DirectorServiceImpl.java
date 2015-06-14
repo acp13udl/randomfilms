@@ -2,6 +2,7 @@ package com.udl.softarch.randomfilms.services;
 
 import com.udl.softarch.randomfilms.models.Actor;
 import com.udl.softarch.randomfilms.models.Director;
+import com.udl.softarch.randomfilms.models.Film;
 import com.udl.softarch.randomfilms.repositories.ActorRepository;
 import com.udl.softarch.randomfilms.repositories.DirectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;

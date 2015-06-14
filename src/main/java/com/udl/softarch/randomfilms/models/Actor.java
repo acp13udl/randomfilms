@@ -1,5 +1,8 @@
 package com.udl.softarch.randomfilms.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -85,6 +88,8 @@ public class Actor extends PersonInvolved{
         return urlPhoto;
     }
 
+    @JsonIgnore
+    @JsonProperty(value = "films")
     public List<Film> getFilms() {
         return films;
     }
